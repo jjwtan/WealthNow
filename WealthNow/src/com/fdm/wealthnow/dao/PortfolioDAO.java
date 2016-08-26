@@ -2,7 +2,7 @@ package com.fdm.wealthnow.dao;
 
 import java.util.List;
 
-public class PortfolioDAO {
+public class PortfolioDAO extends BaseDAO {
 
 	public List getStockHoldingInDataBase(Integer user_id){
 		return null;
