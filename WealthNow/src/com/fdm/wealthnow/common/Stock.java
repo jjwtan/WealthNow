@@ -8,6 +8,21 @@ public class Stock {
 	String percentChange;
 	Float daysValueChange;
 	Date lastTradeDate, tradeDate, tradeTime, modifiedDate;
+	
+	public Stock() {
+		
+	}
+	
+	public Stock(String stockSymbol) {
+		this.stockSymbol = stockSymbol;
+	}
+	public Stock(String stockSymbol, String company, float ask, float bid) {
+		this.stockSymbol = stockSymbol;
+		this.company = company;
+		this.ask = ask;
+		this.bid = bid;
+	}
+
 	public String getStockSymbol() {
 		return stockSymbol;
 	}
@@ -75,6 +90,11 @@ public class Stock {
 		this.modifiedDate = modifiedDate;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		float price = ask+bid/2.0f;
+		return "Stock:" + stockSymbol + "\tCompany: " + company + " $" + price;
+	}
 
 }
