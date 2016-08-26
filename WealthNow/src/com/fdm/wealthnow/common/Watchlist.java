@@ -69,5 +69,9 @@ public class Watchlist {
 		this.dateLastEdited = dateLastEdited;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return watchlistName;
+	}
 }

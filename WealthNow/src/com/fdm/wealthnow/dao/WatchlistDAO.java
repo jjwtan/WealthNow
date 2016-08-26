@@ -59,4 +59,5 @@ public class WatchlistDAO extends BaseDAO {
 		return true;
 	};
 
+
 }
