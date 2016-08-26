@@ -1,4 +1,4 @@
-package com.trading.util;
+package com.fdm.wealthnow.util;
 
 import java.sql.Connection;
 

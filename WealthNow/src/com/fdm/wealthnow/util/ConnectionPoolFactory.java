@@ -1,5 +1,4 @@
-package com.trading.util;
-
+package com.fdm.wealthnow.util;
 import java.sql.Connection;
 import javax.naming.Context;
 import javax.naming.InitialContext;
