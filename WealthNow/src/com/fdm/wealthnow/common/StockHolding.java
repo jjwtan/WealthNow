@@ -14,6 +14,12 @@ public class StockHolding {
 	
 	
 	
+	
+	public StockHolding(String stock_symbol, Integer remaining_quantity, Float purchase_price) {
+		this.stock_symbol = stock_symbol;
+		this.remaining_quantity = remaining_quantity;
+		this.purchase_price = purchase_price;
+	}
 	public StockHolding(Integer stockholding_id, Integer user_id, Integer order_id, String stock_symbol,
 			Integer purchase_quantity, Integer remaining_quantity, Float purchase_price, Date purchase_date) {
 		this.stockholding_id = stockholding_id;
