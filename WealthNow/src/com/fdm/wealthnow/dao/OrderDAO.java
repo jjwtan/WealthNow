@@ -7,8 +7,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.util.DBUtil;
 
-public class OrderDAO extends BaseDAO {
+public class OrderDAO extends DBUtil {
+	
+	public Integer getOrder(Integer order_id) throws Exception{
+		Connection connect = getConnection();
+		
+		return new Integer(1);
+	}
 
 	public List getAllProcessedOrderFromUser(Integer user_id) throws Exception {
 		List<Order> processedCompletedOrderfromUser = new ArrayList<Order>();
@@ -77,7 +84,7 @@ public class OrderDAO extends BaseDAO {
 		String SQL = "INSERT INTO PROCESSEDORDER (order_id, user_id, currency_code, "
 				+ "order_type, quantity, stock_symbol, "
 				+ "price_type, status ,place_order_date, limit_price, order_completion_date, closing_price) "
-				+ "VALUES( '" + user_id + "','" + order_id + "','" + currency_code + "','" + order_type + "',"
+				+ "VALUES("+ getSequenceID("order_id_seq")+", '" + user_id + "','" + currency_code + "','" + order_type + "',"
 				+ quantity + ",'" + stock_symbol + "','" + price_type + "','" + status + "','" + opening_order_date
 				+ "'," + limit_price + "','" + order_completion_date + "'," + limit_price + ")";
 
@@ -125,7 +132,7 @@ public class OrderDAO extends BaseDAO {
 
 		String SQL = "INSERT INTO OPENORDER (order_id, user_id, currency_code, "
 				+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price, term) "
-				+ "VALUES( '" + user_id + "','" + order_id + "','" + currency_code + "','" + order_type + "',"
+				+ "VALUES("+ getSequenceID("order_id_seq")+", '" + user_id + "','" + order_id + "','" + currency_code + "','" + order_type + "',"
 				+ quantity + ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price
 				+ ",'" + term + ")";
 		Connection connect = getConnection();
