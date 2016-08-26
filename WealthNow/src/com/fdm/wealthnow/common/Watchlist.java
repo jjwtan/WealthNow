@@ -1,14 +1,26 @@
 package com.fdm.wealthnow.common;
 
 import java.util.Date;
-import java.util.List;
 
 public class Watchlist {
 	int watchlistId;
 	String watchlistName, visibility;
-	int userId;
-	List<Stock> stocks;
+	//int userId;
+	//List<Stock> stocks;
 	Date dateCreated, dateLastEdited;
+	
+	public Watchlist(){
+		
+	}
+	
+	public Watchlist(int watchlistId, String watchlistName, String visibility, Date dateCreated, Date dateLastEdited) {
+		super();
+		this.watchlistId = watchlistId;
+		this.watchlistName = watchlistName;
+		this.visibility = visibility;
+		this.dateCreated = dateCreated;
+		this.dateLastEdited = dateLastEdited;
+	}
 	
 	public int getWatchlistId() {
 		return watchlistId;
@@ -28,6 +40,8 @@ public class Watchlist {
 	public void setVisibility(String visibility) {
 		this.visibility = visibility;
 	}
+	
+	/*
 	public int getUserId() {
 		return userId;
 	}
@@ -40,6 +54,8 @@ public class Watchlist {
 	public void setStocks(List<Stock> stocks) {
 		this.stocks = stocks;
 	}
+	*/
+	
 	public Date getDateCreated() {
 		return dateCreated;
 	}
