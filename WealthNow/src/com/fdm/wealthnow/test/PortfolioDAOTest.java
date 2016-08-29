@@ -49,20 +49,15 @@ public class PortfolioDAOTest extends DBUtil{
 
 		PortfolioDAO portfolioDAO = new PortfolioDAO();
 		
-		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(82), "7FINGERS", new Integer(500),
+		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(124), "7FINGERS", new Integer(500),
 				new Integer(500), new Double(55.50), "20 Sep 2001");
 		
-		
-	
-		
-		portfolioDAO.updateStockHolding(new Integer(82), new Integer(40));
+		portfolioDAO.updateStockHolding(new Integer(124), new Integer(40));
 
 		List<StockHolding> newTestList = portfolioDAO.getStockHoldingInDataBase(1);
 		System.out.println(newTestList);
 		
 		for (StockHolding newListTest : newTestList) {
-			
-
 			assertEquals(newListTest.getRemaining_quantity(), new Integer(460));
 
 			System.out.println("Test Completed: Update Stock holding in database.");
