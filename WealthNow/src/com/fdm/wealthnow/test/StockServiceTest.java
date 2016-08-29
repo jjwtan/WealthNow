@@ -21,13 +21,13 @@ public class StockServiceTest {
 		stockList.add(new Stock("Z74"));
 	}
 
-	//@Test
+	@Test
 	public void testBasicURL() {
 		String url = stockService.generateRequestURL(stockList, InfoType.BASIC);
 		System.out.println(url);
 	}
 	
-	//@Test
+	@Test
 	public void testBasicStock() {
 		stockService = new StockService();
 		List<Stock> stocks = stockService.getStocksFromExchange(stockList, InfoType.BASIC);
@@ -56,7 +56,7 @@ public class StockServiceTest {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void testFullStock() {
 		stockService = new StockService();
 		List<Stock> stocks = stockService.getStocksFromExchange(stockList, InfoType.FULL);
