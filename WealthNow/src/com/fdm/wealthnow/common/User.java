@@ -6,19 +6,20 @@ import java.util.List;
 public class User {
 	int userId;
 	String username;
-	String firstName, lastName;
+	String firstName;
+	String lastName;
 	Date birthday;
 	String email;
 	String phoneNumber;
 	String maidenName;
 	int failedLoginCount;
-	int watchlistId;
 	List<String> questionList;
 	List<String> answerList;
 	
 	public User() {
 		
 	}
+	
 	
 	public User(int userId, String username, String firstName, String lastName) {
 		this.userId = userId;
@@ -27,6 +28,19 @@ public class User {
 		this.lastName = lastName;
 	}
 	
+	
+	public User(int userId, String username, String firstName, String lastName, Date birthday, String email,
+			String phoneNumber) {
+		this.userId = userId;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthday = birthday;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+	}
+
+
 	public int getUserId() {
 		return userId;
 	}
@@ -81,12 +95,7 @@ public class User {
 	public void setFailedLoginCount(int failedLoginCount) {
 		this.failedLoginCount = failedLoginCount;
 	}
-	public int getWatchlistId() {
-		return watchlistId;
-	}
-	public void setWatchlistId(int watchlistId) {
-		this.watchlistId = watchlistId;
-	}
+
 	public List<String> getQuestionList() {
 		return questionList;
 	}
