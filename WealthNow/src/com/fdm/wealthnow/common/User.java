@@ -15,6 +15,18 @@ public class User {
 	int watchlistId;
 	List<String> questionList;
 	List<String> answerList;
+	
+	public User() {
+		
+	}
+	
+	public User(int userId, String username, String firstName, String lastName) {
+		this.userId = userId;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -91,7 +103,7 @@ public class User {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return firstName;
+		return firstName + " " + lastName;
 	}
 	
 	
