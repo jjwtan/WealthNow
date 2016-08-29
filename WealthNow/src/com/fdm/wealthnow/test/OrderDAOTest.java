@@ -25,17 +25,15 @@ public class OrderDAOTest extends DBUtil {
 		
 		orderDAO.createOpenOrderInDatabase(order_id1, new Integer(1), "SGD", "B", new Integer(100), "AAPL", "M", "11 Sep 2011",
 				new Double(88.9), "GC", "Open");
-		System.out.println("Start testCreatedDataInDatabase");
+		
+		System.out.println("\n Start testCreatedDataInDatabase");
 		
 		Order order1 = orderDAO.getOrderFromOpenOrder(order_id1);
 		assertEquals(order1.getOrder_id(), order_id1);
-		
 		orderDAO.deleteOpenOrderInDatabase(order_id1);
 		System.out.println("Deleted "+order_id1+" successfully.");
-
 		
-		System.out.println("Test Completed: Created Data in database.");
-		
+		System.out.println("Test Completed: Created Data in database.");	
 	}
 	
 	@Test
@@ -43,7 +41,10 @@ public class OrderDAOTest extends DBUtil {
 		orderDAO = new OrderDAO();
 		List<Order> TestList = orderDAO.getListOfOpenOrder(3);
 		Integer testcount = TestList.size();
+		
+		System.out.println("\n Start testGetListOfOpenOrder");
 		assertEquals(testcount, new Integer(3));
+		System.out.println("Test Completed: Get list of open order.");	
 	}
 
 	@Test
@@ -55,32 +56,38 @@ public class OrderDAOTest extends DBUtil {
 		orderDAO.createProcessedOrderInDatabase(order_id1, 1, "SGD", "B", 100, "SAISAI","M", "19 Sep 2014", 90.9, 
 				"12 Oct 2015", "cancelled", 90.2);
 		Order order = orderDAO.getOrderFromProcessedOrder(order_id1);
+		
+		System.out.println("\n Start testCreateProcessedOrderData");
 		assertEquals(order.getUser_id(), new Integer(1));
-		System.out.println("Test Completed: Inserted Data in database.");
+		System.out.println("Test Completed: Create processed order in database.");
 	}
+	
 	@Test
 	public void testGetAllProcessedOrder() throws Exception{
 		Integer user_id = 1;
 		orderDAO  = new OrderDAO();
 		List<Order> newOrder = orderDAO.getAllProcessedOrderFromUser(user_id);
+		
+		System.out.println("\n Start testGetAllProcessedOrder");
 		for(Order ord : newOrder){
 			assertEquals(ord.getUser_id(),user_id);
 			orderDAO.deleteOpenOrderInDatabase(ord.getOrder_id());
-		}
-		
-		
+		}	
+		System.out.println("Test Completed: Get all processed order.");	
 	}
 	
 	@Test
 	public void testGetAllSoldOrders() throws Exception{
-		System.out.println("start testGetAllSoldOrders");
+		System.out.println("\n Start testGetAllSoldOrders");
 		orderDAO = new OrderDAO();
 		List <Order> soldList = orderDAO.getAllSoldOrderInDatabase();
 		
+		System.out.println("\n Start testGetAllSoldOrders");
 		for(Order ord : soldList){
 			assertEquals(ord.getStatus(), "completed");
 			System.out.println(ord.getOrder_id());
 		}
+		System.out.println("Test Completed: Get all sold orders.");	
 		
 	}
 	
