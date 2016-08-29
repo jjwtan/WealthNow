@@ -17,6 +17,7 @@ public class PortfolioDAO extends DBUtil {
 	public List getStockHoldingInDataBase(Integer user_id) throws Exception {
 
 		Connection connect = getConnection();
+		
 		System.out.println("Connected to DB");
 		
 		PreparedStatement ps = connect.prepareStatement("SELECT STOCKHOLDING_ID, USER_ID,ORDER_ID, STOCK_SYMBOL,REMAINING_QUANTITY,PURCHASE_PRICE FROM "
@@ -57,6 +58,7 @@ public class PortfolioDAO extends DBUtil {
 		
 		System.out.println(sql);
 		 Connection connect = getConnection();
+		 
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
 		 System.out.println("Executing SQL Queries");
@@ -78,22 +80,16 @@ public class PortfolioDAO extends DBUtil {
 		+ sold_quantity + " WHERE order_id=" + order_id ;
 		
 		System.out.println(sql);
-//	Connection connect = getConnection();
-//		System.out.println("Connected to DB");
-//		
-//		PreparedStatement ps = connect.prepareStatement(sql);
-//		System.out.println("executing sql");
-////		ResultSet rs = ps.executeQuery(sql);
-//		ps.executeUpdate();
-//		 System.out.println("SQL executed");
 		
 		Connection connect = getConnection();
+		connect.setAutoCommit(true);
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
 		 System.out.println("Executing SQL Queries");
-//		 ResultSet rs =  ps.executeQuery();
+
 		 ps.executeUpdate();
 		
+		 connect.commit();
 		 connect.close();
 		 }
 

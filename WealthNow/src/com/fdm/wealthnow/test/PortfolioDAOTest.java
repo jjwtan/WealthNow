@@ -40,11 +40,6 @@ public class PortfolioDAOTest extends DBUtil{
 			assertEquals(newListTest.getUser_id(), new Integer(1));
 
 		}
-		// portfolioDAO.createStockHoldingInDatabase(new Integer(2), new
-		// Integer(300),"MCDS", new Integer(20),
-		// new Integer(500), new Double(5.99), "08 May 2009");
-
-		// newTestList.add(portfolioDAO1);
 
 		System.out.println("Test Completed: Created Data in database.");
 	}
@@ -54,7 +49,7 @@ public class PortfolioDAOTest extends DBUtil{
 
 		PortfolioDAO portfolioDAO = new PortfolioDAO();
 		
-		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(82), "5FINGERS", new Integer(500),
+		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(82), "7FINGERS", new Integer(500),
 				new Integer(500), new Double(55.50), "20 Sep 2001");
 		
 		
