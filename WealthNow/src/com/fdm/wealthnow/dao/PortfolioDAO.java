@@ -66,7 +66,7 @@ public class PortfolioDAO extends DBUtil {
 		 System.out.println("Data has been inserted");
 		 
 		
-		 connect.close();
+		connect.close();
 		 System.out.println("Connection Closed");
 	}
 
@@ -74,26 +74,27 @@ public class PortfolioDAO extends DBUtil {
 		
 
 		
-		String sql = "UPDATE STOCKHOLDING sh" 
-					+ "SET sh.REMAINING_QUANTITY = sh.REMAINING_QUANTITY -" + sold_quantity 
-				+ "WHERE sh.order_id=" +order_id + "";
+		String sql = "UPDATE STOCKHOLDING SET REMAINING_QUANTITY = REMAINING_QUANTITY - " 
+		+ sold_quantity + " WHERE order_id=" + order_id ;
 		
+		System.out.println(sql);
+//	Connection connect = getConnection();
+//		System.out.println("Connected to DB");
+//		
+//		PreparedStatement ps = connect.prepareStatement(sql);
+//		System.out.println("executing sql");
+////		ResultSet rs = ps.executeQuery(sql);
+//		ps.executeUpdate();
+//		 System.out.println("SQL executed");
 		
 		Connection connect = getConnection();
-		System.out.println("Connected to DB");
+		 System.out.println("Connected to DB");
+		 PreparedStatement ps = connect.prepareStatement(sql);
+		 System.out.println("Executing SQL Queries");
+//		 ResultSet rs =  ps.executeQuery();
+		 ps.executeUpdate();
 		
-		PreparedStatement ps = connect.prepareStatement(sql);
-		 ResultSet rs =  ps.executeQuery();
-		 System.out.println("SQL executed");
-		 
 		 connect.close();
 		 }
-		
-		 
-		 
-		 
-		
-
-	
 
 }
