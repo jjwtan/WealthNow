@@ -98,11 +98,11 @@ public class OrderDAO extends DBUtil {
 	public List getListOfOpenOrder(Integer count) throws Exception {
 		List<Order> OpenOrderList = new ArrayList<Order>();
 
-		String SQL = "SELECT * FROM OPENORDER LIMIT ?";
+		String SQL = "SELECT * FROM OPENORDER WHERE ROWNUM <= ?";
 		Connection connect = getConnection();
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, count);
-
+		
 		ResultSet result = ps.executeQuery();
 		System.out.println("The SQL statement below has been executed\n" + SQL);
 
@@ -127,15 +127,16 @@ public class OrderDAO extends DBUtil {
 	}
 
 	public void createOpenOrderInDatabase(Integer user_id, Integer order_id, String currency_code, String order_type,
-			Integer quantity, String stock_symbol, String price_type, Date opening_order_date, Float limit_price,
+			Integer quantity, String stock_symbol, String price_type, String opening_order_date, Double limit_price,
 			String term, String status) throws Exception {
 
 		String SQL = "INSERT INTO OPENORDER (order_id, user_id, currency_code, "
 				+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price, term) "
-				+ "VALUES("+ getSequenceID("order_id_seq")+", '" + user_id + "','" + order_id + "','" + currency_code + "','" + order_type + "',"
+				+ "VALUES("+ getSequenceID("order_id_seq")+", " + user_id + ",'" + currency_code + "','" + order_type + "',"
 				+ quantity + ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price
-				+ ",'" + term + ")";
+				+ ",'" + term + "')";
 		Connection connect = getConnection();
+		System.out.println(SQL);
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.executeUpdate();
 		System.out.println("The SQL statement below has been executed\n" + SQL);
