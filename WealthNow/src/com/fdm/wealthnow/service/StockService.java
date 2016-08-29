@@ -46,7 +46,7 @@ public class StockService {
 			sb.append("&f=nab");
 			break;
 		case FULL:
-			sb.append("&f=nabpod1d2c1p2");
+			sb.append("&f=nabpod1c1p2");
 			break;
 		default:
 			break;
@@ -109,9 +109,9 @@ public class StockService {
 										Float.parseFloat(st.nextToken()),
 										Float.parseFloat(st.nextToken()), 
 										Float.parseFloat(st.nextToken()),
-										getDate(st.nextToken()),
+										getDate(st.nextToken().replace("\"", "")),
 										new Date(),
-										st.nextToken().replace("\"", ""),
+										st.nextToken(),
 										st.nextToken().replace("\"", ""));
 				counter++;
 				stockList.add(stock);
@@ -124,7 +124,8 @@ public class StockService {
 	}
 
 	private Date getDate(String nextToken) {
-		DateFormat format = new SimpleDateFormat("dd/mm/yyyy", Locale.ENGLISH);
+		System.out.println(nextToken);
+		DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 		Date date = null;
 		try {
 			date = format.parse(nextToken);

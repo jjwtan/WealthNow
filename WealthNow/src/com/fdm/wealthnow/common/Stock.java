@@ -26,6 +26,12 @@ public class Stock {
 		this.stockSymbol = stockSymbol;
 		this.company = company;
 		this.mktPrice = (ask+bid)/2;
+		this.open = open;
+		this.close = close;
+		this.lastTradeDate = lastTradeDate;
+		this.tradeDate = tradeDate;
+		this.daysValueChange = daysValueChange;
+		this.percentChange = percentChange;
 	}
 
 	public String getStockSymbol() {
