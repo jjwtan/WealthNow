@@ -11,6 +11,7 @@ import java.util.List;
 import com.fdm.wealthnow.common.StockHolding;
 
 public class PortfolioDAO extends BaseDAO {
+	///header
 
 	public List getStockHoldingInDataBase(Integer user_id) throws Exception {
 
@@ -22,6 +23,8 @@ public class PortfolioDAO extends BaseDAO {
 		
 		System.out.println("Executing SQL Queries");
 		ResultSet rs = ps.executeQuery();
+		
+		
 
 		List<StockHolding> stockHoldingList = new ArrayList();
 
