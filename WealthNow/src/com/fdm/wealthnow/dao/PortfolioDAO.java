@@ -9,8 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.fdm.wealthnow.common.StockHolding;
+import com.fdm.wealthnow.util.DBUtil;
 
-public class PortfolioDAO extends BaseDAO {
+public class PortfolioDAO extends DBUtil {
 	///header
 
 	public List getStockHoldingInDataBase(Integer user_id) throws Exception {
@@ -18,22 +19,24 @@ public class PortfolioDAO extends BaseDAO {
 		Connection connect = getConnection();
 		System.out.println("Connected to DB");
 		
-		PreparedStatement ps = connect.prepareStatement("SELECT STOCK_SYMBOL,REMAINING_QUANTITY,PURCHASE_PRICE FROM "
-				+ "STOCKHOLDING WHERE USER_ID=" + user_id + "");
+		PreparedStatement ps = connect.prepareStatement("SELECT STOCKHOLDING_ID, USER_ID,ORDER_ID, STOCK_SYMBOL,REMAINING_QUANTITY,PURCHASE_PRICE FROM "
+				+ "STOCKHOLDING WHERE USER_ID=" + user_id );
 		
 		System.out.println("Executing SQL Queries");
 		ResultSet rs = ps.executeQuery();
 		
 		
-
 		List<StockHolding> stockHoldingList = new ArrayList();
 
 		while (rs.next()) {
+			int stockHoldingID = rs.getInt("StockHOLDING_ID");
+			int userID= rs.getInt("USER_ID");
+			int orderID= rs.getInt("ORDER_ID");
 			String stockSymbol = rs.getString("Stock_Symbol");
 			int qty = rs.getInt("Remaining_Quantity");
-			float price = rs.getFloat("Purchase_Price");
+			Double price = rs.getDouble("Purchase_Price");
 			System.out.println(stockSymbol + qty + price);
-			StockHolding sh = new StockHolding(stockSymbol, qty, price);
+			StockHolding sh = new StockHolding(stockHoldingID,userID,orderID,stockSymbol, qty, price);
 			stockHoldingList.add(sh);
 			System.out.println("new stock has been added");
 		}
@@ -45,17 +48,20 @@ public class PortfolioDAO extends BaseDAO {
 	}
 
 	public void createStockHoldingInDatabase(Integer user_id,Integer order_id,
-	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,Date purchase_date) throws Exception{
-		String sql = "INSERT INTO STOCKHOLDING(USER_ID ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
-				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES(" + user_id + "," + order_id + ", '"
-				+ stock_symbol + "' ," + purchase_quantity + "," + remaining_quantity + "," + purchase_price + ", '" + purchase_date +"')";
+	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,String purchase_date) throws Exception{
+		String sql = "INSERT INTO STOCKHOLDING(STOCKHOLDING_ID,USER_ID, ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
+				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES("+ getSequenceID("STOCKHOLDINGS_PK_SEQ") +", "
+				+ user_id + " , " + order_id + " , '"
+				+ stock_symbol + "' ," + purchase_quantity + "," + remaining_quantity + "," + purchase_price + ", '"
+				+ purchase_date +"')";
 		
-		
+		System.out.println(sql);
 		 Connection connect = getConnection();
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
 		 System.out.println("Executing SQL Queries");
-		 ResultSet rs =  ps.executeQuery();
+//		 ResultSet rs =  ps.executeQuery();
+		 ps.executeUpdate();
 		 
 		 System.out.println("Data has been inserted");
 		 
