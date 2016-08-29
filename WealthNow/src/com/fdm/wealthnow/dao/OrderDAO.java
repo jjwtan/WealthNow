@@ -10,11 +10,57 @@ import com.fdm.wealthnow.common.Order;
 import com.fdm.wealthnow.util.DBUtil;
 
 public class OrderDAO extends DBUtil {
-	
-	public Integer getOrder(Integer order_id) throws Exception{
+
+	public Order getOrderFromOpenOrder(Integer order_id) throws Exception {
 		Connection connect = getConnection();
-		
-		return new Integer(1);
+		String SQL = "SELECT * FROM OPENORDER WHERE ORDER_ID ='?'";
+		PreparedStatement ps = connect.prepareStatement(SQL);
+		ps.setInt(1, order_id);
+
+		ResultSet result = ps.executeQuery();
+		Order order = null;
+		while (result.next()) {
+			Integer user_id = result.getInt("user_id");
+			String currency_code = result.getString("currency_code");
+			String order_type = result.getString("order_type");
+			Integer quantity = result.getInt("quantity");
+			String stock_symbol = result.getString("stock_symbol");
+			String price_type = result.getString("price_type");
+			Date opening_order_date = result.getDate("opening_order_date");
+			Float limit_price = result.getFloat("limit_price");
+			String term = result.getString("term");
+			String status = "OpenOrder";
+			order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
+					opening_order_date, limit_price, term, status);
+		}
+
+		return order;
+	}
+
+	public Order getOrderFromProcessedOrder(Integer order_id) throws Exception {
+		Connection connect = getConnection();
+		String SQL = "SELECT * FROM OPENORDER WHERE ORDER_ID ='?'";
+		PreparedStatement ps = connect.prepareStatement(SQL);
+		ps.setInt(1, order_id);
+
+		ResultSet result = ps.executeQuery();
+		Order order = null;
+		while (result.next()) {
+			Integer user_id = result.getInt("user_id");
+			String currency_code = result.getString("currency_code");
+			String order_type = result.getString("order_type");
+			Integer quantity = result.getInt("quantity");
+			String stock_symbol = result.getString("stock_symbol");
+			String price_type = result.getString("price_type");
+			Date opening_order_date = result.getDate("opening_order_date");
+			Float limit_price = result.getFloat("limit_price");
+			String term = result.getString("term");
+			String status = "OpenOrder";
+			order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
+					opening_order_date, limit_price, term, status);
+		}
+
+		return order;
 	}
 
 	public List getAllProcessedOrderFromUser(Integer user_id) throws Exception {
@@ -84,9 +130,9 @@ public class OrderDAO extends DBUtil {
 		String SQL = "INSERT INTO PROCESSEDORDER (order_id, user_id, currency_code, "
 				+ "order_type, quantity, stock_symbol, "
 				+ "price_type, status ,place_order_date, limit_price, order_completion_date, closing_price) "
-				+ "VALUES("+ getSequenceID("order_id_seq")+", '" + user_id + "','" + currency_code + "','" + order_type + "',"
-				+ quantity + ",'" + stock_symbol + "','" + price_type + "','" + status + "','" + opening_order_date
-				+ "'," + limit_price + "','" + order_completion_date + "'," + limit_price + ")";
+				+ "VALUES(" + getSequenceID("order_id_seq") + ", '" + user_id + "','" + currency_code + "','"
+				+ order_type + "'," + quantity + ",'" + stock_symbol + "','" + price_type + "','" + status + "','"
+				+ opening_order_date + "'," + limit_price + "','" + order_completion_date + "'," + limit_price + ")";
 
 		Connection connect = getConnection();
 		PreparedStatement ps = connect.prepareStatement(SQL);
@@ -102,7 +148,7 @@ public class OrderDAO extends DBUtil {
 		Connection connect = getConnection();
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, count);
-		
+
 		ResultSet result = ps.executeQuery();
 		System.out.println("The SQL statement below has been executed\n" + SQL);
 
@@ -132,9 +178,9 @@ public class OrderDAO extends DBUtil {
 
 		String SQL = "INSERT INTO OPENORDER (order_id, user_id, currency_code, "
 				+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price, term) "
-				+ "VALUES("+ getSequenceID("order_id_seq")+", " + user_id + ",'" + currency_code + "','" + order_type + "',"
-				+ quantity + ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price
-				+ ",'" + term + "')";
+				+ "VALUES(" + getSequenceID("order_id_seq") + ", " + user_id + ",'" + currency_code + "','" + order_type
+				+ "'," + quantity + ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "',"
+				+ limit_price + ",'" + term + "')";
 		Connection connect = getConnection();
 		System.out.println(SQL);
 		PreparedStatement ps = connect.prepareStatement(SQL);
@@ -144,7 +190,7 @@ public class OrderDAO extends DBUtil {
 	}
 
 	public boolean deleteOpenOrderInDatabase(Integer order_id) throws Exception {
-		
+
 		Connection connect = getConnection();
 		connect.setAutoCommit(false);
 		String SQL = "DELETE FROM OPENORDER WHERE ORDER_ID =?";
