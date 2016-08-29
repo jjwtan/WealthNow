@@ -10,6 +10,7 @@ public class User {
 	String lastName;
 	Date birthday;
 	String email;
+	String address;
 	String phoneNumber;
 	String maidenName;
 	int failedLoginCount;
@@ -30,7 +31,7 @@ public class User {
 	
 	
 	public User(int userId, String username, String firstName, String lastName, Date birthday, String email,
-			String phoneNumber) {
+			String phoneNumber, String address) {
 		this.userId = userId;
 		this.username = username;
 		this.firstName = firstName;
@@ -38,6 +39,7 @@ public class User {
 		this.birthday = birthday;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.address = address;
 	}
 
 
@@ -109,6 +111,18 @@ public class User {
 		this.answerList = answerList;
 	}
 	
+	
+	
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

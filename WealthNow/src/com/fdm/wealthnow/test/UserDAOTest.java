@@ -36,12 +36,29 @@ public class UserDAOTest {
 	}
 	
 	@Test
-	public void testSingleUser() {
+	public void testSingleBasicUser() {
 		try {
-			User user = userDAO.getUser(1, InfoType.BASIC);
+			User user = userDAO.getUser(1, InfoType.FULL);
 			
 			
 			System.out.println(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testSingleFullUser() {
+		try {
+			User user = userDAO.getUser(2, InfoType.FULL);
+			
+			System.out.println("User:   \t" + user.getUsername() + "\n"
+					  +"Name:   \t" + user.getFirstName() + " " + user.getLastName() + "\n"
+					  +"Email:   \t" + user.getEmail() + "\n"
+					  +"Address:\t" + user.getAddress() + "\n"
+					  +"Phone:   \t" + user.getPhoneNumber() + "\n"
+					  +"Birthday:\t" + user.getBirthday());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
