@@ -5,36 +5,53 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.apache.jasper.tagplugins.jstl.core.Catch;
 
+import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Stock;
 
 public class StockService {
 	static List<String> rawStockList;
 	static List<Stock> requestStock;
 
-	public List<Stock> getStocksFromExchange(List<Stock> stocks) {
+	public List<Stock> getStocksFromExchange(List<Stock> stocks, InfoType type) {
 		this.requestStock = stocks;
 		rawStockList  = new ArrayList<>();
 		
-		String url = generateRequestURL(stocks);
+		String url = generateRequestURL(stocks, type);
 		getFromExhange(url);
 		
-		return createListStockObj(rawStockList);
+		return createListStockObj(rawStockList, type);
 
 	}
 
-	public String generateRequestURL(List<Stock> stocks) {
+	public String generateRequestURL(List<Stock> stocks, InfoType type) {
 		StringBuilder sb = new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
 		for(Stock stock : stocks) {
 			sb.append(stock.getStockSymbol()).append(".SI").append("+");
 		}
 		sb.deleteCharAt(sb.length()-1);
-		sb.append("&f=nab");
+		
+		switch (type) {
+		case BASIC:
+			sb.append("&f=nab");
+			break;
+		case FULL:
+			sb.append("&f=nabpod1d2c1p2");
+			break;
+		default:
+			break;
+		}
+		
 		return sb.toString();
 	}
 
@@ -61,18 +78,61 @@ public class StockService {
 
 	}
 	
+	public List<String> getRawData() {
+		return rawStockList;
+	}
 	
-	private List<Stock> createListStockObj(List<String> stocksFromEx) {
+	
+	private List<Stock> createListStockObj(List<String> stocksFromEx, InfoType type) {
 		StringTokenizer st;
 		List<Stock> stockList = new ArrayList<>();
 		int counter = 0;
-		for (String item: stocksFromEx) {
-			st = new StringTokenizer(item, ",");
-			Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), st.nextToken().replace("\"", ""), Float.parseFloat(st.nextToken()), Float.parseFloat(st.nextToken()));
-			counter++;
-			stockList.add(stock);
+		
+		switch (type) {
+		case BASIC:
+			counter = 0;
+			for (String item: stocksFromEx) {
+				st = new StringTokenizer(item, ",");
+				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), st.nextToken().replace("\"", ""), Float.parseFloat(st.nextToken()), Float.parseFloat(st.nextToken()));
+				counter++;
+				stockList.add(stock);
+			}
+			return stockList;
+			
+		case FULL:
+			counter = 0;
+			for (String item: stocksFromEx) {
+				st = new StringTokenizer(item, ",");
+				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), 
+										st.nextToken().replace("\"", ""), 
+										Float.parseFloat(st.nextToken()), 
+										Float.parseFloat(st.nextToken()),
+										Float.parseFloat(st.nextToken()), 
+										Float.parseFloat(st.nextToken()),
+										getDate(st.nextToken()),
+										new Date(),
+										st.nextToken().replace("\"", ""),
+										st.nextToken().replace("\"", ""));
+				counter++;
+				stockList.add(stock);
+			}
+			return stockList;
+		default:
+			return null;
 		}
-		return stockList;
+		
+	}
+
+	private Date getDate(String nextToken) {
+		DateFormat format = new SimpleDateFormat("dd/mm/yyyy", Locale.ENGLISH);
+		Date date = null;
+		try {
+			date = format.parse(nextToken);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
 	}
 
 	// printStockList();
