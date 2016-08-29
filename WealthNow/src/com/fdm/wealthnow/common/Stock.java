@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Stock {
 	String stockSymbol, company;
-	Float ask, bid, change;
+	Float mktPrice, change, open, close;
 	String percentChange;
-	Float daysValueChange;
+	String daysValueChange;
 	Date lastTradeDate, tradeDate, tradeTime, modifiedDate;
 	
 	public Stock() {
@@ -19,8 +19,13 @@ public class Stock {
 	public Stock(String stockSymbol, String company, float ask, float bid) {
 		this.stockSymbol = stockSymbol;
 		this.company = company;
-		this.ask = ask;
-		this.bid = bid;
+		this.mktPrice = (ask+bid)/2;
+	}
+	public Stock(String stockSymbol, String company, float ask, float bid, float open, float close, 
+				 Date lastTradeDate, Date tradeDate, String daysValueChange, String percentChange) {
+		this.stockSymbol = stockSymbol;
+		this.company = company;
+		this.mktPrice = (ask+bid)/2;
 	}
 
 	public String getStockSymbol() {
@@ -35,18 +40,31 @@ public class Stock {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	public Float getAsk() {
-		return ask;
+	
+	public Float getMktPrice() {
+		return mktPrice;
 	}
-	public void setAsk(Float ask) {
-		this.ask = ask;
+
+	public void setMktPrice(Float mktPrice) {
+		this.mktPrice = mktPrice;
 	}
-	public Float getBid() {
-		return bid;
+
+	public Float getOpen() {
+		return open;
 	}
-	public void setBid(Float bid) {
-		this.bid = bid;
+
+	public void setOpen(Float open) {
+		this.open = open;
 	}
+
+	public Float getClose() {
+		return close;
+	}
+
+	public void setClose(Float close) {
+		this.close = close;
+	}
+
 	public Float getChange() {
 		return change;
 	}
@@ -59,10 +77,10 @@ public class Stock {
 	public void setPercentChange(String percentChange) {
 		this.percentChange = percentChange;
 	}
-	public Float getDaysValueChange() {
+	public String getDaysValueChange() {
 		return daysValueChange;
 	}
-	public void setDaysValueChange(Float daysValueChange) {
+	public void setDaysValueChange(String daysValueChange) {
 		this.daysValueChange = daysValueChange;
 	}
 	public Date getLastTradeDate() {
@@ -93,8 +111,7 @@ public class Stock {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		float price = ask+bid/2.0f;
-		return "Stock:" + stockSymbol + "\tCompany: " + company + " $" + price;
+		return "Stock:" + stockSymbol + "\tCompany: " + company + " $" + mktPrice;
 	}
 
 }
