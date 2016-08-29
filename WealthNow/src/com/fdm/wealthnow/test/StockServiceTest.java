@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.service.StockService;
 
@@ -20,16 +21,45 @@ public class StockServiceTest {
 		stockList.add(new Stock("Z74"));
 	}
 
-	@Test
-	public void testURL() {
-		String url = stockService.generateRequestURL(stockList);
+	//@Test
+	public void testBasicURL() {
+		String url = stockService.generateRequestURL(stockList, InfoType.BASIC);
 		System.out.println(url);
 	}
 	
-	@Test
-	public void testStock() {
+	//@Test
+	public void testBasicStock() {
 		stockService = new StockService();
-		List<Stock> stocks = stockService.getStocksFromExchange(stockList);
+		List<Stock> stocks = stockService.getStocksFromExchange(stockList, InfoType.BASIC);
+		for(Stock stock: stocks) {
+			System.out.println(stock);
+		}
+	}
+	
+	@Test
+	public void testFullURL() {
+		String url = stockService.generateRequestURL(stockList, InfoType.FULL);
+		System.out.println(url);
+		showFullRawData();
+		
+	}
+	
+	public void showFullRawData() {
+		List<Stock> stocks = stockService.getStocksFromExchange(stockList, InfoType.FULL);
+		List<String> list = stockService.getRawData();
+		for (String item: list) {
+			System.out.println(item);
+		}
+		
+		for(Stock stock: stocks) {
+			System.out.println(stock.getMktPrice() + " " + stock.getPercentChange());
+		}
+	}
+	
+	//@Test
+	public void testFullStock() {
+		stockService = new StockService();
+		List<Stock> stocks = stockService.getStocksFromExchange(stockList, InfoType.FULL);
 		for(Stock stock: stocks) {
 			System.out.println(stock);
 		}
