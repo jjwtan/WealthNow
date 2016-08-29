@@ -172,7 +172,7 @@ public class OrderDAO extends DBUtil {
 		return OpenOrderList;
 	}
 
-	public void createOpenOrderInDatabase(Integer user_id, Integer order_id, String currency_code, String order_type,
+	public void createOpenOrderInDatabase(Integer user_id, String currency_code, String order_type,
 			Integer quantity, String stock_symbol, String price_type, String opening_order_date, Double limit_price,
 			String term, String status) throws Exception {
 
@@ -182,24 +182,32 @@ public class OrderDAO extends DBUtil {
 				+ "'," + quantity + ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "',"
 				+ limit_price + ",'" + term + "')";
 		Connection connect = getConnection();
-		System.out.println(SQL);
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.executeUpdate();
 		System.out.println("The SQL statement below has been executed\n" + SQL);
 
 	}
 
-	public boolean deleteOpenOrderInDatabase(Integer order_id) throws Exception {
-
-		Connection connect = getConnection();
-		connect.setAutoCommit(false);
+	public boolean deleteOpenOrderInDatabase(Integer order_id) {
+		boolean success = false;
+		Connection connect;
 		String SQL = "DELETE FROM OPENORDER WHERE ORDER_ID =?";
-		PreparedStatement ps = connect.prepareStatement(SQL);
-		ps.setInt(1, order_id);
-		ps.executeUpdate();
-		connect.commit();
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			PreparedStatement ps = connect.prepareStatement(SQL);
+			ps.setInt(1, order_id);
+			ps.executeUpdate();
+			connect.commit();
+			success = true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			success = false;
+		}
+		
 		System.out.println("The SQL statement below has been executed\n" + SQL);
-		return true;
+		return success;
 	}
 
 }
