@@ -22,9 +22,9 @@ public void setup(){
 public void testCreatedDataInDatabase() throws Exception{
 
 orderDAO = new OrderDAO();
-orderDAO.createOpenOrderInDatabase(new Integer(1), new Integer(100), "SGD", "BUY", new Integer(100), "AAPL", "Market", new Date("04/05/2016"), new Float(0f), "NA", "Open");
-orderDAO.createOpenOrderInDatabase(new Integer(2), new Integer(101), "SGD", "SELL", new Integer(100), "GOOG", "Limit", new Date("05/05/2016"), new Float(88f), "Good Till Cancelled", "Open");
-orderDAO.createOpenOrderInDatabase(new Integer(3), new Integer(102), "SGD", "BUY", new Integer(100), "AMZN", "Market", new Date("06/05/2016"), new Float(0f), "NA", "Open");
+orderDAO.createOpenOrderInDatabase(new Integer(1), new Integer(100), "SGD", "B", new Integer(100), "AAPL", "M", "11 Sep 2011", new Double(88.9), "GC", "Open");
+orderDAO.createOpenOrderInDatabase(new Integer(2), new Integer(101), "SGD", "B", new Integer(100), "GOOG", "LT", "05/05/2016", new Double(76.2), "GC", "Open");
+orderDAO.createOpenOrderInDatabase(new Integer(3), new Integer(102), "SGD", "B", new Integer(100), "AMZN", "M", "06/05/2016", new Double(90.1), "GD", "Open");
 
 List<Order> TestList = orderDAO.getListOfOpenOrder(3);
 Integer testcount = TestList.size();
