@@ -3,7 +3,7 @@ package com.fdm.wealthnow.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
