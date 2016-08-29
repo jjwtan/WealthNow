@@ -45,7 +45,7 @@ public class PortfolioDAO extends BaseDAO {
 	}
 
 	public void createStockHoldingInDatabase(Integer user_id,Integer order_id,
-	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Float purchase_price,Date purchase_date) throws Exception{
+	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,Date purchase_date) throws Exception{
 		String sql = "INSERT INTO STOCKHOLDING(USER_ID ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
 				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES(" + user_id + "," + order_id + ", '"
 				+ stock_symbol + "' ," + purchase_quantity + "," + remaining_quantity + "," + purchase_price + ", '" + purchase_date +"')";
