@@ -20,17 +20,17 @@ import com.fdm.wealthnow.common.UserAuth;
 import com.fdm.wealthnow.dao.AuthDAO;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class LoginController
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/LoginController")
+public class LoginController extends HttpServlet {
 	private static final int SESSION_TIMEOUT_IN_MINS = 30 * 60;
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoginServlet() {
+	public LoginController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
