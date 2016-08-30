@@ -21,7 +21,7 @@ public class User {
 		
 	}
 	
-	
+	// key info
 	public User(int userId, String username, String firstName, String lastName) {
 		this.userId = userId;
 		this.username = username;
@@ -29,7 +29,7 @@ public class User {
 		this.lastName = lastName;
 	}
 	
-	
+	// all info
 	public User(int userId, String username, String firstName, String lastName, Date birthday, String email,
 			String phoneNumber, String address) {
 		this.userId = userId;
@@ -41,7 +41,20 @@ public class User {
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 	}
-
+	
+	// used for user updating
+	public User(int userId, String username, String firstName, String lastName, Date birthday, String email,
+			String phoneNumber, String address, String maidenName) {
+		this.userId = userId;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthday = birthday;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.maidenName = maidenName;
+	}
 
 	public int getUserId() {
 		return userId;
