@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,7 +30,7 @@ public class AuthDAOTest {
 
 	private void createUser() {
 		try {
-			PreparedStatement ps = connect.prepareStatement("Insert into user1(user_id, user_name, user_password, first_name, birthday, email, address, phone_num, maiden_name) values(?,?,?,?,?,?,?,?,?)");
+			PreparedStatement ps = connect.prepareStatement("Insert into user1(user_id, user_name, user_password, first_name, birthday, email, address, phone_num, maiden_name, fail_login_count, last_failedlogin) values(?,?,?,?,?,?,?,?,?,?,  to_date(? , 'dd-MM-yyyy hh:mi'))");
 			ps.setInt	(1, 12);
 			ps.setString(2, "biscuit");
 			ps.setString(3, "secret");
@@ -37,10 +40,11 @@ public class AuthDAOTest {
 			ps.setString(7, "Candy Road 91");
 			ps.setInt	(8, 654568741);
 			ps.setString(9, "Cookie");
+			ps.setInt	(10, 3);
+			ps.setString(11, "15-sep-2016 10:45");
 
-		
+
 			ps.executeUpdate();
-			System.out.println("query executed");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,10 +52,11 @@ public class AuthDAOTest {
 		
 	}
 
-	@Test
-	public void test() {
+	//@Test
+	public void testPasswordChecking() {
 		try {
-			System.out.println(AuthDAO.checkPassword(connect, "biscuit", "secret"));
+			assertTrue(AuthDAO.checkPassword(connect, "biscuit", "secret"));
+			assertFalse(AuthDAO.checkPassword(connect, "biscuit", "secret2"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,10 +70,51 @@ public class AuthDAOTest {
 		}
 	}
 	
+	//@Test
+	public void testFailCount() {
+		try {
+			assertEquals(3, AuthDAO.getFailedCount(connect, "biscuit"));
+			AuthDAO.incrementFailCount(connect, "biscuit");
+			assertEquals(4, AuthDAO.getFailedCount(connect, "biscuit"));
+			AuthDAO.resetLastFailedCountAndTime(connect, "biscuit");
+			assertEquals(0, AuthDAO.getFailedCount(connect, "biscuit"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testDateTime() {
+		Date date;
+		try {
+			date = AuthDAO.getLastFailedTime(connect, "biscuit");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+			System.out.println("Date: " +  sdf.format(date));
+			assertEquals("15/09/2016 10:45 AM", sdf.format(date));
+			
+			AuthDAO.resetLastFailedCountAndTime(connect, "biscuit");
+			date = AuthDAO.getLastFailedTime(connect, "biscuit");
+			assertNull(date);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+	}
+	
 	@After
 	public void tearDown() {
 		try {
 			connect.rollback();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
