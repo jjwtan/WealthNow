@@ -12,14 +12,18 @@ import com.fdm.wealthnow.util.DBUtil;
 public class AuthDAO extends DBUtil{
 	private static final String USER_TABLE = "user1";
 	
-	public static UserAuth authenticate(String username, String password) throws Exception {
-		Connection connect = getConnection();
+	public static UserAuth authenticate(Connection connect, String username, String password) throws Exception {
 		
 		int failCount = getFailedCount(connect, username);
 		if (failCount == -1 ) {
 			System.out.println("username does not exist");
 		} else if(failCount <= 5 ) {
-			checkPassword(connect, username, password);
+			if(checkPassword(connect, username, password)) {
+				return new UserAuth(true);
+			} else {
+				incrementFailCount(connect, username);
+				return new UserAuth(false);
+			}
 		} else {
 			System.out.println("max attempt reached");
 		}
