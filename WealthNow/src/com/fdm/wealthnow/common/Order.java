@@ -12,12 +12,12 @@ public class Order {
 	String stock_symbol;
 	String price_type;
 	Date place_order_date;
-	Float limit_price;
+	Double limit_price;
 	String term;
 	Date order_completion_date;
 	String status;
-	Float closing_price;
-	Float open_market_price;
+	Double closing_price;
+	Double open_market_price;
 
 	/*
 	 * Order constructor is to be called to create an OpenOrder
