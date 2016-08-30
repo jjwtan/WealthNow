@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fdm.wealthnow.common.UserAuth;
 import com.fdm.wealthnow.dao.AuthDAO;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
@@ -52,7 +53,7 @@ public class AuthDAOTest {
 		
 	}
 
-	//@Test
+	@Test
 	public void testPasswordChecking() {
 		try {
 			assertTrue(AuthDAO.checkPassword(connect, "biscuit", "secret"));
@@ -70,7 +71,7 @@ public class AuthDAOTest {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void testFailCount() {
 		try {
 			assertEquals(3, AuthDAO.getFailedCount(connect, "biscuit"));
@@ -102,6 +103,21 @@ public class AuthDAOTest {
 			e.printStackTrace();
 		}
 				
+	}
+	
+	
+	@Test
+	public void testAuthenticate() {
+		try {
+			UserAuth userAuth = AuthDAO.authenticate(connect, "biscuit", "secret");
+			assertTrue(userAuth.isAuthenticationSuccess());
+			
+			userAuth = AuthDAO.authenticate(connect, "biscuit", "houifdshuigk");
+			assertFalse(userAuth.isAuthenticationSuccess());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@After
