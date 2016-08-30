@@ -23,6 +23,18 @@ public class StockService {
 	static List<String> rawStockList;
 	static List<Stock> requestStock;
 
+	public Stock getStockFromExchange(String stockSymbol, InfoType type) {
+		List<Stock> wrapper = new ArrayList<>();
+		this.requestStock = wrapper;
+		rawStockList = new ArrayList<>();
+		
+		wrapper.add(new Stock(stockSymbol));
+		String url = generateRequestURL(wrapper, type);
+		getFromExhange(url);
+		
+		return createListStockObj(rawStockList, type).get(0);
+	}
+	
 	public List<Stock> getStocksFromExchange(List<Stock> stocks, InfoType type) {
 		this.requestStock = stocks;
 		rawStockList  = new ArrayList<>();
