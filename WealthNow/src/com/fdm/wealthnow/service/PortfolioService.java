@@ -30,8 +30,14 @@ public class PortfolioService extends DBUtil {
 		OrderDAO orderDao = new OrderDAO();
 		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase();
 		for(Order newListofSoldGainsAndLosses : listOfSoldGainsAndLosses){
-			
+			String symbolStock = newListofSoldGainsAndLosses.getStock_symbol();
+			Double openingPrice = newListofSoldGainsAndLosses.getLimit_price();
+			Double closingPrice = newListofSoldGainsAndLosses.getClosing_price();
+			Double netIncome = openingPrice - closingPrice;
+			System.out.println("Your net profit/loss for "+ symbolStock +":$" + netIncome);
 		}
+		
+		
 	}
 
 	/*
