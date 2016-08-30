@@ -14,9 +14,9 @@ import com.fdm.wealthnow.util.DBUtil;
 public class PortfolioDAO extends DBUtil {
 	///header
 
-	public List getStockHoldingInDataBase(Integer user_id) throws Exception {
+	public List getStockHoldingInDataBase(Integer user_id, Connection connect) throws Exception {
 
-		Connection connect = getConnection();
+		connect = getConnection();
 		
 		System.out.println("Connected to DB");
 		
@@ -49,7 +49,7 @@ public class PortfolioDAO extends DBUtil {
 		return stockHoldingList;
 	}
 
-	public void createStockHoldingInDatabase(Integer user_id,Integer order_id,
+	public void createStockHoldingInDatabase(Connection connect,Integer user_id,Integer order_id,
 	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,String purchase_date) throws Exception{
 		
 		Integer stochHolding_id = getSequenceID("stockholdings_pk_seq");
@@ -61,7 +61,7 @@ public class PortfolioDAO extends DBUtil {
 				+ purchase_date +"')";
 		
 		System.out.println(sql);
-		 Connection connect = getConnection();
+		 connect = getConnection();
 		 
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
@@ -76,14 +76,14 @@ public class PortfolioDAO extends DBUtil {
 		 System.out.println("Connection Closed");
 	}
 
-	public void updateStockHolding(Integer order_id, Integer sold_quantity) throws Exception {
+	public void updateStockHolding(Connection connect,Integer order_id, Integer sold_quantity) throws Exception {
 
 		String sql = "UPDATE STOCKHOLDING SET REMAINING_QUANTITY = REMAINING_QUANTITY - " 
 		+ sold_quantity + " WHERE order_id=" + order_id ;
 		
 		System.out.println(sql);
 		
-		Connection connect = getConnection();
+		connect = getConnection();
 		connect.setAutoCommit(true);
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
