@@ -59,6 +59,11 @@ public class Order {
 	}
 	
 
+	public Order(Integer user_id2, Integer order_id2, String currency_code2, String order_type2, Integer quantity2,
+			String stock_symbol2, String price_type2, Date opening_order_date, Double limit_price2, String term2,
+			Double closing_price2, String status2) {
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getUser_id() {
 		return user_id;
 	}
