@@ -17,7 +17,7 @@ public class OrderManagementService extends DBUtil {
 	 */
 	static Connection connect;
 
-	OrderManagementService() {
+	public OrderManagementService() {
 		try {
 			connect = getConnection();
 		} catch (Exception e) {
@@ -52,13 +52,10 @@ public class OrderManagementService extends DBUtil {
 		OrderDAO ord = new OrderDAO();
 		Order order = ord.getOrderFromOpenOrder(order_id, connect);
 		// format the date to string for create method
-		SimpleDateFormat format = new SimpleDateFormat("dd/MMM/yyy");
-		String place_order_date = format.format(order.getPlace_order_date());
-		String order_completed_date = format.format(order.getOrder_completion_date());
 		System.out.println("process order method running...");
 		ord.createProcessedOrderInDatabase(connect,order.getOrder_id(), order.getUser_id(), order.getCurrency_code(),
 				order.getOrder_type(), order.getQuantity(), order.getStock_symbol(), order.getPrice_type(),
-				place_order_date, order.getLimit_price(), order_completed_date, "completed", closing_price);
+				convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(), convertDateObjToString(order.getPlace_order_date()), "completed", closing_price);
 		System.out.println("created processed order in database - " + order.getOrder_id());
 		ord.deleteOpenOrderInDatabase(connect,order.getOrder_id());
 		System.out.println("deleted open order in database - " + order.getOrder_id());
@@ -106,9 +103,13 @@ public class OrderManagementService extends DBUtil {
 		return true;
 	}
 
-	public void createStockHoldings() {
+	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
 
 		PortfolioDAO pfdao = new PortfolioDAO();
+		OrderDAO ord = new OrderDAO();
+		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
+		pfdao.createStockHoldingInDatabase(connect, user_id, order_id, order.getStock_symbol(), 
+				order.getQuantity(), order.getQuantity(), order.getLimit_price(), convertDateObjToString(order.getPlace_order_date()));
 
 	}
 
