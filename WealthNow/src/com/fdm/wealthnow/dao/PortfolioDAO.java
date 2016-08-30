@@ -54,7 +54,7 @@ public class PortfolioDAO extends DBUtil {
 		
 		Integer order_id1 = getSequenceID("stockholdings_pk_seq");
 		
-		String sql = "INSERT INTO STOCKHOLDING(STOCKHOLDING_ID,USER_ID, ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
+		String sql = "INSERT INTO STOCKHOLDING("+order_id1 +",USER_ID, ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
 				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES("+ order_id1 +", "
 				+ user_id + " , " + order_id + " , '"
 				+ stock_symbol + "' ," + purchase_quantity + "," + remaining_quantity + "," + purchase_price + ", '"
