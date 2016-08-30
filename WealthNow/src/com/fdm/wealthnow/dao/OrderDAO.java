@@ -12,29 +12,36 @@ import com.fdm.wealthnow.util.DBUtil;
 
 public class OrderDAO extends DBUtil {
 
-	public Order getOrderFromOpenOrder(Integer order_id, Connection connect) throws Exception {
+	public Order getOrderFromOpenOrder(Integer order_id, Connection connect) {
 		
 		String SQL = "SELECT * FROM OPENORDER WHERE ORDER_ID =?";
-		PreparedStatement ps = connect.prepareStatement(SQL);
-		ps.setInt(1, order_id);
+		PreparedStatement ps;
+		try {
+			ps = connect.prepareStatement(SQL);
+			ps.setInt(1, order_id);
 
-		ResultSet result = ps.executeQuery();
-		Order order = null;
-		while (result.next()) {
-			Integer user_id = result.getInt("user_id");
-			String currency_code = result.getString("currency_code");
-			String order_type = result.getString("order_type");
-			Integer quantity = result.getInt("quantity");
-			String stock_symbol = result.getString("stock_symbol");
-			String price_type = result.getString("price_type");
-			Date opening_order_date = result.getDate("opening_order_date");
-			Double limit_price = result.getDouble("limit_price");
-			String term = result.getString("term");
-			String status = "OpenOrder";
-			order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
-					opening_order_date, limit_price, term, status);
+			ResultSet result = ps.executeQuery();
+			Order order = null;
+			while (result.next()) {
+				Integer user_id = result.getInt("user_id");
+				String currency_code = result.getString("currency_code");
+				String order_type = result.getString("order_type");
+				Integer quantity = result.getInt("quantity");
+				String stock_symbol = result.getString("stock_symbol");
+				String price_type = result.getString("price_type");
+				Date opening_order_date = result.getDate("opening_order_date");
+				Double limit_price = result.getDouble("limit_price");
+				String term = result.getString("term");
+				String status = "OpenOrder";
+				order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
+						opening_order_date, limit_price, term, status);
+			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		connect.close();
+		
 		return order;
 
 	}
@@ -155,34 +162,41 @@ public class OrderDAO extends DBUtil {
 
 	}
 
-	public List getListOfOpenOrder(Connection connect, Integer count) throws Exception {
+	public List getListOfOpenOrder(Connection connect, Integer count) {
 		List<Order> OpenOrderList = new ArrayList<Order>();
 
 		String SQL = "SELECT * FROM OPENORDER WHERE ROWNUM <= ?";
 		
-		PreparedStatement ps = connect.prepareStatement(SQL);
-		ps.setInt(1, count);
+		PreparedStatement ps;
+		try {
+			ps = connect.prepareStatement(SQL);
+			ps.setInt(1, count);
 
-		ResultSet result = ps.executeQuery();
-		System.out.println(SQL + "\nThe SQL statement above has been executed");
+			ResultSet result = ps.executeQuery();
+			System.out.println(SQL + "\nThe SQL statement above has been executed");
 
-		while (result.next()) {
-			Integer order_id = result.getInt("order_id");
-			Integer user_id = result.getInt("user_id");
-			String currency_code = result.getString("currency_code");
-			String order_type = result.getString("order_type");
-			Integer quantity = result.getInt("quantity");
-			String stock_symbol = result.getString("stock_symbol");
-			String price_type = result.getString("price_type");
-			Date opening_order_date = result.getDate("opening_order_date");
-			Double limit_price = result.getDouble("limit_price");
-			String term = result.getString("term");
-			String status = "OpenOrder";
-			Order order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
-					opening_order_date, limit_price, term, status);
-			OpenOrderList.add(order);
+			while (result.next()) {
+				Integer order_id = result.getInt("order_id");
+				Integer user_id = result.getInt("user_id");
+				String currency_code = result.getString("currency_code");
+				String order_type = result.getString("order_type");
+				Integer quantity = result.getInt("quantity");
+				String stock_symbol = result.getString("stock_symbol");
+				String price_type = result.getString("price_type");
+				Date opening_order_date = result.getDate("opening_order_date");
+				Double limit_price = result.getDouble("limit_price");
+				String term = result.getString("term");
+				String status = "OpenOrder";
+				Order order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
+						opening_order_date, limit_price, term, status);
+				OpenOrderList.add(order);
+			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		connect.close();
+		
 		return OpenOrderList;
 	}
 
