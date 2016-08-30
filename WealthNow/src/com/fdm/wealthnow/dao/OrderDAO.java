@@ -13,7 +13,7 @@ import com.fdm.wealthnow.util.DBUtil;
 public class OrderDAO extends DBUtil {
 
 	public Order getOrderFromOpenOrder(Integer order_id, Connection connect) throws Exception {
-		connect = getConnection();
+		
 		String SQL = "SELECT * FROM OPENORDER WHERE ORDER_ID =?";
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, order_id);
@@ -40,7 +40,7 @@ public class OrderDAO extends DBUtil {
 	}
 
 	public Order getOrderFromProcessedOrder(Connection connect, Integer order_id) throws Exception {
-		connect = getConnection();
+		
 		String SQL = "SELECT * FROM PROCESSEDORDER WHERE ORDER_ID =?";
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, order_id);
@@ -73,7 +73,7 @@ public class OrderDAO extends DBUtil {
 		List<Order> processedCompletedOrderfromUser = new ArrayList<Order>();
 
 		String SQL = "SELECT * FROM PROCESSEDORDER WHERE STATUS = 'completed' AND USER_ID = ?";
-		connect = getConnection();
+		
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, user_id);
 
@@ -106,7 +106,7 @@ public class OrderDAO extends DBUtil {
 		List<Order> AllSoldOrderInDatabase = new ArrayList<Order>();
 
 		String SQL = "SELECT * FROM PROCESSEDORDER WHERE STATUS = 'completed'";
-		connect = getConnection();
+		
 		PreparedStatement ps = connect.prepareStatement(SQL);
 
 		ResultSet result = ps.executeQuery();
@@ -146,7 +146,7 @@ public class OrderDAO extends DBUtil {
 				+ ",'" + stock_symbol + "','" + price_type + "','" + status + "','" + opening_order_date + "',"
 				+ limit_price + ",'" + order_completion_date + "'," + limit_price + ")";
 
-		connect = getConnection();
+		
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		System.out.println(SQL);
 		ps.executeUpdate();
@@ -159,7 +159,7 @@ public class OrderDAO extends DBUtil {
 		List<Order> OpenOrderList = new ArrayList<Order>();
 
 		String SQL = "SELECT * FROM OPENORDER WHERE ROWNUM <= ?";
-		connect = getConnection();
+		
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, count);
 
@@ -195,7 +195,7 @@ public class OrderDAO extends DBUtil {
 				+ "VALUES(" + order_id + ", " + user_id + ",'" + currency_code + "','" + order_type + "'," + quantity
 				+ ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price + ",'"
 				+ term + "')";
-		connect = getConnection();
+		
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		System.out.println("Before executing update..");
 		ps.executeUpdate();
@@ -208,7 +208,7 @@ public class OrderDAO extends DBUtil {
 		boolean success;
 		connect = null;
 		String SQL = "DELETE FROM OPENORDER WHERE ORDER_ID =?";
-		connect = getConnection();
+		
 		connect.setAutoCommit(false);
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, order_id);

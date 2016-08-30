@@ -16,7 +16,7 @@ public class PortfolioDAO extends DBUtil {
 
 	public List getStockHoldingInDataBase(Integer user_id, Connection connect) throws Exception {
 
-		connect = getConnection();
+		
 		
 		System.out.println("Connected to DB");
 		
@@ -61,7 +61,7 @@ public class PortfolioDAO extends DBUtil {
 				+ purchase_date +"')";
 		
 		System.out.println(sql);
-		 connect = getConnection();
+		 
 		 
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
@@ -83,7 +83,7 @@ public class PortfolioDAO extends DBUtil {
 		
 		System.out.println(sql);
 		
-		connect = getConnection();
+		
 		connect.setAutoCommit(true);
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
