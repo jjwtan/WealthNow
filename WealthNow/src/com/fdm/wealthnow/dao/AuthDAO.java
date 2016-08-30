@@ -70,6 +70,18 @@ public class AuthDAO extends DBUtil{
 		ps.setString(1, username);
 		rs = ps.executeQuery();
 		if(rs.next()) {
+			return rs.getTimestamp("last_failedLogin");
+		}
+		return null;
+	}
+	
+	public static Date setCurrentFailTime(Connection connect, String username) throws SQLException {
+		PreparedStatement ps;
+		ResultSet rs;
+		ps = connect.prepareStatement("Update " + USER_TABLE + " Set fail_login_count = 0, last_failedlogin = null where user_name = ?");
+		ps.setString(1, username);
+		rs = ps.executeQuery();
+		if(rs.next()) {
 			return rs.getDate("last_failedlogin");
 		}
 		return null;
@@ -78,7 +90,7 @@ public class AuthDAO extends DBUtil{
 	public static void resetLastFailedCountAndTime(Connection connect, String username) throws SQLException {
 		PreparedStatement ps;
 		
-		ps = connect.prepareStatement("Update " + USER_TABLE + " Set fail_login_count = 0 where user_name = ?" );
+		ps = connect.prepareStatement("Update " + USER_TABLE + " Set fail_login_count = 0, last_failedlogin = null where user_name = ?" );
 		ps.setString(1, username);
 		ps.executeUpdate();
 	}
