@@ -38,14 +38,14 @@ public class OrderDAOTest extends DBUtil {
 		orderDAO = new OrderDAO();
 		Integer order_id1 = getSequenceID("order_id_seq");
 		
-		orderDAO.createOpenOrderInDatabase(order_id1, new Integer(1), "SGD", "B", new Integer(100), "AAPL", "M", "11 Sep 2011",
+		orderDAO.createOpenOrderInDatabase(connect, order_id1, new Integer(1), "SGD", "B", new Integer(100), "AAPL", "M", "11 Sep 2011",
 				new Double(88.9), "GC", "Open");
 		
 		System.out.println("\n Start testCreatedDataInDatabase");
 		
-		Order order1 = orderDAO.getOrderFromOpenOrder(order_id1);
+		Order order1 = orderDAO.getOrderFromOpenOrder(order_id1, connect);
 		assertEquals(order1.getOrder_id(), order_id1);
-		orderDAO.deleteOpenOrderInDatabase(order_id1);
+		orderDAO.deleteOpenOrderInDatabase(connect, order_id1);
 		System.out.println("Deleted "+order_id1+" successfully.");
 		
 		System.out.println("Test Completed: Created Data in database.");	
@@ -54,7 +54,7 @@ public class OrderDAOTest extends DBUtil {
 	@Test
 	public void testGetListOfOpenOrder() throws Exception{
 		orderDAO = new OrderDAO();
-		List<Order> TestList = orderDAO.getListOfOpenOrder(3);
+		List<Order> TestList = orderDAO.getListOfOpenOrder(connect, 3);
 		Integer testcount = TestList.size();
 		
 		System.out.println("\n Start testGetListOfOpenOrder");
@@ -72,9 +72,9 @@ public class OrderDAOTest extends DBUtil {
 		
 		Integer order_id1 = getSequenceID("order_id_seq");
 		System.out.println("order id is " + order_id1);
-		orderDAO.createProcessedOrderInDatabase(order_id1, 1, "SGD", "B", 100, "SAISAI","M", "19 Sep 2014", 90.9, 
+		orderDAO.createProcessedOrderInDatabase(connect, order_id1, 1, "SGD", "B", 100, "SAISAI","M", "19 Sep 2014", 90.9, 
 				"12 Oct 2015", "cancelled", 90.2);
-		Order order = orderDAO.getOrderFromProcessedOrder(order_id1);
+		Order order = orderDAO.getOrderFromProcessedOrder(connect, order_id1);
 		
 		System.out.println("\n Start testCreateProcessedOrderData");
 		assertEquals(order.getUser_id(), new Integer(1));
@@ -89,12 +89,12 @@ public class OrderDAOTest extends DBUtil {
 	public void testGetAllProcessedOrder() throws Exception{
 		Integer user_id = 1;
 		orderDAO  = new OrderDAO();
-		List<Order> newOrder = orderDAO.getAllProcessedOrderFromUser(user_id);
+		List<Order> newOrder = orderDAO.getAllProcessedOrderFromUser(connect, user_id);
 		
 		System.out.println("\n Start testGetAllProcessedOrder");
 		for(Order ord : newOrder){
 			assertEquals(ord.getUser_id(),user_id);
-			orderDAO.deleteOpenOrderInDatabase(ord.getOrder_id());
+			orderDAO.deleteOpenOrderInDatabase(connect, ord.getOrder_id());
 		}	
 		System.out.println("Test Completed: Get all processed order.");	
 	}
@@ -107,7 +107,7 @@ public class OrderDAOTest extends DBUtil {
 	public void testGetAllSoldOrders() throws Exception{
 		System.out.println("\n Start testGetAllSoldOrders");
 		orderDAO = new OrderDAO();
-		List <Order> soldList = orderDAO.getAllSoldOrderInDatabase();
+		List <Order> soldList = orderDAO.getAllSoldOrderInDatabase(connect);
 		
 		System.out.println("\n Start testGetAllSoldOrders");
 		for(Order ord : soldList){

@@ -43,10 +43,10 @@ public class PortfolioDAOTest extends DBUtil{
 
 		PortfolioDAO portfolioDAO1 = new PortfolioDAO();
 
-		portfolioDAO1.createStockHoldingInDatabase(new Integer(1), new Integer(131), "MAC", new Integer(100),
+		portfolioDAO1.createStockHoldingInDatabase(connect, new Integer(1), new Integer(131), "MAC", new Integer(100),
 				new Integer(100), new Double(99.99), "20 Sep 2001");
 
-		List<StockHolding> newTestList = portfolioDAO1.getStockHoldingInDataBase(1);
+		List<StockHolding> newTestList = portfolioDAO1.getStockHoldingInDataBase(1, connect);
 
 		for (StockHolding newListTest : newTestList) {
 			System.out.println(newListTest.getUser_id());
@@ -70,9 +70,9 @@ public class PortfolioDAOTest extends DBUtil{
 //		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(131), "9FINGERS", new Integer(400),
 //				new Integer(400), new Double(55.50), "20 Sep 2001");
 		
-		portfolioDAO.updateStockHolding(new Integer(131), new Integer(40));
+		portfolioDAO.updateStockHolding(connect, new Integer(131), new Integer(40));
 
-		List<StockHolding> newTestList = portfolioDAO.getStockHoldingInDataBase(1);
+		List<StockHolding> newTestList = portfolioDAO.getStockHoldingInDataBase(1, connect);
 		System.out.println(newTestList);
 		
 		for (StockHolding newListTest : newTestList) {

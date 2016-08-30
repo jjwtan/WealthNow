@@ -76,8 +76,8 @@ public class PortfolioDAO extends DBUtil {
 		 System.out.println("Connection Closed");
 	}
 
-	public void updateStockHolding(Connection connect,Integer order_id, Integer sold_quantity) throws Exception {
-
+	public boolean updateStockHolding(Connection connect,Integer order_id, Integer sold_quantity) throws Exception {
+		boolean success = false;
 		String sql = "UPDATE STOCKHOLDING SET REMAINING_QUANTITY = REMAINING_QUANTITY - " 
 		+ sold_quantity + " WHERE order_id=" + order_id ;
 		
@@ -92,7 +92,28 @@ public class PortfolioDAO extends DBUtil {
 		 ps.executeUpdate();
 		
 		 connect.commit();
-		 connect.close(); 
+		 success = true;
+		 connect.close();
+		return success; 
  }
+	
+	public boolean deleteStockHolding(Connection connect,Integer order_id) throws SQLException{
+		boolean success = false;
+		String sql = "DELETE FROM STOCKHolding where order_id= " + order_id;
+		System.out.println(sql);
+		
+		connect.setAutoCommit(true);
+		System.out.println("Connecting to DB");
+		PreparedStatement ps = connect.prepareStatement(sql);
+		ps.executeUpdate();
+		connect.commit();
+		System.out.println("Committed");
+		success = true;
+		System.out.println("Success deletion!");
+		connect.close();
+		
+		return success;
+		
+	}
 
 }

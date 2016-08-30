@@ -1,5 +1,6 @@
 package com.fdm.wealthnow.service;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,15 +11,25 @@ import com.fdm.wealthnow.dao.PortfolioDAO;
 import com.fdm.wealthnow.util.DBUtil;
 
 public class PortfolioService extends DBUtil {
+	static Connection connect;
+	
+	public PortfolioService() {
+		try {
+			this.connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * update for selling of stocks
 	 */
 	public void updateStockHolding(Integer user_id, Integer order_id, Integer sold_quantity) throws Exception {
-
+		
 		PortfolioDAO pfDao = new PortfolioDAO();
 		System.out.println("Updating StockHolding");
-		pfDao.updateStockHolding(order_id, sold_quantity);
+		pfDao.updateStockHolding(connect,order_id, sold_quantity);
 		System.out.println("StockHolding updated");
 	}
 
@@ -28,7 +39,7 @@ public class PortfolioService extends DBUtil {
 	public void computeGainsAndLosses() throws Exception {
 		
 		OrderDAO orderDao = new OrderDAO();
-		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase();
+		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect);
 		for(Order newListofSoldGainsAndLosses : listOfSoldGainsAndLosses){
 			String symbolStock = newListofSoldGainsAndLosses.getStock_symbol();
 			Double openingPrice = newListofSoldGainsAndLosses.getLimit_price();
@@ -46,7 +57,7 @@ public class PortfolioService extends DBUtil {
 	public List getAllSoldOrders() throws Exception {
 		
 		OrderDAO orderDao = new OrderDAO();
-		List<Order> listOfSoldOrders = orderDao.getAllSoldOrderInDatabase();
+		List<Order> listOfSoldOrders = orderDao.getAllSoldOrderInDatabase(connect);
 		System.out.println(listOfSoldOrders);
 		return listOfSoldOrders;
 	}
