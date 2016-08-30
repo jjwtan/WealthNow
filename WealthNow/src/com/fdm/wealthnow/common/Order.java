@@ -43,7 +43,6 @@ public class Order {
 	public Order(Integer user_id, Integer order_id, String currency_code, String order_type, Integer quantity,
 			String stock_symbol, String price_type, Date place_order_date, Float limit_price,
 			Date order_completion_date, String status, Float closing_price, Float open_market_price) {
-		super();
 		this.user_id = user_id;
 		this.order_id = order_id;
 		this.currency_code = currency_code;
