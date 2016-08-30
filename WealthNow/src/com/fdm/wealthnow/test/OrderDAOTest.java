@@ -1,22 +1,37 @@
 package com.fdm.wealthnow.test;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.dao.AuthDAO;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 public class OrderDAOTest extends DBUtil {
+	static Connection connect;
 	private OrderDAO orderDAO;
+	
+	//==============================================================================
+	// Before test
+	//==============================================================================
 
 	@Before
-	public void setup() {
+	public void setup() throws Exception{
 		OrderDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+		connect = AuthDAO.getConnection();
+		connect.setAutoCommit(false);
 	}
+	
+	//==============================================================================
+	// Test on creating data in database
+	//==============================================================================
 
 	@Test
 	public void testCreatedDataInDatabase() throws Exception {
@@ -46,6 +61,10 @@ public class OrderDAOTest extends DBUtil {
 		assertEquals(testcount, new Integer(3));
 		System.out.println("Test Completed: Get list of open order.");	
 	}
+	
+	//==============================================================================
+	// Test on creating processed order data
+	//==============================================================================
 
 	@Test
 	public void testCreateProcessedOrderData() throws Exception{
@@ -62,6 +81,10 @@ public class OrderDAOTest extends DBUtil {
 		System.out.println("Test Completed: Create processed order in database.");
 	}
 	
+	//==============================================================================
+	// Test on getting all processed orders
+	//==============================================================================
+	
 	@Test
 	public void testGetAllProcessedOrder() throws Exception{
 		Integer user_id = 1;
@@ -76,6 +99,10 @@ public class OrderDAOTest extends DBUtil {
 		System.out.println("Test Completed: Get all processed order.");	
 	}
 	
+	//==============================================================================
+	// Test on getting all sold orders
+	//==============================================================================
+	
 	@Test
 	public void testGetAllSoldOrders() throws Exception{
 		System.out.println("\n Start testGetAllSoldOrders");
@@ -89,6 +116,19 @@ public class OrderDAOTest extends DBUtil {
 		}
 		System.out.println("Test Completed: Get all sold orders.");	
 		
+	}
+	
+	//==============================================================================
+	// After test
+	//==============================================================================
+	
+	@After
+	public void tearDown() {
+		try {
+			connect.rollback();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

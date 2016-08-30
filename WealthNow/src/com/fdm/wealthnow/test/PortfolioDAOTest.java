@@ -3,6 +3,7 @@ package com.fdm.wealthnow.test;
 import org.junit.Test;
 
 import com.fdm.wealthnow.common.StockHolding;
+import com.fdm.wealthnow.dao.AuthDAO;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.dao.PortfolioDAO;
 import com.fdm.wealthnow.util.DBUtil;
@@ -11,18 +12,31 @@ import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 
 public class PortfolioDAOTest extends DBUtil{
+	static Connection connect;
 	private PortfolioDAO portfolioDAO;
 
+	//==============================================================================
+	// Before test
+	//==============================================================================
+	
 	@Before
-	public void setup() {
+	public void setup() throws Exception {
 		OrderDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+		connect = AuthDAO.getConnection();
+		connect.setAutoCommit(false);
 	}
+	
+	//==============================================================================
+	// Test on creating stockholding in database
+	//==============================================================================
 
 	@Test
 	public void testCreateStockHoldingInDatabase() throws Exception {
@@ -44,6 +58,10 @@ public class PortfolioDAOTest extends DBUtil{
 		System.out.println("Test Completed: Created Data in database.");
 	}
 
+	//==============================================================================
+	// Test on updating stockholding database
+	//==============================================================================
+	
 	@Test
 	public void testUpdateStockHoldingInDatabase() throws Exception {
 
@@ -64,4 +82,18 @@ public class PortfolioDAOTest extends DBUtil{
 		}
 
 	}
+	
+	//==============================================================================
+	// After test
+	//==============================================================================
+	
+	@After
+	public void tearDown() {
+		try {
+			connect.rollback();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

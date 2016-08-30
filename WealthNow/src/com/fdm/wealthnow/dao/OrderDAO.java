@@ -28,7 +28,7 @@ public class OrderDAO extends DBUtil {
 			String stock_symbol = result.getString("stock_symbol");
 			String price_type = result.getString("price_type");
 			Date opening_order_date = result.getDate("opening_order_date");
-			Float limit_price = result.getFloat("limit_price");
+			Double limit_price = result.getDouble("limit_price");
 			String term = result.getString("term");
 			String status = "OpenOrder";
 			order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
@@ -55,11 +55,11 @@ public class OrderDAO extends DBUtil {
 			String stock_symbol = result.getString("stock_symbol");
 			String price_type = result.getString("price_type");
 			Date place_order_date = result.getDate("place_order_date");
-			Float limit_price = result.getFloat("limit_price");
+			Double limit_price = result.getDouble("limit_price");
 			String status = result.getString("status");
 			Date order_completion_date = result.getDate("order_completion_date");
-			Float closing_price = result.getFloat("closing_price");
-			Float open_market_price = result.getFloat("open_market_price");
+			Double closing_price = result.getDouble("closing_price");
+			Double open_market_price = result.getDouble("open_market_price");
 
 			order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
 					place_order_date, limit_price, order_completion_date, status, closing_price, open_market_price);
@@ -89,11 +89,11 @@ public class OrderDAO extends DBUtil {
 			String stock_symbol = result.getString("stock_symbol");
 			String price_type = result.getString("price_type");
 			Date place_order_date = result.getDate("place_order_date");
-			Float limit_price = result.getFloat("limit_price");
+			Double limit_price = result.getDouble("limit_price");
 			String status = result.getString("status");
 			Date order_completion_date = result.getDate("order_completion_date");
-			Float closing_price = result.getFloat("closing_price");
-			Float open_market_price = result.getFloat("open_market_price");
+			Double closing_price = result.getDouble("closing_price");
+			Double open_market_price = result.getDouble("open_market_price");
 
 			Order order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
 					place_order_date, limit_price, order_completion_date, status, closing_price, open_market_price);
@@ -176,7 +176,7 @@ public class OrderDAO extends DBUtil {
 			String stock_symbol = result.getString("stock_symbol");
 			String price_type = result.getString("price_type");
 			Date opening_order_date = result.getDate("opening_order_date");
-			Float limit_price = result.getFloat("limit_price");
+			Double limit_price = result.getDouble("limit_price");
 			String term = result.getString("term");
 			String status = "OpenOrder";
 			Order order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
