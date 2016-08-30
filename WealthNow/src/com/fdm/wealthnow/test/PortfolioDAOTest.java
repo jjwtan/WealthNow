@@ -43,7 +43,7 @@ public class PortfolioDAOTest extends DBUtil{
 
 		PortfolioDAO portfolioDAO1 = new PortfolioDAO();
 
-		portfolioDAO1.createStockHoldingInDatabase(connect, new Integer(1), new Integer(131), "MAC", new Integer(100),
+		portfolioDAO1.createStockHoldingInDatabase(connect, new Integer(10),new Integer(1), new Integer(131), "MAC", new Integer(100),
 				new Integer(100), new Double(99.99), "20 Sep 2001");
 
 		List<StockHolding> newTestList = portfolioDAO1.getStockHoldingInDataBase(1, connect);
