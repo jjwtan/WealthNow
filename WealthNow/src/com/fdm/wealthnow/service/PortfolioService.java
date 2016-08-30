@@ -59,7 +59,7 @@ public class PortfolioService extends DBUtil {
 		 
 		PortfolioDAO pfDAO = new PortfolioDAO();
 
-		List<StockHolding> stockHoldingList = pfDAO.getStockHoldingInDataBase(user_id);
+		List<StockHolding> stockHoldingList = pfDAO.getStockHoldingInDataBase(user_id,connect);
 
 //		for (StockHolding newStockHoldingList : stockHoldingList) {
 //			int stockHoldingID = newStockHoldingList.getStockholding_id();

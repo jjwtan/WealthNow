@@ -3,7 +3,8 @@ package com.fdm.wealthnow.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
@@ -31,6 +32,12 @@ public class DBUtil {
 		}
 		
 		return order_id;
+	}
+	
+	public static String convertDateObjToString(Date date){
+		SimpleDateFormat format = new SimpleDateFormat("dd/MMM/yyy");
+		String datestr = format.format(date);
+		return datestr;
 	}
 
 }
