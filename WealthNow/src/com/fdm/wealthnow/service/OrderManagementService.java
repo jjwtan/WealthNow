@@ -1,11 +1,13 @@
 package com.fdm.wealthnow.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.common.StockHolding;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.dao.PortfolioDAO;
 import com.fdm.wealthnow.util.DBUtil;
@@ -26,7 +28,7 @@ public class OrderManagementService extends DBUtil {
 		}
 	}
 
-	public void createOpenOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
+	public Integer createOpenOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
 			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term)
 			throws Exception {
 		OrderDAO ord = new OrderDAO();
@@ -45,6 +47,7 @@ public class OrderManagementService extends DBUtil {
 		}
 
 		System.out.println("End Order Management Service.");
+		return order_id;
 
 	}
 
@@ -91,7 +94,7 @@ public class OrderManagementService extends DBUtil {
 		}
 
 		// check if limit price is not negative
-		else if (limit_price < 1) {
+		else if (limit_price < 0) {
 			return false;
 		}
 
@@ -104,21 +107,36 @@ public class OrderManagementService extends DBUtil {
 	}
 
 	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
-
 		PortfolioDAO pfdao = new PortfolioDAO();
 		OrderDAO ord = new OrderDAO();
 		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
-		pfdao.createStockHoldingInDatabase(connect, user_id, order_id, order.getStock_symbol(), 
+		Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
+		System.out.println("Stockholding id created : " + stockholding_id);
+		pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(), 
 				order.getQuantity(), order.getQuantity(), order.getLimit_price(), convertDateObjToString(order.getPlace_order_date()));
 
 	}
 
-	public void updateStockHoldings() {
+	public void updateStockHoldings(Integer order_id, Integer sold_quantity) throws Exception {
+		PortfolioDAO pfdao = new PortfolioDAO();
+		System.out.println("OMS - updating stockholdings with order id - " + order_id +
+				" and quantity " + sold_quantity);
+		pfdao.updateStockHolding(connect, order_id, sold_quantity);
+		System.out.println("updated stockholdings in OMS.");
 
 	}
 
-	public void deleteStockHoldings() {
-
+	public void deleteStockHoldings(Integer order_id) throws SQLException {
+		PortfolioDAO pfdao = new PortfolioDAO();
+		StockHolding sh = pfdao.getStockholding(connect, order_id);
+		if(sh.getPurchase_quantity().equals("0")){
+			pfdao.deleteStockHolding(connect, order_id);
+			System.out.println("Stockholding with order id - " + order_id + " has been deleted.");
+		}else{
+			System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
+		}
+		
+		
 	}
 
 	/*

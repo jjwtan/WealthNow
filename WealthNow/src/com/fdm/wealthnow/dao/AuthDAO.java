@@ -12,14 +12,18 @@ import com.fdm.wealthnow.util.DBUtil;
 public class AuthDAO extends DBUtil{
 	private static final String USER_TABLE = "user1";
 	
-	public static UserAuth authenticate(String username, String password) throws Exception {
-		Connection connect = getConnection();
+	public static UserAuth authenticate(Connection connect, String username, String password) throws Exception {
 		
 		int failCount = getFailedCount(connect, username);
 		if (failCount == -1 ) {
 			System.out.println("username does not exist");
 		} else if(failCount <= 5 ) {
-			checkPassword(connect, username, password);
+			if(checkPassword(connect, username, password)) {
+				return new UserAuth(true);
+			} else {
+				incrementFailCount(connect, username);
+				return new UserAuth(false);
+			}
 		} else {
 			System.out.println("max attempt reached");
 		}
@@ -70,6 +74,18 @@ public class AuthDAO extends DBUtil{
 		ps.setString(1, username);
 		rs = ps.executeQuery();
 		if(rs.next()) {
+			return rs.getTimestamp("last_failedLogin");
+		}
+		return null;
+	}
+	
+	public static Date setCurrentFailTime(Connection connect, String username) throws SQLException {
+		PreparedStatement ps;
+		ResultSet rs;
+		ps = connect.prepareStatement("Update " + USER_TABLE + " Set fail_login_count = 0, last_failedlogin = null where user_name = ?");
+		ps.setString(1, username);
+		rs = ps.executeQuery();
+		if(rs.next()) {
 			return rs.getDate("last_failedlogin");
 		}
 		return null;
@@ -78,7 +94,7 @@ public class AuthDAO extends DBUtil{
 	public static void resetLastFailedCountAndTime(Connection connect, String username) throws SQLException {
 		PreparedStatement ps;
 		
-		ps = connect.prepareStatement("Update " + USER_TABLE + " Set fail_login_count = 0 where user_name = ?" );
+		ps = connect.prepareStatement("Update " + USER_TABLE + " Set fail_login_count = 0, last_failedlogin = null where user_name = ?" );
 		ps.setString(1, username);
 		ps.executeUpdate();
 	}
