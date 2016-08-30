@@ -8,15 +8,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fdm.wealthnow.common.Order;
 import com.fdm.wealthnow.common.StockHolding;
 import com.fdm.wealthnow.util.DBUtil;
 
 public class PortfolioDAO extends DBUtil {
 	///header
 
-	public List getStockHoldingInDataBase(Integer user_id) throws Exception {
+	public List getStockHoldingInDataBase(Integer user_id, Connection connect) throws Exception {
 
-		Connection connect = getConnection();
+		
 		
 		System.out.println("Connected to DB");
 		
@@ -49,10 +50,8 @@ public class PortfolioDAO extends DBUtil {
 		return stockHoldingList;
 	}
 
-	public void createStockHoldingInDatabase(Integer user_id,Integer order_id,
+	public void createStockHoldingInDatabase(Connection connect,Integer stochHolding_id,Integer user_id,Integer order_id,
 	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,String purchase_date) throws Exception{
-		
-		Integer stochHolding_id = getSequenceID("stockholdings_pk_seq");
 		
 		String sql = "INSERT INTO STOCKHOLDING(stockholding_id,USER_ID, ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
 				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES("+ stochHolding_id +", "
@@ -61,7 +60,7 @@ public class PortfolioDAO extends DBUtil {
 				+ purchase_date +"')";
 		
 		System.out.println(sql);
-		 Connection connect = getConnection();
+		 
 		 
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
@@ -76,14 +75,14 @@ public class PortfolioDAO extends DBUtil {
 		 System.out.println("Connection Closed");
 	}
 
-	public void updateStockHolding(Integer order_id, Integer sold_quantity) throws Exception {
-
+	public boolean updateStockHolding(Connection connect,Integer order_id, Integer sold_quantity) throws Exception {
+		boolean success = false;
 		String sql = "UPDATE STOCKHOLDING SET REMAINING_QUANTITY = REMAINING_QUANTITY - " 
 		+ sold_quantity + " WHERE order_id=" + order_id ;
 		
 		System.out.println(sql);
 		
-		Connection connect = getConnection();
+		
 		connect.setAutoCommit(true);
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
@@ -92,7 +91,51 @@ public class PortfolioDAO extends DBUtil {
 		 ps.executeUpdate();
 		
 		 connect.commit();
-		 connect.close(); 
+		 success = true;
+		 connect.close();
+		return success; 
  }
+	
+	public boolean deleteStockHolding(Connection connect,Integer order_id) throws SQLException{
+		boolean success = false;
+		String sql = "DELETE FROM STOCKHolding where order_id= " + order_id;
+		System.out.println(sql);
+		
+		connect.setAutoCommit(true);
+		System.out.println("Connecting to DB");
+		PreparedStatement ps = connect.prepareStatement(sql);
+		ps.executeUpdate();
+		connect.commit();
+		System.out.println("Committed");
+		success = true;
+		System.out.println("Success deletion!");
+		connect.close();
+		
+		return success;
+		
+	}
+	
+	public StockHolding getStockholding(Connection connect, Integer order_id) throws SQLException{
+		String SQL = "SELECT * FROM STOCKHOLDING WHERE ORDER_ID =?";
+		PreparedStatement ps = connect.prepareStatement(SQL);
+		ps.setInt(1, order_id);
+		ResultSet result = ps.executeQuery();
+		StockHolding sh = null;
+		
+		while (result.next()) {
+			Integer stockholding_id = result.getInt("stockholding_id");
+			Integer user_id = result.getInt("user_id");
+			String stock_symbol = result.getString("stock_symbol");
+			Integer purchase_quantity = result.getInt("purchase_quantity");
+			Integer remaining_quantity = result.getInt("remaining_quantity");
+			Double purchase_price = result.getDouble("purchase_price");
+			Date purchase_date = result.getDate("purchase_date");
+		
+			sh = new StockHolding( stockholding_id, user_id, order_id, stock_symbol, remaining_quantity, purchase_price);
+		}
+		return sh;
+		
+		
+	}
 
 }

@@ -12,18 +12,18 @@ public class Order {
 	String stock_symbol;
 	String price_type;
 	Date place_order_date;
-	Float limit_price;
+	Double limit_price;
 	String term;
 	Date order_completion_date;
 	String status;
-	Float closing_price;
-	Float open_market_price;
+	Double closing_price;
+	Double open_market_price;
 
 	/*
 	 * Order constructor is to be called to create an OpenOrder
 	 */
 	public Order(Integer user_id, Integer order_id, String currency_code, String order_type, Integer quantity,
-			String stock_symbol, String price_type, Date opening_order_date, Float limit_price, String term,
+			String stock_symbol, String price_type, Date opening_order_date, Double limit_price, String term,
 			String status) {
 		this.user_id = user_id;
 		this.order_id = order_id;
@@ -41,8 +41,8 @@ public class Order {
 	 * Order constructor is to be called to create a ProcessedOrder
 	 */
 	public Order(Integer user_id, Integer order_id, String currency_code, String order_type, Integer quantity,
-			String stock_symbol, String price_type, Date place_order_date, Float limit_price,
-			Date order_completion_date, String status, Float closing_price, Float open_market_price) {
+			String stock_symbol, String price_type, Date place_order_date, Double limit_price,
+			Date order_completion_date, String status, Double closing_price, Double open_market_price) {
 		this.user_id = user_id;
 		this.order_id = order_id;
 		this.currency_code = currency_code;
@@ -59,6 +59,11 @@ public class Order {
 	}
 	
 
+	public Order(Integer user_id2, Integer order_id2, String currency_code2, String order_type2, Integer quantity2,
+			String stock_symbol2, String price_type2, Date opening_order_date, Double limit_price2, String term2,
+			Double closing_price2, String status2) {
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getUser_id() {
 		return user_id;
 	}
@@ -124,27 +129,27 @@ public class Order {
 		this.place_order_date = place_order_date;
 	}
 
-	public Float getClosing_price() {
+	public Double getClosing_price() {
 		return closing_price;
 	}
 
-	public void setClosing_price(Float closing_price) {
+	public void setClosing_price(Double closing_price) {
 		this.closing_price = closing_price;
 	}
 
-	public Float getOpen_market_price() {
+	public Double getOpen_market_price() {
 		return open_market_price;
 	}
 
-	public void setOpen_market_price(Float open_market_price) {
+	public void setOpen_market_price(Double open_market_price) {
 		this.open_market_price = open_market_price;
 	}
 
-	public Float getLimit_price() {
+	public Double getLimit_price() {
 		return limit_price;
 	}
 
-	public void setLimit_price(Float limit_price) {
+	public void setLimit_price(Double limit_price) {
 		this.limit_price = limit_price;
 	}
 
