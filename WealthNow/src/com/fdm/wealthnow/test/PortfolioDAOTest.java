@@ -24,12 +24,12 @@ public class PortfolioDAOTest extends DBUtil{
 		OrderDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 	}
 
-	
+	@Test
 	public void testCreateStockHoldingInDatabase() throws Exception {
 
 		PortfolioDAO portfolioDAO1 = new PortfolioDAO();
 
-		portfolioDAO1.createStockHoldingInDatabase(new Integer(1), new Integer(3), "MAC", new Integer(100),
+		portfolioDAO1.createStockHoldingInDatabase(new Integer(1), new Integer(131), "MAC", new Integer(100),
 				new Integer(100), new Double(99.99), "20 Sep 2001");
 
 		List<StockHolding> newTestList = portfolioDAO1.getStockHoldingInDataBase(1);
@@ -49,16 +49,16 @@ public class PortfolioDAOTest extends DBUtil{
 
 		PortfolioDAO portfolioDAO = new PortfolioDAO();
 		
-		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(124), "7FINGERS", new Integer(500),
-				new Integer(500), new Double(55.50), "20 Sep 2001");
+//		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(131), "9FINGERS", new Integer(400),
+//				new Integer(400), new Double(55.50), "20 Sep 2001");
 		
-		portfolioDAO.updateStockHolding(new Integer(124), new Integer(40));
+		portfolioDAO.updateStockHolding(new Integer(131), new Integer(40));
 
 		List<StockHolding> newTestList = portfolioDAO.getStockHoldingInDataBase(1);
 		System.out.println(newTestList);
 		
 		for (StockHolding newListTest : newTestList) {
-			assertEquals(newListTest.getRemaining_quantity(), new Integer(460));
+			assertEquals(newListTest.getRemaining_quantity(), new Integer(60));
 
 			System.out.println("Test Completed: Update Stock holding in database.");
 		}

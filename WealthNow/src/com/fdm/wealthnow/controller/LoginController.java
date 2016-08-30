@@ -1,6 +1,10 @@
 package com.fdm.wealthnow.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -57,6 +61,12 @@ public class LoginController extends HttpServlet {
 		System.out.println("username -> " + request.getParameter("username"));
 		System.out.println("password -> " + request.getParameter("password"));
 
+		String hashedPw = null;
+		hashedPw = getHash(password);
+		
+		System.out.println("hashed password: " + hashedPw);
+	 
+
 		System.out.println("forwarding");
 		request.getRequestDispatcher("welcome.jsp").forward(request, response);
 		
@@ -71,6 +81,20 @@ public class LoginController extends HttpServlet {
 //			request.getRequestDispatcher("login.jsp").forward(request, response);
 //		}
 
+	}
+
+	private String getHash(String password) throws UnsupportedEncodingException {
+		// convert password to md5
+		byte[] plainText = password.getBytes("UTF-8");
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+			messageDigest.update( plainText, 0, plainText.length);
+			return new BigInteger(1, messageDigest.digest()).toString(16);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
