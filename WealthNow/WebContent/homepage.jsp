@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome</title>
+<title>Homepage</title>
 </head>
 <body>
 <h1>welcome!</h1>
+<input type="text" value="<%= session.getAttribute("loggedInUser") %>" />
 </body>
 </html>

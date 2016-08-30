@@ -1,13 +1,34 @@
 package com.fdm.wealthnow.service;
 
+import java.sql.Connection;
 import java.util.Date;
 
 import com.fdm.wealthnow.common.User;
+import com.fdm.wealthnow.common.UserAuth;
+import com.fdm.wealthnow.dao.AuthDAO;
+import com.fdm.wealthnow.util.DBUtil;
 
-public class UserService {
+public class UserService extends DBUtil{
+	static Connection connect;
+	
+	public UserService() {
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-	public void userLogin(String userName, String password){
-		
+	public static UserAuth userLogin(String username, String password){
+		try {
+			connect = getConnection();
+			return AuthDAO.authenticate(connect, username, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void updateUserInfo(User user, String fieldToChange, String newData){

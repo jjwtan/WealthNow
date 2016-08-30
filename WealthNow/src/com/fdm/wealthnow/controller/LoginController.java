@@ -22,6 +22,8 @@ import javax.servlet.http.HttpSession;
 import com.fdm.wealthnow.common.User;
 import com.fdm.wealthnow.common.UserAuth;
 import com.fdm.wealthnow.dao.AuthDAO;
+import com.fdm.wealthnow.service.UserService;
+import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 /**
  * Servlet implementation class LoginController
@@ -65,21 +67,29 @@ public class LoginController extends HttpServlet {
 		hashedPw = getHash(password);
 		
 		System.out.println("hashed password: " + hashedPw);
-	 
 
-		System.out.println("forwarding");
-		request.getRequestDispatcher("welcome.jsp").forward(request, response);
+		AuthDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+//		UserAuth user = UserService.userLogin(username, password);
 		
-//		UserAuth user = AuthDAO.authenticate(username, password);
-//		if (user.isAuthenticationSuccess()) {
-//			HttpSession session = request.getSession();
-//			session.setMaxInactiveInterval(SESSION_TIMEOUT_IN_MINS);
-//			session.setAttribute("loggedInUser", username);
+		UserAuth user = null;
+		try {
+			user = AuthDAO.authenticate(AuthDAO.getConnection(),username, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (user.isAuthenticationSuccess()) {
+			HttpSession session = request.getSession();
+			session.setMaxInactiveInterval(SESSION_TIMEOUT_IN_MINS);
+			session.setAttribute("loggedInUser", user.getUser().getFirstName()+user.getUser().getLastName());
+			session.setAttribute("loggedInUserId", user.getUser().getUserId());
+			request.getRequestDispatcher("homepage.jsp").forward(request, response);
 
-//		} else {
-//			System.out.println("authentication failed");
-//			request.getRequestDispatcher("login.jsp").forward(request, response);
-//		}
+		} else {
+			System.out.println("authentication failed");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
 
 	}
 

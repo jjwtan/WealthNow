@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import com.fdm.wealthnow.common.InfoType;
+import com.fdm.wealthnow.common.User;
 import com.fdm.wealthnow.common.UserAuth;
 import com.fdm.wealthnow.util.DBUtil;
 
@@ -19,7 +21,7 @@ public class AuthDAO extends DBUtil{
 			System.out.println("username does not exist");
 		} else if(failCount <= 5 ) {
 			if(checkPassword(connect, username, password)) {
-				return new UserAuth(true);
+				return new UserAuth(getUser(username, InfoType.BASIC), true);
 			} else {
 				incrementFailCount(connect, username);
 				return new UserAuth(false);
@@ -33,6 +35,26 @@ public class AuthDAO extends DBUtil{
 		connect.close();
 		return null;
 	}
+	
+	public static User getUser(String username, InfoType type) throws Exception {
+		Connection connect = getConnection();
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+	
+		ps = connect.prepareStatement("Select user_id, user_name, first_name, last_name from " +  USER_TABLE + " where user_name = ?");
+		ps.setString(1, username);
+		rs = ps.executeQuery();
+	
+		rs.next();
+		User userBasic = new User( rs.getInt("user_id"), rs.getString("user_name"), rs.getString("first_name"), rs.getString("last_name"));
+		
+		return userBasic;
+
+	}
+	
+	
 	
 	public static boolean checkPassword(Connection connect, String username, String password) throws SQLException {
 		PreparedStatement ps;
