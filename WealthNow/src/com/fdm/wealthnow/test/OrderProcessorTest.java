@@ -12,11 +12,11 @@ public class OrderProcessorTest {
 	private OrderProcessor orderProcessor;
 
 	//============================================================
-	// Test on...
+	// Test on fetching order from DAO
 	//============================================================
 	
 	@Test 
-	public void createOpenOrder() throws Exception {
+	public void fetchOrderFromDao() throws Exception {
 		orderProcessor = new OrderProcessor();
 		
 		
@@ -27,11 +27,11 @@ public class OrderProcessorTest {
 	}
 	
 	//==============================================================================
-	// Test on...
+	// Test on time to process order
 	//==============================================================================
 	
 	@Test
-	public void processOrder() throws Exception {
+	public void timeToProcessOrder() throws Exception {
 		orderProcessor = new OrderProcessor();
 		
 		
@@ -42,62 +42,17 @@ public class OrderProcessorTest {
 	}
 	
 	//==============================================================================
-	// Test on...
+	// Test on check limit order
 	//==============================================================================
 	
 	@Test
-	public void validateOrderData() throws Exception {
+	public void checkLimitOfOrder() throws Exception {
 		orderProcessor = new OrderProcessor();
 		
 		
 		System.out.println("\n Start testCreatedDataInDatabase");
 		
 		
-		System.out.println("Test Completed: Created Data in database.");	
-	}
-
-	//==============================================================================
-	// Test on...
-	//==============================================================================
-	
-	@Test
-	public void createStockHoldings() throws Exception {
-		orderProcessor = new OrderProcessor();
-		
-		
-		System.out.println("\n Start testCreatedDataInDatabase");
-		
-		
-		System.out.println("Test Completed: Created Data in database.");	
-	}
-	
-	//==============================================================================
-	// Test on...
-	//==============================================================================
-	
-	@Test
-	public void updateStockHoldings() throws Exception {
-		orderProcessor = new OrderProcessor();
-		
-
-		System.out.println("\n Start testCreatedDataInDatabase");
-		
-		
-		System.out.println("Test Completed: Created Data in database.");	
-	}
-	
-	//==============================================================================
-	// Test on...
-	//==============================================================================
-	
-	@Test
-	public void deleteStockHoldings() throws Exception {
-		orderProcessor = new OrderProcessor();
-		
-		
-		System.out.println("\n Start testCreatedDataInDatabase");
-		
-
 		System.out.println("Test Completed: Created Data in database.");	
 	}
 
