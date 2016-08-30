@@ -24,7 +24,7 @@ public class PortfolioDAOTest extends DBUtil{
 		OrderDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 	}
 
-	
+	@Test
 	public void testCreateStockHoldingInDatabase() throws Exception {
 
 		PortfolioDAO portfolioDAO1 = new PortfolioDAO();
