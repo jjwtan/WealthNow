@@ -22,6 +22,12 @@ public class Watchlist {
 		this.dateLastEdited = dateLastEdited;
 	}
 	
+	public Watchlist(int watchlistId, String watchlistName, String visibility){
+		this.watchlistId = watchlistId;
+		this.watchlistName = watchlistName;
+		this.visibility = visibility;
+	}
+	
 	public int getWatchlistId() {
 		return watchlistId;
 	}
