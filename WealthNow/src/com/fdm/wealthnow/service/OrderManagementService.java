@@ -51,7 +51,7 @@ public class OrderManagementService extends DBUtil {
 
 	}
 
-	public void processOrder(Integer order_id, Double closing_price) throws Exception {
+	public void processOrder(Integer order_id, Double closing_price) {
 		OrderDAO ord = new OrderDAO();
 		Order order = ord.getOrderFromOpenOrder(order_id, connect);
 		// format the date to string for create method

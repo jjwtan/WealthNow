@@ -13,7 +13,7 @@ import com.fdm.wealthnow.util.DBUtil;
 public class OrderDAO extends DBUtil {
 
 	public Order getOrderFromOpenOrder(Integer order_id, Connection connect) {
-		
+		Order order = null;
 		String SQL = "SELECT * FROM OPENORDER WHERE ORDER_ID =?";
 		PreparedStatement ps;
 		try {
@@ -21,7 +21,7 @@ public class OrderDAO extends DBUtil {
 			ps.setInt(1, order_id);
 
 			ResultSet result = ps.executeQuery();
-			Order order = null;
+			
 			while (result.next()) {
 				Integer user_id = result.getInt("user_id");
 				String currency_code = result.getString("currency_code");
@@ -144,7 +144,7 @@ public class OrderDAO extends DBUtil {
 	public void createProcessedOrderInDatabase(Connection connect, Integer order_id, Integer user_id,
 			String currency_code, String order_type, Integer quantity, String stock_symbol, String price_type,
 			String opening_order_date, Double limit_price, String order_completion_date, String status,
-			Double closing_price) throws Exception {
+			Double closing_price) {
 
 		String SQL = "INSERT INTO PROCESSEDORDER (order_id, user_id, currency_code, "
 				+ "order_type, quantity, stock_symbol, "
@@ -154,11 +154,18 @@ public class OrderDAO extends DBUtil {
 				+ limit_price + ",'" + order_completion_date + "'," + limit_price + ")";
 
 		
-		PreparedStatement ps = connect.prepareStatement(SQL);
-		System.out.println(SQL);
-		ps.executeUpdate();
-		System.out.println("The SQL statement below has been executed\n" + SQL);
-		connect.close();
+		PreparedStatement ps;
+		try {
+			ps = connect.prepareStatement(SQL);
+			System.out.println(SQL);
+			ps.executeUpdate();
+			System.out.println("The SQL statement below has been executed\n" + SQL);
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
@@ -218,18 +225,24 @@ public class OrderDAO extends DBUtil {
 		connect.close();
 	}
 
-	public boolean deleteOpenOrderInDatabase(Connection connect, Integer order_id) throws Exception {
-		boolean success;
+	public boolean deleteOpenOrderInDatabase(Connection connect, Integer order_id) {
+		boolean success = false;
 		connect = null;
 		String SQL = "DELETE FROM OPENORDER WHERE ORDER_ID =?";
 		
-		connect.setAutoCommit(false);
-		PreparedStatement ps = connect.prepareStatement(SQL);
-		ps.setInt(1, order_id);
-		ps.executeUpdate();
-		connect.commit();
-		success = true;
-		connect.close();
+		try {
+			connect.setAutoCommit(false);
+			PreparedStatement ps = connect.prepareStatement(SQL);
+			ps.setInt(1, order_id);
+			ps.executeUpdate();
+			connect.commit();
+			success = true;
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 		System.out.println(SQL + "\nThe SQL statement above has been executed");
 
