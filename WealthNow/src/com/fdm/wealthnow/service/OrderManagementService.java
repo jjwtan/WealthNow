@@ -28,7 +28,7 @@ public class OrderManagementService extends DBUtil {
 		}
 	}
 
-	public void createOpenOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
+	public Integer createOpenOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
 			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term)
 			throws Exception {
 		OrderDAO ord = new OrderDAO();
@@ -47,6 +47,7 @@ public class OrderManagementService extends DBUtil {
 		}
 
 		System.out.println("End Order Management Service.");
+		return order_id;
 
 	}
 
@@ -93,7 +94,7 @@ public class OrderManagementService extends DBUtil {
 		}
 
 		// check if limit price is not negative
-		else if (limit_price < 1) {
+		else if (limit_price < 0) {
 			return false;
 		}
 
