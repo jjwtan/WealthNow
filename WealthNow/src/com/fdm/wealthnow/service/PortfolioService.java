@@ -44,7 +44,7 @@ public class PortfolioService extends DBUtil {
 
 		OrderDAO orderDao = new OrderDAO();
 		Double netIncome = (double) 0;
-		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect,2,301);
+		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect,2,303);
 		
 		for (Order newListofSoldGainsAndLosses : listOfSoldGainsAndLosses) {
 			String symbolStock = newListofSoldGainsAndLosses.getStock_symbol();
