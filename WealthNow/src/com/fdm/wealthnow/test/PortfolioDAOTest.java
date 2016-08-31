@@ -30,7 +30,7 @@ public class PortfolioDAOTest extends DBUtil{
 	@Before
 	public void setup() throws Exception {
 		OrderDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
-		connect = AuthDAO.getConnection();
+		connect = PortfolioDAO.getConnection();
 		connect.setAutoCommit(false);
 	}
 	
@@ -88,12 +88,13 @@ public class PortfolioDAOTest extends DBUtil{
 	//==============================================================================
 	
 	@After
-	public void tearDown() {
+	public void tearDown() throws SQLException {
 		try {
 			connect.rollback();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		connect.close();
 	}
 	
 }
