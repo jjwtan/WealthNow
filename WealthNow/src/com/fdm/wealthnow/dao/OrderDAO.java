@@ -112,10 +112,11 @@ public class OrderDAO extends DBUtil {
 		return processedCompletedOrderfromUser;
 	}
 
-	public List getAllSoldOrderInDatabase(Connection connect) throws Exception {
+	public List getAllSoldOrderInDatabase(Connection connect,Integer user_ID,Integer order_ID) throws Exception {
 		List<Order> AllSoldOrderInDatabase = new ArrayList<Order>();
 
-		String SQL = "SELECT * FROM PROCESSEDORDER WHERE STATUS = 'completed'";
+		String SQL = "SELECT * FROM PROCESSEDORDER WHERE STATUS = 'completed' AND USER_ID =" + user_ID + " AND ORDER_ID="
+				+ order_ID;
 		
 		PreparedStatement ps = connect.prepareStatement(SQL);
 

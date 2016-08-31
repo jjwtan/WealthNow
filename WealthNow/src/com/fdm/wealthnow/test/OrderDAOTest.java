@@ -107,7 +107,7 @@ public class OrderDAOTest extends DBUtil {
 	public void testGetAllSoldOrders() throws Exception{
 		System.out.println("\n Start testGetAllSoldOrders");
 		orderDAO = new OrderDAO();
-		List <Order> soldList = orderDAO.getAllSoldOrderInDatabase(connect);
+		List <Order> soldList = orderDAO.getAllSoldOrderInDatabase(connect,1,152);
 		
 		System.out.println("\n Start testGetAllSoldOrders");
 		for(Order ord : soldList){
