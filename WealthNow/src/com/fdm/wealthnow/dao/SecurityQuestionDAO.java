@@ -87,8 +87,7 @@ public class SecurityQuestionDAO extends DBUtil{
 			ps.setString(2, response.getAns());
 			ps.setInt(3, response.getQnId());
 			
-			ps.executeUpdate();
-
+			return ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -97,7 +96,7 @@ public class SecurityQuestionDAO extends DBUtil{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 1;
+		return 0;
 	}
 	
 }
