@@ -32,9 +32,9 @@ public class PortfolioService extends DBUtil {
 		System.out.println("Updating StockHolding");
 		pfDao.updateStockHolding(connect, order_id, sold_quantity);
 		System.out.println("StockHolding updated");
-		
+
 		connect.commit();
-		
+
 	}
 
 	/*
@@ -44,8 +44,8 @@ public class PortfolioService extends DBUtil {
 
 		OrderDAO orderDao = new OrderDAO();
 		Double netIncome = (double) 0;
-		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect,2,303);
-		
+		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect, 2, 301);
+
 		for (Order newListofSoldGainsAndLosses : listOfSoldGainsAndLosses) {
 			String symbolStock = newListofSoldGainsAndLosses.getStock_symbol();
 			Double openingPrice = newListofSoldGainsAndLosses.getLimit_price();
@@ -57,23 +57,20 @@ public class PortfolioService extends DBUtil {
 		}
 		connect.commit();
 		return netIncome;
-		
 
 	}
 
 	/*
 	 * retrieve sold orders for realized G&L page
 	 */
-	
 
-	
-	public List getAllSoldOrders(Integer user_id,Integer order_id) throws Exception {
+	public List getAllSoldOrders(Integer user_id, Integer order_id) throws Exception {
 
 		OrderDAO orderDao = new OrderDAO();
-		List<Order> listOfSoldOrders = orderDao.getAllSoldOrderInDatabase(connect,user_id,order_id);
+		List<Order> listOfSoldOrders = orderDao.getAllSoldOrderInDatabase(connect, user_id, order_id);
 		System.out.println(listOfSoldOrders);
 		connect.commit();
-		
+
 		return listOfSoldOrders;
 	}
 
@@ -102,7 +99,7 @@ public class PortfolioService extends DBUtil {
 
 		// }
 		connect.commit();
-		
+
 		return stockHoldingList;
 	}
 
@@ -115,9 +112,8 @@ public class PortfolioService extends DBUtil {
 		pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
 				order.getQuantity(), order.getQuantity(), order.getLimit_price(),
 				convertDateObjToString(order.getPlace_order_date()));
-		
+
 		connect.commit();
-	
 
 	}
 
@@ -130,9 +126,9 @@ public class PortfolioService extends DBUtil {
 		} else {
 			System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
 		}
-	
+
 		connect.commit();
-		
+
 	}
 
 }
