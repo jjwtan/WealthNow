@@ -119,16 +119,7 @@ public class OrderManagementService extends DBUtil {
 		return true;
 	}
 
-	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
-		PortfolioDAO pfdao = new PortfolioDAO();
-		OrderDAO ord = new OrderDAO();
-		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
-		Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
-		System.out.println("Stockholding id created : " + stockholding_id);
-		pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(), 
-				order.getQuantity(), order.getQuantity(), order.getLimit_price(), convertDateObjToString(order.getPlace_order_date()));
-
-	}
+	
 
 	public void updateStockHoldings(Integer order_id, Integer sold_quantity) throws Exception {
 		PortfolioDAO pfdao = new PortfolioDAO();
@@ -139,18 +130,10 @@ public class OrderManagementService extends DBUtil {
 
 	}
 
-	public void deleteStockHoldings(Integer order_id) throws SQLException {
-		PortfolioDAO pfdao = new PortfolioDAO();
-		StockHolding sh = pfdao.getStockholding(connect, order_id);
-		if(sh.getPurchase_quantity().equals("0")){
-			pfdao.deleteStockHolding(connect, order_id);
-			System.out.println("Stockholding with order id - " + order_id + " has been deleted.");
-		}else{
-			System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
-		}
+	
 		
 		
-	}
+	
 
 	/*
 	 * system check to see if trade is executable - to be done at
