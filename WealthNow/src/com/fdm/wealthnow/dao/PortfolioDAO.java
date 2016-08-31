@@ -50,11 +50,11 @@ public class PortfolioDAO extends DBUtil {
 		return stockHoldingList;
 	}
 
-	public void createStockHoldingInDatabase(Connection connect,Integer stochHolding_id,Integer user_id,Integer order_id,
+	public void createStockHoldingInDatabase(Connection connect,Integer stockHolding_id,Integer user_id,Integer order_id,
 	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,String purchase_date) throws Exception{
 		
 		String sql = "INSERT INTO STOCKHOLDING(stockholding_id,USER_ID, ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
-				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES("+ stochHolding_id +", "
+				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES("+ stockHolding_id +", "
 				+ user_id + " , " + order_id + " , '"
 				+ stock_symbol + "' ," + purchase_quantity + "," + remaining_quantity + "," + purchase_price + ", '"
 				+ purchase_date +"')";
