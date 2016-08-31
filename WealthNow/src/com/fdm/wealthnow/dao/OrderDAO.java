@@ -130,14 +130,16 @@ public class OrderDAO extends DBUtil {
 			Integer quantity = result.getInt("quantity");
 			String stock_symbol = result.getString("stock_symbol");
 			String price_type = result.getString("price_type");
-			Date opening_order_date = result.getDate("opening_order_date");
+			Date place_order_date = result.getDate("place_order_date");
 			Double limit_price = result.getDouble("limit_price");
-			String term = result.getString("term");
+			Date order_completion_date = result.getDate("order_completion_date");
 			Double closing_price = result.getDouble("closing_price");
-			String status = "OpenOrder";
+			Double open_market_price = result.getDouble("open_market_price");
+			String status = result.getString("status");
 
-			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
-					opening_order_date, limit_price, TermEnum.valueOf(term), closing_price, status);
+			Order order = new Order( user_id,  order_id,  currency_code,  OrderTypeEnum.valueOf(order_type),  quantity,
+					 stock_symbol,  PriceTypeEnum.valueOf(price_type),  place_order_date,  limit_price,
+					 order_completion_date,  status,  closing_price,  open_market_price);
 			AllSoldOrderInDatabase.add(order);
 		}
 		
