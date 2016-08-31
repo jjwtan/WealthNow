@@ -113,6 +113,24 @@ public class UserDAO extends DBUtil {
 		}
 
 	}
+	
+	public void updatePassword (int userId, String newPassword, Connection connect) {
+		
+		try {
+
+			// NEED TO add phone number
+			String SQLStatement = "UPDATE user1 set user_password = '" + newPassword + "' where user_id = " + userId;
+
+			PreparedStatement ps = connect.prepareStatement(SQLStatement);
+			ps.executeUpdate();
+			System.out.println("--> Updating user's password SQL executed" + SQLStatement);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// skip for now
 	public boolean softDeleteUser(int userId) {
