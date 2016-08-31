@@ -20,7 +20,7 @@
 				type="radio" name="A" value="sell" required> Sell <br> <br>
 			Quantity: <input type="number" name="quantity" value="quantity"
 				required> Stock Symbol:<input type="text"
-				name="stock_symbol" value="" pattern="[A-Za-z]{3}" required>
+				name="stock_symbol" value="" pattern="[A-Za-z]{3}" required placeholder="3 Characters">
 			<br> <br> Price Type:<br> <select required>
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="M">Market</option>
