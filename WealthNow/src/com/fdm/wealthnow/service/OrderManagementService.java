@@ -56,11 +56,12 @@ public class OrderManagementService extends DBUtil {
 		Order order = ord.getOrderFromOpenOrder(order_id, connect);
 		// format the date to string for create method
 		System.out.println("process order method running...");
-		ord.createProcessedOrderInDatabase(connect,order.getOrder_id(), order.getUser_id(), order.getCurrency_code(),
+		ord.createProcessedOrderInDatabase(connect, order.getOrder_id(), order.getUser_id(), order.getCurrency_code(),
 				order.getOrder_type(), order.getQuantity(), order.getStock_symbol(), order.getPrice_type(),
-				convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(), convertDateObjToString(order.getPlace_order_date()), "completed", closing_price);
+				convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
+				convertDateObjToString(order.getPlace_order_date()), "completed", closing_price);
 		System.out.println("created processed order in database - " + order.getOrder_id());
-		ord.deleteOpenOrderInDatabase(connect,order.getOrder_id());
+		ord.deleteOpenOrderInDatabase(connect, order.getOrder_id());
 		System.out.println("deleted open order in database - " + order.getOrder_id());
 		System.out.println("Order has been processed...");
 	}
@@ -85,8 +86,8 @@ public class OrderManagementService extends DBUtil {
 			System.out.println(price_type);
 			return false;
 		}
-		
-		//check if only B and S for order type
+
+		// check if only B and S for order type
 		else if (!order_type.equals("B") && !order_type.equals("S")) {
 			System.out.println(price_type);
 			return false;
@@ -110,30 +111,42 @@ public class OrderManagementService extends DBUtil {
 			return false;
 		}
 
-		// check if term is good to cancel or good for the day
-		else if (!term.equals("GC") && !term.equals("GD")) {
-			System.out.println("7");
-			return false;
-		}
+		// // check if term is good to cancel or good for the day
+		// else if (!term.equals("GC") && !term.equals("GD")) {
+		// System.out.println("7");
+		// return false;
+		// }
 
 		return true;
 	}
 
-	
-
-	public void updateStockHoldings(Integer order_id, Integer sold_quantity) throws Exception {
-		PortfolioDAO pfdao = new PortfolioDAO();
-		System.out.println("OMS - updating stockholdings with order id - " + order_id +
-				" and quantity " + sold_quantity);
-		pfdao.updateStockHolding(connect, order_id, sold_quantity);
-		System.out.println("updated stockholdings in OMS.");
+	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
+		PortfolioService ps = new PortfolioService();
+		// placeholder for the portfolio service
+		System.out.println("Calls for portfolio Service - createStockHoldings...");
+		ps.createStockHoldings(order_id, user_id);
+		
 
 	}
 
-	
-		
-		
-	
+	public void updateStockHoldings(Integer user_id, Integer order_id, Integer sold_quantity) throws Exception {
+		PortfolioService ps = new PortfolioService();
+		// placeholder for the portfolio service
+		System.out.println("Calls for portfolio Service - updateStockHoldings");
+		ps.updateStockHolding(user_id, order_id, sold_quantity);
+	}
+
+	public void deleteStockHoldings(Integer order_id) throws SQLException {
+		PortfolioDAO pfdao = new PortfolioDAO();
+		StockHolding sh = pfdao.getStockholding(connect, order_id);
+		if (sh.getPurchase_quantity().equals("0")) {
+			pfdao.deleteStockHolding(connect, order_id);
+			System.out.println("Stockholding with order id - " + order_id + " has been deleted.");
+		} else {
+			System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
+		}
+
+	}
 
 	/*
 	 * system check to see if trade is executable - to be done at
