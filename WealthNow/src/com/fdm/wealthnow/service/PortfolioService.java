@@ -102,17 +102,24 @@ public class PortfolioService extends DBUtil {
 		return stockHoldingList;
 	}
 
-	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
+	public void createStockHoldings(Integer order_id, Integer user_id) {
 		PortfolioDAO pfdao = new PortfolioDAO();
 		OrderDAO ord = new OrderDAO();
-		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
-		Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
-		System.out.println("Stockholding id created : " + stockholding_id);
-		pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
-				order.getQuantity(), order.getQuantity(), order.getLimit_price(),
-				convertDateObjToString(order.getPlace_order_date()));
+		Order order;
+		try {
+			order = ord.getOrderFromProcessedOrder(connect, order_id);
+			Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
+			System.out.println("Stockholding id created : " + stockholding_id);
+			pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
+					order.getQuantity(), order.getQuantity(), order.getLimit_price(),
+					convertDateObjToString(order.getPlace_order_date()));
+			
+			connect.commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		connect.commit();
 	
 
 	}
