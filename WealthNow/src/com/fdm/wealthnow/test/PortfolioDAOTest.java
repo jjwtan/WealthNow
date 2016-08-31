@@ -29,7 +29,7 @@ public class PortfolioDAOTest extends DBUtil{
 	
 	@Before
 	public void setup() throws Exception {
-		OrderDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+		PortfolioDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 		connect = PortfolioDAO.getConnection();
 		connect.setAutoCommit(false);
 	}
