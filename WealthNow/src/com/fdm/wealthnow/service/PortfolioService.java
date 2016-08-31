@@ -31,6 +31,8 @@ public class PortfolioService extends DBUtil {
 		System.out.println("Updating StockHolding");
 		pfDao.updateStockHolding(connect,order_id, sold_quantity);
 		System.out.println("StockHolding updated");
+		connect.commit();
+		connect.close();
 	}
 
 	/*
@@ -47,7 +49,8 @@ public class PortfolioService extends DBUtil {
 			Double netIncome = openingPrice - closingPrice;
 			System.out.println("Your net profit/loss for "+ symbolStock +":$" + netIncome);
 		}
-		
+		connect.commit();
+		connect.close();
 		
 	}
 
@@ -59,6 +62,8 @@ public class PortfolioService extends DBUtil {
 		OrderDAO orderDao = new OrderDAO();
 		List<Order> listOfSoldOrders = orderDao.getAllSoldOrderInDatabase(connect);
 		System.out.println(listOfSoldOrders);
+		connect.commit();
+		connect.close();
 		return listOfSoldOrders;
 	}
 
@@ -85,6 +90,8 @@ public class PortfolioService extends DBUtil {
 //					+ quantity + ", Price:" + price);
 
 //		}
+		connect.commit();
+		connect.close();
 		return stockHoldingList;
 	}
 
