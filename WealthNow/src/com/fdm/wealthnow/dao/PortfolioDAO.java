@@ -75,15 +75,15 @@ public class PortfolioDAO extends DBUtil {
 		 System.out.println("Connection Closed");
 	}
 
-	public boolean updateStockHolding(Connection connect,Integer order_id, Integer sold_quantity) throws Exception {
-		boolean success = false;
+	public void updateStockHolding(Connection connect,Integer order_id, Integer sold_quantity) throws Exception {
+//		boolean success = false;
 		String sql = "UPDATE STOCKHOLDING SET REMAINING_QUANTITY = REMAINING_QUANTITY - " 
 		+ sold_quantity + " WHERE order_id=" + order_id ;
 		
 		System.out.println(sql);
 		
 		
-		connect.setAutoCommit(true);
+//		connect.setAutoCommit(true);
 		 System.out.println("Connected to DB");
 		 PreparedStatement ps = connect.prepareStatement(sql);
 		 System.out.println("Executing SQL Queries");
@@ -91,9 +91,9 @@ public class PortfolioDAO extends DBUtil {
 		 ps.executeUpdate();
 		
 //		 connect.commit();
-		 success = true;
+//		 success = true;
 		
-		return success; 
+//		return success; 
  }
 	
 	public boolean deleteStockHolding(Connection connect,Integer order_id) throws SQLException{
