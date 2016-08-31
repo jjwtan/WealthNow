@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.common.OrderTypeEnum;
+import com.fdm.wealthnow.common.PriceTypeEnum;
+import com.fdm.wealthnow.common.TermEnum;
 import com.fdm.wealthnow.util.DBUtil;
 
 public class OrderDAO extends DBUtil {
@@ -33,8 +36,8 @@ public class OrderDAO extends DBUtil {
 				Double limit_price = result.getDouble("limit_price");
 				String term = result.getString("term");
 				String status = "OpenOrder";
-				order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
-						opening_order_date, limit_price, term, status);
+				order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
+						opening_order_date, limit_price, TermEnum.valueOf(term), status);
 			}
 			
 		} catch (SQLException e) {
@@ -68,7 +71,7 @@ public class OrderDAO extends DBUtil {
 			Double closing_price = result.getDouble("closing_price");
 			Double open_market_price = result.getDouble("open_market_price");
 
-			order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
+			order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
 					place_order_date, limit_price, order_completion_date, status, closing_price, open_market_price);
 
 		}
@@ -101,7 +104,7 @@ public class OrderDAO extends DBUtil {
 			Double closing_price = result.getDouble("closing_price");
 			Double open_market_price = result.getDouble("open_market_price");
 
-			Order order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
+			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
 					place_order_date, limit_price, order_completion_date, status, closing_price, open_market_price);
 			processedCompletedOrderfromUser.add(order);
 		}
@@ -133,8 +136,8 @@ public class OrderDAO extends DBUtil {
 			Double closing_price = result.getDouble("closing_price");
 			String status = "OpenOrder";
 
-			Order order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
-					opening_order_date, limit_price, term, closing_price, status);
+			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
+					opening_order_date, limit_price, TermEnum.valueOf(term), closing_price, status);
 			AllSoldOrderInDatabase.add(order);
 		}
 		
@@ -193,8 +196,8 @@ public class OrderDAO extends DBUtil {
 				Double limit_price = result.getDouble("limit_price");
 				String term = result.getString("term");
 				String status = "OpenOrder";
-				Order order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
-						opening_order_date, limit_price, term, status);
+				Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
+						opening_order_date, limit_price, TermEnum.valueOf(term), status);
 				OpenOrderList.add(order);
 			}
 			

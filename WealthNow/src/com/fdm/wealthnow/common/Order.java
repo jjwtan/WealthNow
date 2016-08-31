@@ -7,13 +7,13 @@ public class Order {
 	Integer user_id;
 	Integer order_id;
 	String currency_code;
-	String order_type;
+	OrderTypeEnum order_type;
 	Integer quantity;
 	String stock_symbol;
-	String price_type;
+	PriceTypeEnum price_type;
 	Date place_order_date;
 	Double limit_price;
-	String term;
+	TermEnum term;
 	Date order_completion_date;
 	String status;
 	Double closing_price;
@@ -22,8 +22,8 @@ public class Order {
 	/*
 	 * Order constructor is to be called to create an OpenOrder
 	 */
-	public Order(Integer user_id, Integer order_id, String currency_code, String order_type, Integer quantity,
-			String stock_symbol, String price_type, Date opening_order_date, Double limit_price, String term,
+	public Order(Integer user_id, Integer order_id, String currency_code, OrderTypeEnum order_type, Integer quantity,
+			String stock_symbol, PriceTypeEnum price_type, Date opening_order_date, Double limit_price, TermEnum term2,
 			String status) {
 		this.user_id = user_id;
 		this.order_id = order_id;
@@ -34,14 +34,14 @@ public class Order {
 		this.price_type = price_type;
 		this.place_order_date = opening_order_date;
 		this.limit_price = limit_price;
-		this.term = term;
+		this.term = term2;
 		this.status = status;
 	}
 	/*
 	 * Order constructor is to be called to create a ProcessedOrder
 	 */
-	public Order(Integer user_id, Integer order_id, String currency_code, String order_type, Integer quantity,
-			String stock_symbol, String price_type, Date place_order_date, Double limit_price,
+	public Order(Integer user_id, Integer order_id, String currency_code, OrderTypeEnum order_type, Integer quantity,
+			String stock_symbol, PriceTypeEnum price_type, Date place_order_date, Double limit_price,
 			Date order_completion_date, String status, Double closing_price, Double open_market_price) {
 		this.user_id = user_id;
 		this.order_id = order_id;
@@ -59,8 +59,8 @@ public class Order {
 	}
 	
 
-	public Order(Integer user_id2, Integer order_id2, String currency_code2, String order_type2, Integer quantity2,
-			String stock_symbol2, String price_type2, Date opening_order_date, Double limit_price2, String term2,
+	public Order(Integer user_id2, Integer order_id2, String currency_code2, OrderTypeEnum order_type2, Integer quantity2,
+			String stock_symbol2, PriceTypeEnum price_type2, Date opening_order_date, Double limit_price2, TermEnum term2,
 			Double closing_price2, String status2) {
 		// TODO Auto-generated constructor stub
 	}
@@ -89,11 +89,11 @@ public class Order {
 		this.currency_code = currency_code;
 	}
 
-	public String getOrder_type() {
+	public OrderTypeEnum getOrder_type() {
 		return order_type;
 	}
 
-	public void setOrder_type(String order_type) {
+	public void setOrder_type(OrderTypeEnum order_type) {
 		this.order_type = order_type;
 	}
 
@@ -113,11 +113,11 @@ public class Order {
 		this.stock_symbol = stock_symbol;
 	}
 
-	public String getPrice_type() {
+	public PriceTypeEnum getPrice_type() {
 		return price_type;
 	}
 
-	public void setPrice_type(String price_type) {
+	public void setPrice_type(PriceTypeEnum price_type) {
 		this.price_type = price_type;
 	}
 
@@ -153,11 +153,11 @@ public class Order {
 		this.limit_price = limit_price;
 	}
 
-	public String getTerm() {
+	public TermEnum getTerm() {
 		return term;
 	}
 
-	public void setTerm(String term) {
+	public void setTerm(TermEnum term) {
 		this.term = term;
 	}
 
