@@ -4,18 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Insert title here</title>
 </head>
 <body>
-
-<h3>Login Form</h3>  
-<form action="LoginController" method="post">  
-	User name:<input type="text" name="username"/><br/><br/>  
-	Password:<input type="password" name="password"/><br/><br/>  
-	<input type="submit" value="Login"/>  
-</form>  
-
-<a href="register_user_info.jsp">New User</a>
 
 </body>
 </html>

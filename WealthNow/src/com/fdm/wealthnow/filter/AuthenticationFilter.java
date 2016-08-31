@@ -31,7 +31,7 @@ public class AuthenticationFilter implements Filter {
 		System.out.println("Requested Resource:"+uri);
 		
 		// Special handle request to login page.Otherwise we will end up in infinite loop!
-		if (!uri.endsWith("/login.jsp") && !uri.endsWith("/LoginController")) {
+		if (!uri.endsWith("/login.jsp") && !uri.endsWith("/LoginController") && !uri.endsWith("/register_user_info.jsp")) {
 			//Do not create a new session if it does not exist!
 			HttpSession session = req.getSession(false);
 			if(session == null || session.getAttribute("loggedInUser") == null) {
