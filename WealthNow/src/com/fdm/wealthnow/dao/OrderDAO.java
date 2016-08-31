@@ -36,7 +36,7 @@ public class OrderDAO extends DBUtil {
 				order = new Order(user_id, order_id, currency_code, order_type, quantity, stock_symbol, price_type,
 						opening_order_date, limit_price, term, status);
 			}
-			connect.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,7 +72,7 @@ public class OrderDAO extends DBUtil {
 					place_order_date, limit_price, order_completion_date, status, closing_price, open_market_price);
 
 		}
-		connect.close();
+		
 		return order;
 	}
 
@@ -105,7 +105,7 @@ public class OrderDAO extends DBUtil {
 					place_order_date, limit_price, order_completion_date, status, closing_price, open_market_price);
 			processedCompletedOrderfromUser.add(order);
 		}
-		connect.close();
+		
 		return processedCompletedOrderfromUser;
 	}
 
@@ -137,7 +137,7 @@ public class OrderDAO extends DBUtil {
 					opening_order_date, limit_price, term, closing_price, status);
 			AllSoldOrderInDatabase.add(order);
 		}
-		connect.close();
+		
 		return AllSoldOrderInDatabase;
 	}
 
@@ -222,7 +222,7 @@ public class OrderDAO extends DBUtil {
 		ps.executeUpdate();
 		System.out.println(SQL + "\nThe SQL statement above has been executed");
 
-		connect.close();
+		
 	}
 
 	public boolean deleteOpenOrderInDatabase(Connection connect, Integer order_id) {
