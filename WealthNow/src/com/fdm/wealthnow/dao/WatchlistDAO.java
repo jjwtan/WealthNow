@@ -129,9 +129,11 @@ public class WatchlistDAO extends DBUtil {
 			PreparedStatement ps2 = connect.prepareStatement(SQLStatement2);
 
 			ps1.executeUpdate();
-			//System.out.println("--> Delete from userwatchlist SQL executed\n" + SQLStatement1);
+			// System.out.println("--> Delete from userwatchlist SQL executed\n"
+			// + SQLStatement1);
 			ps2.executeUpdate();
-			//System.out.println("--> Delete from userwatchlist SQL executed\n" + SQLStatement2);
+			// System.out.println("--> Delete from userwatchlist SQL executed\n"
+			// + SQLStatement2);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,8 +144,8 @@ public class WatchlistDAO extends DBUtil {
 	};
 
 	// allow user to change watchlistName and/or visibility
-	// pass in newWatchlist with existing id but new name and visibility 
-	public boolean updateWatchlist(Watchlist newWatchlist, Connection connect) {
+	// pass in newWatchlist with existing id but new name and visibility
+	public void updateWatchlist(Watchlist newWatchlist, Connection connect) {
 
 		try {
 
@@ -154,7 +156,52 @@ public class WatchlistDAO extends DBUtil {
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 
 			ps.executeUpdate();
-			System.out.println("--> Update userwatchlist SQL executed\n" + SQLStatement);
+			// System.out.println("--> Update userwatchlist SQL executed\n" +
+			// SQLStatement);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	};
+
+	// get stock symbols from watchlist
+	public List<String> getAllStocksFromWatchlist(Integer watchlistId, Connection connect) {
+
+		List<String> stocksList = new ArrayList<String>();
+
+		try {
+			String SQLStatement = "select stock_symbol from WatchlistDetail where watchlist_id = ?";
+			PreparedStatement ps = connect.prepareStatement(SQLStatement);
+			ps.setInt(1, watchlistId);
+
+			ResultSet result = ps.executeQuery();
+
+			while (result.next()) {
+				String stockSymbol = result.getString("stock_symbol");
+				stocksList.add(stockSymbol);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return stocksList;
+	}
+
+	// add stock symbols to watchlist
+	public void addStockToWatchlist(Integer watchlistId, String stockSymbol, Connection connect) {
+
+		try {
+
+			String SQLStatement = "INSERT INTO WatchlistDetail(watchlist_id  , stock_symbol ) VALUES (" + watchlistId
+					+ ", '" + stockSymbol + "')";
+
+			PreparedStatement ps = connect.prepareStatement(SQLStatement);
+			ps.executeUpdate();
+			System.out.println("--> Add stock to userwatchlist SQL executed\n" + SQLStatement);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -162,7 +209,23 @@ public class WatchlistDAO extends DBUtil {
 			e.printStackTrace();
 		}
 
-		return true;
-	};
+	}
+	
+	// delete stock symbol from watchlist
+	public void deleteStockFromWatchlist(Integer watchlistId, String stockSymbol, Connection connect) {
+
+		try {
+
+			String SQLStatement = "delete from WatchlistDetail where stock_symbol = '" + stockSymbol + "'";
+			PreparedStatement ps = connect.prepareStatement(SQLStatement);
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 }

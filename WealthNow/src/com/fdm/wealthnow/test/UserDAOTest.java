@@ -3,6 +3,8 @@ package com.fdm.wealthnow.test;
 import static org.junit.Assert.*;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +116,26 @@ public class UserDAOTest {
 		assertEquals("Tommy", updatedUser.getUsername());
 		assertEquals("Lee", updatedUser.getLastName());
 		assertEquals("harrypotter@hotmail.com", updatedUser.getEmail());
+	}
+	
+	@Test
+	public void testUpdatePassword() throws SQLException{
+		
+		Integer userId;
+		userId = 1;
+		
+		userDAO.updatePassword(userId, "newPass", connect);
+		
+		// run SQL statement to pull password 
+		String SQLStatement = "Select user_password from USER1 where user_id = ?";
+		PreparedStatement ps = connect.prepareStatement(SQLStatement);
+		ps.setInt(1, userId);
+		ResultSet rs;
+		rs = ps.executeQuery();
+		rs.next();
+		String userPassword = rs.getString("user_password");
+		
+		assertEquals("newPass", userPassword);
 	}
 	
 	@After

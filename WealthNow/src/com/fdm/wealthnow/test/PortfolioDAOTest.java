@@ -2,6 +2,7 @@ package com.fdm.wealthnow.test;
 
 import org.junit.Test;
 
+import com.fdm.wealthnow.common.Order;
 import com.fdm.wealthnow.common.StockHolding;
 import com.fdm.wealthnow.dao.AuthDAO;
 import com.fdm.wealthnow.dao.OrderDAO;
@@ -19,32 +20,32 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 
-public class PortfolioDAOTest extends DBUtil{
+public class PortfolioDAOTest extends DBUtil {
 	static Connection connect;
 	private PortfolioDAO portfolioDAO;
 
-	//==============================================================================
+	// ==============================================================================
 	// Before test
-	//==============================================================================
-	
+	// ==============================================================================
+
 	@Before
 	public void setup() throws Exception {
 		PortfolioDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 		connect = PortfolioDAO.getConnection();
 		connect.setAutoCommit(false);
 	}
-	
-	//==============================================================================
+
+	// ==============================================================================
 	// Test on creating stockholding in database
-	//==============================================================================
+	// ==============================================================================
 
 	@Test
 	public void testCreateStockHoldingInDatabase() throws Exception {
 
 		PortfolioDAO portfolioDAO1 = new PortfolioDAO();
 
-		portfolioDAO1.createStockHoldingInDatabase(connect, new Integer(10),new Integer(1), new Integer(131), "MAC", new Integer(100),
-				new Integer(100), new Double(99.99), "20 Sep 2001");
+		portfolioDAO1.createStockHoldingInDatabase(connect, new Integer(10), new Integer(1), new Integer(131), "MAC",
+				new Integer(100), new Integer(100), new Double(99.99), "20 Sep 2001");
 
 		List<StockHolding> newTestList = portfolioDAO1.getStockHoldingInDataBase(1, connect);
 
@@ -58,35 +59,42 @@ public class PortfolioDAOTest extends DBUtil{
 		System.out.println("Test Completed: Created Data in database.");
 	}
 
-	//==============================================================================
+	// ==============================================================================
 	// Test on updating stockholding database
-	//==============================================================================
-	
+	// ==============================================================================
+
 	@Test
 	public void testUpdateStockHoldingInDatabase() throws Exception {
 
 		PortfolioDAO portfolioDAO = new PortfolioDAO();
-		
-//		portfolioDAO.createStockHoldingInDatabase(new Integer(1), new Integer(131), "9FINGERS", new Integer(400),
-//				new Integer(400), new Double(55.50), "20 Sep 2001");
-		
-		portfolioDAO.updateStockHolding(connect, new Integer(131), new Integer(40));
+		OrderDAO ord = new OrderDAO();
 
-		List<StockHolding> newTestList = portfolioDAO.getStockHoldingInDataBase(1, connect);
-		System.out.println(newTestList);
-		
-		for (StockHolding newListTest : newTestList) {
-			assertEquals(newListTest.getRemaining_quantity(), new Integer(60));
+		// portfolioDAO.createStockHoldingInDatabase(new Integer(1), new
+		// Integer(131),
+		// "9FINGERS", new Integer(400),
+		// new Integer(400), new Double(55.50), "20 Sep 2001");
+		Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
 
-			System.out.println("Test Completed: Update Stock holding in database.");
-		}
+		Order order = ord.getOrderFromProcessedOrder(connect, new Integer(145));
+
+		portfolioDAO.createStockHoldingInDatabase(connect, stockholding_id, new Integer(1), new Integer(145),
+				order.getStock_symbol(), order.getQuantity(), order.getQuantity(), order.getLimit_price(),
+				convertDateObjToString(order.getPlace_order_date()));
+
+		portfolioDAO.updateStockHolding(connect, order.getOrder_id(), new Integer(40));
+
+		StockHolding sh = portfolioDAO.getStockholding(connect, order.getOrder_id());
+
+		System.out.println("Test Completed: Update Stock holding in database.");
+
+		assertEquals(sh.getRemaining_quantity(), new Integer(60));
 
 	}
-	
-	//==============================================================================
+
+	// ==============================================================================
 	// After test
-	//==============================================================================
-	
+	// ==============================================================================
+
 	@After
 	public void tearDown() throws SQLException {
 		try {
@@ -96,5 +104,5 @@ public class PortfolioDAOTest extends DBUtil{
 		}
 		connect.close();
 	}
-	
+
 }

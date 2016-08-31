@@ -34,13 +34,13 @@ public class PortfolioServiceTest extends DBUtil {
 		connect.setAutoCommit(false);
 	}
 
-	 @Test
+	 //@Test
 	public void testResultsOfComputeGainsAndLosses() throws Exception {// TEST
 																		// GET
 																		// SOLD
 																		// ORDERS
 						OrderDAO ord = new OrderDAO();	
-						ord.createProcessedOrderInDatabase(connect, 2, 301, "SGD", "B", 100, "HKL","M", "19 Sep 2014", 90.0, 
+						ord.createProcessedOrderInDatabase(connect, 2, 303, "SGD", "B", 100, "HKL","M", "19 Sep 2014", 90.0, 
 								"12 Oct 2015", "completed", 100.0);
 											connect.commit();							
 		PortfolioService pfs = new PortfolioService();
@@ -55,25 +55,28 @@ public class PortfolioServiceTest extends DBUtil {
 		connect.close();
 	}
 
-	
+	@Test
 	public void testUpdateStockHolding() throws Exception {// test update and
 															// get together
 
 		PortfolioService pfs = new PortfolioService();
 		System.out.println("creating new stockholding");
 		Integer stockHolding_id = getSequenceID("stockholdings_pk_seq");
-		pfs.createStockHoldings(176, 1);
+		pfs.createStockHoldings(176, 3);
 		System.out.println("stockholding created");
 
 		System.out.println("Updating stock via portfolio service method now");
 
-		pfs.updateStockHolding(1, 176, 50);
-
-		List<StockHolding> stockHoldingList = pfs.getPortfolioInStockHolding(1);
+		pfs.updateStockHolding(3, 176, 50);
+		StockHolding sh = null;
+		List<StockHolding> stockHoldingList = pfs.getPortfolioInStockHolding(3);
 		for (StockHolding newStock : stockHoldingList) {
-			Integer remain_qty = newStock.getRemaining_quantity();
-			assertEquals(remain_qty, new Integer(50));
+			sh = newStock;
+			
 		}
+		
+		Integer remain_qty = sh.getRemaining_quantity();
+		assertEquals(remain_qty, new Integer(50));
 
 		connect.close();
 	}

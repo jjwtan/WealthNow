@@ -18,7 +18,7 @@ import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 public class WatchlistDAOTest {
 
-	private WatchlistDAO watchlistDAO;
+	static WatchlistDAO watchlistDAO;
 	static Connection connect;
 
 	@Before
@@ -31,10 +31,6 @@ public class WatchlistDAOTest {
 	@Test
 	public void testGetWatchlist() {
 
-		//System.out.println("Inside testGetWatchlist");
-		watchlistDAO = new WatchlistDAO();
-		// Watchlist watchlistToGet = new Watchlist();
-
 		Watchlist watchlistToGet1 = watchlistDAO.getWatchlist(1, connect);
 		assertEquals("following", watchlistToGet1.getWatchlistName());
 		Watchlist watchlistToGet2 = watchlistDAO.getWatchlist(2, connect);
@@ -44,7 +40,7 @@ public class WatchlistDAOTest {
 	@Test
 	public void testGetAllUserWatchlist() {
 
-		watchlistDAO = new WatchlistDAO();
+		WatchlistDAO watchlistDAO = new WatchlistDAO();
 		List<Watchlist> watchlistsBelongingToUser = new ArrayList<Watchlist>();
 		watchlistsBelongingToUser = watchlistDAO.getAllUserWatchlist(3, connect);
 
@@ -85,7 +81,8 @@ public class WatchlistDAOTest {
 	
 	@Test
 	public void testDeleteWatchlist() throws ParseException, SQLException {
-		watchlistDAO = new WatchlistDAO();
+		
+		WatchlistDAO watchlistDAO = new WatchlistDAO();
 		// delete watchlist (id 6) named My Important Stocks from John's (id 3) watchlist
 		Integer watchListId = 6;
 		
@@ -107,7 +104,7 @@ public class WatchlistDAOTest {
 	
 	@Test
 	public void testUpdateWatchlist() throws ParseException, SQLException {
-		watchlistDAO = new WatchlistDAO();
+
 		Integer watchListId = 1;
 		Watchlist newWatchlist = new Watchlist(watchListId, "NEW", "PUBLIC");
 		watchlistDAO.updateWatchlist(newWatchlist, connect);
@@ -116,6 +113,61 @@ public class WatchlistDAOTest {
 		Watchlist watchlistToGet = watchlistDAO.getWatchlist(watchListId, connect);
 		assertEquals("NEW", watchlistToGet.getWatchlistName());
 		assertEquals("PUBLIC", watchlistToGet.getVisibility());
+	}
+	
+	@Test
+	public void testGetAllStocksFromWatchlist() throws ParseException, SQLException {
+		
+		WatchlistDAO watchlistDAO = new WatchlistDAO();
+		Integer watchlistId;
+		watchlistId = 3;
+		List<String> stocksListToGet = new ArrayList<String>();
+		stocksListToGet = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connect);
+		
+		assertEquals(2, stocksListToGet.size());
+	}
+	
+	@Test
+	public void testAddStockToWatchlist() throws ParseException, SQLException {
+		WatchlistDAO watchlistDAO = new WatchlistDAO();
+		String stockSymbol;
+		Integer watchlistId;
+		List<String> stocksListToGet = new ArrayList<String>();
+		
+		stockSymbol = "AEE";
+		watchlistId = 3;
+		
+		watchlistDAO.addStockToWatchlist(watchlistId, stockSymbol, connect);
+		stocksListToGet = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connect);
+		
+		/*
+		System.out.println("Stock symbol in watchlistId: " + watchlistId);
+		for(int i = 0; i<stocksListToGet.size(); i++){
+			System.out.println(stocksListToGet.get(i));
+		}
+		*/
+		assertEquals(3, stocksListToGet.size());
+	}
+	
+	@Test
+	public void testDeleteStockFromWatchlist() throws ParseException, SQLException {
+		WatchlistDAO watchlistDAO = new WatchlistDAO();
+		String stockSymbol;
+		Integer watchlistId;
+		List<String> stocksListToGet = new ArrayList<String>();
+		
+		stockSymbol = "GOOG";
+		watchlistId = 1;
+		
+		watchlistDAO.deleteStockFromWatchlist(watchlistId, stockSymbol, connect);
+		stocksListToGet = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connect);
+		
+		System.out.println("Stock symbol in watchlistId: " + watchlistId);
+		for(int i = 0; i<stocksListToGet.size(); i++){
+			System.out.println(stocksListToGet.get(i));
+		}
+		
+		assertEquals(1, stocksListToGet.size());
 	}
 	
 	@After
