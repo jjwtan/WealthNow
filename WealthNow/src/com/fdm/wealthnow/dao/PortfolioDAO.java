@@ -42,8 +42,8 @@ public class PortfolioDAO extends DBUtil {
 			stockHoldingList.add(sh);
 			System.out.println("new stock has been added");
 		}
-		connect.commit();
-		connect.close();
+//		connect.commit();
+		
 		
 		 System.out.println("Connection Closed");
 
@@ -70,8 +70,8 @@ public class PortfolioDAO extends DBUtil {
 		 
 		 System.out.println("Data has been inserted");
 		 
-		connect.commit();
-		connect.close();
+//		connect.commit();
+		
 		 System.out.println("Connection Closed");
 	}
 
@@ -90,9 +90,9 @@ public class PortfolioDAO extends DBUtil {
 
 		 ps.executeUpdate();
 		
-		 connect.commit();
+//		 connect.commit();
 		 success = true;
-		 connect.close();
+		
 		return success; 
  }
 	
@@ -101,15 +101,15 @@ public class PortfolioDAO extends DBUtil {
 		String sql = "DELETE FROM STOCKHolding where order_id= " + order_id;
 		System.out.println(sql);
 		
-		connect.setAutoCommit(true);
+//		connect.setAutoCommit(true);
 		System.out.println("Connecting to DB");
 		PreparedStatement ps = connect.prepareStatement(sql);
 		ps.executeUpdate();
-		connect.commit();
-		System.out.println("Committed");
+//		connect.commit();
+//		System.out.println("Committed");
 		success = true;
 		System.out.println("Success deletion!");
-		connect.close();
+		
 		
 		return success;
 		
