@@ -82,8 +82,7 @@ public class LoginController extends HttpServlet {
 		if (user.isAuthenticationSuccess()) {
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(SESSION_TIMEOUT_IN_MINS);
-			session.setAttribute("loggedInUser", user.getUser().getFirstName()+user.getUser().getLastName());
-			session.setAttribute("loggedInUserId", user.getUser().getUserId());
+			session.setAttribute("loggedInUser", user);
 			request.getRequestDispatcher("homepage.jsp").forward(request, response);
 
 		} else {
