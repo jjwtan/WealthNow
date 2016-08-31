@@ -198,7 +198,7 @@ public class OrderDAO extends DBUtil {
 						opening_order_date, limit_price, term, status);
 				OpenOrderList.add(order);
 			}
-			connect.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
