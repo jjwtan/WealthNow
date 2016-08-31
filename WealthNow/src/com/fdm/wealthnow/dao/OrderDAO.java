@@ -147,7 +147,7 @@ public class OrderDAO extends DBUtil {
 		return AllSoldOrderInDatabase;
 	}
 
-	public void createProcessedOrderInDatabase(Connection connect, Integer order_id, Integer user_id,
+	public void createProcessedOrderInDatabase(Connection connect,  Integer user_id,Integer order_id,
 			String currency_code, String order_type, Integer quantity, String stock_symbol, String price_type,
 			String opening_order_date, Double limit_price, String order_completion_date, String status,
 			Double closing_price) {
@@ -157,7 +157,7 @@ public class OrderDAO extends DBUtil {
 				+ "price_type, status ,place_order_date, limit_price, order_completion_date, closing_price) "
 				+ "VALUES(" + order_id + ", " + user_id + ",'" + currency_code + "','" + order_type + "'," + quantity
 				+ ",'" + stock_symbol + "','" + price_type + "','" + status + "','" + opening_order_date + "',"
-				+ limit_price + ",'" + order_completion_date + "'," + limit_price + ")";
+				+ limit_price + ",'" + order_completion_date + "'," + closing_price + ")";
 
 		
 		PreparedStatement ps;

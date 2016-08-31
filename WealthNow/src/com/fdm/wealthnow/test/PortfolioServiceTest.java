@@ -39,19 +39,20 @@ public class PortfolioServiceTest extends DBUtil {
 																		// GET
 																		// SOLD
 																		// ORDERS
-																		// AND
-																		// COMPUTATION
+						OrderDAO ord = new OrderDAO();	
+						ord.createProcessedOrderInDatabase(connect, 2, 301, "SGD", "B", 100, "HKL","M", "19 Sep 2014", 90.0, 
+								"12 Oct 2015", "completed", 100.0);
+											connect.commit();							
 		PortfolioService pfs = new PortfolioService();
-		List<Order> soldList = pfs.getAllSoldOrders(1,152);
-		for (Order newList : soldList) {
-			Double soldPrice = newList.getClosing_price();
-			Double boughtPrice = newList.getLimit_price();
-			Double netPrice = soldPrice - boughtPrice;
-			assertEquals(netPrice, new Double(100));// change the expected value
+		
+		Double netIncome = pfs.computeGainsAndLosses();
+		
+			assertEquals(netIncome, new Double(-10));// change the expected value
 													// check with DB.
-		}
+		
 
 		System.out.println("Test Completed: Results of compute gains and losses.");
+		connect.close();
 	}
 
 	

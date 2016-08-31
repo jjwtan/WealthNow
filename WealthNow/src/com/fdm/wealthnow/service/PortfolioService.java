@@ -40,19 +40,23 @@ public class PortfolioService extends DBUtil {
 	/*
 	 * calculate gains/losses for realised G&L page
 	 */
-	public void computeGainsAndLosses() throws Exception {
+	public double computeGainsAndLosses() throws Exception {
 
 		OrderDAO orderDao = new OrderDAO();
 		Double netIncome = (double) 0;
-		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect,1,152);
+		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect,2,301);
+		
 		for (Order newListofSoldGainsAndLosses : listOfSoldGainsAndLosses) {
 			String symbolStock = newListofSoldGainsAndLosses.getStock_symbol();
 			Double openingPrice = newListofSoldGainsAndLosses.getLimit_price();
+			System.out.println(openingPrice);
 			Double closingPrice = newListofSoldGainsAndLosses.getClosing_price();
+			System.out.println(closingPrice);
 			netIncome = openingPrice - closingPrice;
 			System.out.println("Your net profit/loss for " + symbolStock + ":$" + netIncome);
 		}
 		connect.commit();
+		return netIncome;
 		
 
 	}
@@ -102,24 +106,17 @@ public class PortfolioService extends DBUtil {
 		return stockHoldingList;
 	}
 
-	public void createStockHoldings(Integer order_id, Integer user_id) {
+	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
 		PortfolioDAO pfdao = new PortfolioDAO();
 		OrderDAO ord = new OrderDAO();
-		Order order;
-		try {
-			order = ord.getOrderFromProcessedOrder(connect, order_id);
-			Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
-			System.out.println("Stockholding id created : " + stockholding_id);
-			pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
-					order.getQuantity(), order.getQuantity(), order.getLimit_price(),
-					convertDateObjToString(order.getPlace_order_date()));
-			
-			connect.commit();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
+		Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
+		System.out.println("Stockholding id created : " + stockholding_id);
+		pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
+				order.getQuantity(), order.getQuantity(), order.getLimit_price(),
+				convertDateObjToString(order.getPlace_order_date()));
 		
+		connect.commit();
 	
 
 	}
