@@ -22,6 +22,11 @@ import com.fdm.wealthnow.common.Stock;
 public class StockService {
 	static List<String> rawStockList;
 	static List<Stock> requestStock;
+	
+	public boolean validateStock(String stockSymbol) {
+		Stock stock = getStockFromExchange(stockSymbol, InfoType.BASIC);
+		return (stock.getCompany().equals("N/A")) ? false : true ;
+	}
 
 	public Stock getStockFromExchange(String stockSymbol, InfoType type) {
 		List<Stock> wrapper = new ArrayList<>();
@@ -105,9 +110,15 @@ public class StockService {
 			counter = 0;
 			for (String item: stocksFromEx) {
 				st = new StringTokenizer(item, ",");
-				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), st.nextToken().replace("\"", ""), Float.parseFloat(st.nextToken()), Float.parseFloat(st.nextToken()));
+				String company = st.nextToken().replace("\"", "");
+				if(!company.equals("N/A")){
+					Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), company, Float.parseFloat(st.nextToken()), Float.parseFloat(st.nextToken()));
+					stockList.add(stock);
+				} else {
+					Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), "N/A", 0, 0);
+					stockList.add(stock);
+				}
 				counter++;
-				stockList.add(stock);
 			}
 			return stockList;
 			

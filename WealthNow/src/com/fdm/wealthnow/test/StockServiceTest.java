@@ -22,6 +22,12 @@ public class StockServiceTest {
 	}
 
 	@Test
+	public void testValidateStock() {
+		assertFalse(stockService.validateStock("S307"));
+		assertTrue(stockService.validateStock("Z74"));
+	}
+	
+	@Test
 	public void testBasicURL() {
 		String url = stockService.generateRequestURL(stockList, InfoType.BASIC);
 		System.out.println(url);
