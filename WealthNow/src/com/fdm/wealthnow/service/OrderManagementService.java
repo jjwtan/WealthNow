@@ -70,36 +70,49 @@ public class OrderManagementService extends DBUtil {
 		// check nulls for all parameters
 		if (user_id == null || currency_code == null || order_type == null || quantity == null || stock_symbol == null
 				|| price_type == null || opening_order_date == null || limit_price == null || term == null) {
+			System.out.println("1");
 			return false;
 		}
 
 		// check if currency_code is not more than 3 characters.
 		else if (currency_code.length() > 3) {
+			System.out.println("2");
 			return false;
 		}
 
-		// check if order type is M, LT, SL
-		else if (!order_type.equals("M") || !order_type.equals("LT") || !order_type.equals("SL")) {
+		// check if price type is M, LT, SL
+		else if (!price_type.equals("M") && !price_type.equals("LT") && !price_type.equals("SL")) {
+			System.out.println(price_type);
+			return false;
+		}
+		
+		//check if only B and S for order type
+		else if (!order_type.equals("B") && !order_type.equals("S")) {
+			System.out.println(price_type);
 			return false;
 		}
 
 		// check if quantity is not negative
 		else if (quantity < 1) {
+			System.out.println("4");
 			return false;
 		}
 
 		// check if stock symbol not more than 4 characters.
 		else if (stock_symbol.length() > 4) {
+			System.out.println("5");
 			return false;
 		}
 
 		// check if limit price is not negative
 		else if (limit_price < 0) {
+			System.out.println("6");
 			return false;
 		}
 
 		// check if term is good to cancel or good for the day
-		else if (!term.equals("GC") || !term.equals("GD")) {
+		else if (!term.equals("GC") && !term.equals("GD")) {
+			System.out.println("7");
 			return false;
 		}
 
