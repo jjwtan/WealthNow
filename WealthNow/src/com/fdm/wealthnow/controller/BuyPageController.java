@@ -42,7 +42,7 @@ public class BuyPageController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		doGet(request, response);
-		String ordertype = request.getParameter("ordertype");
+		String ordertype = request.getParameter("Selection");
 		String quantity  = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
 		String price_type = request.getParameter("price_type");

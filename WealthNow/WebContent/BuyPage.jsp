@@ -10,23 +10,23 @@
 <body>
 
 
-	<form
-		action="/WealthNow/com/fdm/wealthnow/controller/BuyPageController"
-		method="post">
+	<form action="BuyPageController" method="post">
 		<fieldset>
 			<legend>Buy Stocks</legend>
 
-			<input type="radio" name="A" value="buy" required> Buy <input
-				type="radio" name="A" value="sell" required> Sell <br> <br>
+			<input type="radio" name="Selection" value="buy"  required> Buy 
+			<input type="radio" name="Selection" value="sell" required> Sell <br> <br>
+				
 			Quantity: <input type="number" name="quantity" value="quantity"
 				required> Stock Symbol:<input type="text"
 				name="stock_symbol" value="" pattern="[A-Za-z]{3}" required placeholder="3 Characters">
-			<br> <br> Price Type:<br> <select required>
+				
+			<br> <br> Price Type:<br> <select required name="price_type">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="M">Market</option>
 				<option value="SL">Stop Loss</option>
 				<option value="L">Limit</option>
-			</select> <br> Term:<br> <select required>
+			</select> <br> Term:<br> <select required name="term">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="GD">Good For The Day</option>
 				<option value="GC">Good Till Cancelled</option>
