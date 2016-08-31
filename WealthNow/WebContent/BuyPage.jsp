@@ -11,7 +11,7 @@
 <body>
 
 
-<form action="BuyPageController" border 1px>
+<form action="BuyPageController" >
 <fieldset>
     <legend>Buy Stocks</legend>
 
