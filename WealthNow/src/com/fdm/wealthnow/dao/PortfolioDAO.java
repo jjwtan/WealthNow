@@ -45,7 +45,7 @@ public class PortfolioDAO extends DBUtil {
 //		connect.commit();
 		
 		
-		 System.out.println("Connection Closed");
+//		 System.out.println("Connection Closed");
 
 		return stockHoldingList;
 	}

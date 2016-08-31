@@ -19,9 +19,8 @@ import java.util.List;
 
 import org.junit.Before;
 
-public class PortfolioServiceTest extends DBUtil{
+public class PortfolioServiceTest extends DBUtil {
 
-	
 	Connection connect;
 
 	// ==============================================================================
@@ -35,49 +34,46 @@ public class PortfolioServiceTest extends DBUtil{
 		connect.setAutoCommit(false);
 	}
 
-//	@Test
-	public void testResultsOfComputeGainsAndLosses() throws Exception {//TEST GET SOLD ORDERS AND COMPUTATION
+	 @Test
+	public void testResultsOfComputeGainsAndLosses() throws Exception {// TEST
+																		// GET
+																		// SOLD
+																		// ORDERS
+																		// AND
+																		// COMPUTATION
 		PortfolioService pfs = new PortfolioService();
-		List<Order> soldList = pfs.getAllSoldOrders();
-		for(Order newList : soldList){
+		List<Order> soldList = pfs.getAllSoldOrders(1,152);
+		for (Order newList : soldList) {
 			Double soldPrice = newList.getClosing_price();
 			Double boughtPrice = newList.getLimit_price();
 			Double netPrice = soldPrice - boughtPrice;
-			assertEquals(netPrice, new Double(100));//change the expected value check with DB.
+			assertEquals(netPrice, new Double(100));// change the expected value
+													// check with DB.
 		}
-		
-		
-		
-		
 
 		System.out.println("Test Completed: Results of compute gains and losses.");
 	}
 
-	@Test
-	public void testUpdateStockHolding() throws Exception {//test update and get together
-		
-		PortfolioDAO pfDao = new PortfolioDAO();
+	
+	public void testUpdateStockHolding() throws Exception {// test update and
+															// get together
+
+		PortfolioService pfs = new PortfolioService();
 		System.out.println("creating new stockholding");
 		Integer stockHolding_id = getSequenceID("stockholdings_pk_seq");
-		pfDao.createStockHoldingInDatabase(connect, stockHolding_id,new Integer(1), new Integer(124), "XXX", new Integer(500),
-				new Integer(500), new Double(9.99), "20 Sep 2001");
+		pfs.createStockHoldings(176, 1);
 		System.out.println("stockholding created");
-		
+
 		System.out.println("Updating stock via portfolio service method now");
-		PortfolioService pfs = new PortfolioService();
-		pfs.updateStockHolding(1, 124, 50);
-		
-		StockHolding sh = pfDao.getStockholding(connect, 124);
-		Integer qty_remains = sh.getRemaining_quantity();
-		assertEquals(qty_remains, new Integer (450));
-	
-		
-		
-		
-	
-		
-		
-		
-		
+
+		pfs.updateStockHolding(1, 176, 50);
+
+		List<StockHolding> stockHoldingList = pfs.getPortfolioInStockHolding(1);
+		for (StockHolding newStock : stockHoldingList) {
+			Integer remain_qty = newStock.getRemaining_quantity();
+			assertEquals(remain_qty, new Integer(50));
+		}
+
+		connect.close();
 	}
 }
