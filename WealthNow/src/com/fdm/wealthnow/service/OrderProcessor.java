@@ -21,15 +21,8 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 	private static final int WORKER_THREAD_POOL_SIZE = 5;
 	private static final int ORDER_FETCH_SIZE = 20;
 
-	static Connection connect;
-
-	public OrderProcessor() {
-		try {
-			this.connect = getConnection();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
+	
 
 	ScheduledExecutorService scheduledExecutorService;
 	ExecutorService executorService;
@@ -80,6 +73,16 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 	}
 
 	private List<Order> fetchOrderFromDao(int limit) {
+		
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		OrderDAO orderDao = new OrderDAO();
 		List<Order> listOfOpenOrder = orderDao.getListOfOpenOrder(connect, limit);
 

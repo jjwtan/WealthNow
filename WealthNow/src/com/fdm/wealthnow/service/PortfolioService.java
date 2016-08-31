@@ -12,21 +12,18 @@ import com.fdm.wealthnow.dao.PortfolioDAO;
 import com.fdm.wealthnow.util.DBUtil;
 
 public class PortfolioService extends DBUtil {
-	static Connection connect;
-
-	public PortfolioService() {
-		try {
-			this.connect = getConnection();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/*
 	 * update for selling of stocks
 	 */
 	public void updateStockHolding(Integer user_id, Integer order_id, Integer sold_quantity) throws Exception {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		PortfolioDAO pfDao = new PortfolioDAO();
 		System.out.println("Updating StockHolding");
@@ -41,6 +38,14 @@ public class PortfolioService extends DBUtil {
 	 * calculate gains/losses for realised G&L page
 	 */
 	public double computeGainsAndLosses() throws Exception {
+
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		OrderDAO orderDao = new OrderDAO();
 		Double netIncome = (double) 0;
@@ -66,6 +71,14 @@ public class PortfolioService extends DBUtil {
 
 	public List getAllSoldOrders(Integer user_id, Integer order_id) throws Exception {
 
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		OrderDAO orderDao = new OrderDAO();
 		List<Order> listOfSoldOrders = orderDao.getAllSoldOrderInDatabase(connect, user_id, order_id);
 		System.out.println(listOfSoldOrders);
@@ -78,6 +91,13 @@ public class PortfolioService extends DBUtil {
 	 * user request to view portfolio
 	 */
 	public List getPortfolioInStockHolding(Integer user_id) throws Exception {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		PortfolioDAO pfDAO = new PortfolioDAO();
 
@@ -104,6 +124,13 @@ public class PortfolioService extends DBUtil {
 	}
 
 	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		PortfolioDAO pfdao = new PortfolioDAO();
 		OrderDAO ord = new OrderDAO();
 		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
@@ -118,6 +145,13 @@ public class PortfolioService extends DBUtil {
 	}
 
 	public void deleteStockHoldings(Integer order_id) throws SQLException {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		PortfolioDAO pfdao = new PortfolioDAO();
 		StockHolding sh = pfdao.getStockholding(connect, order_id);
 		if (sh.getPurchase_quantity().equals("0")) {

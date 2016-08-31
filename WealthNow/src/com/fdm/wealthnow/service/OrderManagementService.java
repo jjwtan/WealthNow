@@ -17,20 +17,19 @@ public class OrderManagementService extends DBUtil {
 	 * user submits order and the service will pass the details to the DAO for
 	 * creation.
 	 */
-	static Connection connect;
 
-	public OrderManagementService() {
+	public Integer createOpenOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
+			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term)
+			throws Exception {
+
+		Connection connect = null;
 		try {
 			connect = getConnection();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
 
-	public Integer createOpenOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
-			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term)
-			throws Exception {
 		OrderDAO ord = new OrderDAO();
 		System.out.println("Start Order Management Service(OMS) - createOpenOrder method");
 		// create sequence id for order_id
@@ -52,12 +51,21 @@ public class OrderManagementService extends DBUtil {
 	}
 
 	public void processOrder(Integer order_id, Double closing_price) {
+
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		OrderDAO ord = new OrderDAO();
 		OrderManagementService oms = new OrderManagementService();
 		Order order = ord.getOrderFromOpenOrder(order_id, connect);
 		// format the date to string for create method
 		System.out.println("process order method running...");
-		ord.createProcessedOrderInDatabase(connect,  order.getUser_id(),order.getOrder_id(), order.getCurrency_code(),
+		ord.createProcessedOrderInDatabase(connect, order.getUser_id(), order.getOrder_id(), order.getCurrency_code(),
 				order.getOrder_type().toString(), order.getQuantity(), order.getStock_symbol(),
 				order.getPrice_type().toString(), convertDateObjToString(order.getPlace_order_date()),
 				order.getLimit_price(), convertDateObjToString(order.getPlace_order_date()), "completed",
@@ -76,6 +84,15 @@ public class OrderManagementService extends DBUtil {
 
 	public static boolean validateOrderData(Integer user_id, String currency_code, String order_type, Integer quantity,
 			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term) {
+
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// check nulls for all parameters
 		if (user_id == null || currency_code == null || order_type == null || quantity == null || stock_symbol == null
 				|| price_type == null || opening_order_date == null || limit_price == null || term == null) {
@@ -145,6 +162,15 @@ public class OrderManagementService extends DBUtil {
 	}
 
 	public void deleteStockHoldings(Integer order_id) throws SQLException {
+
+		Connection connect = null;
+		try {
+			connect = getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		PortfolioDAO pfdao = new PortfolioDAO();
 		StockHolding sh = pfdao.getStockholding(connect, order_id);
 		if (sh.getPurchase_quantity().equals("0")) {
