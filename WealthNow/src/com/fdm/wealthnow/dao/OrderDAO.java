@@ -227,17 +227,13 @@ public class OrderDAO extends DBUtil {
 
 	public boolean deleteOpenOrderInDatabase(Connection connect, Integer order_id) {
 		boolean success = false;
-		connect = null;
 		String SQL = "DELETE FROM OPENORDER WHERE ORDER_ID =?";
-		
 		try {
 			connect.setAutoCommit(false);
 			PreparedStatement ps = connect.prepareStatement(SQL);
 			ps.setInt(1, order_id);
 			ps.executeUpdate();
-			connect.commit();
 			success = true;
-			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
