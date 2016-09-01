@@ -7,10 +7,16 @@
 <title>Login</title>
 </head>
 <body>
-
+<%
+	if(request.getAttribute("errorMessage") != null) {
+		out.println(request.getAttribute("errorMessage"));
+	}
+%>
+<jsp:useBean id="userBean" class="com.fdm.wealthnow.beans.UserBean" scope="request"/>  
+<jsp:setProperty name="userBean" property="*"/>
 <h3>Login Form</h3>  
 <form action="LoginController" method="post">  
-	User name:<input type="text" name="username"/><br/><br/>  
+	User name:<input type="text" name="username" value="${userBean.username}"/><br/><br/>  
 	Password:<input type="password" name="password"/><br/><br/>  
 	<input type="submit" value="Login"/>  
 </form>  
