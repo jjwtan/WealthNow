@@ -30,6 +30,7 @@ public class BuyPageController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("do get");
 		
 	}
 
@@ -39,9 +40,9 @@ public class BuyPageController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 		
-		doGet(request, response);
+		System.out.println("buy page controller");
 		
 		String ordertype = request.getParameter("Selection");
 		String quantity  = request.getParameter("quantity");
@@ -49,19 +50,19 @@ public class BuyPageController extends HttpServlet {
 		String price_type = request.getParameter("price_type");
 		String term = request.getParameter("term");
 		
-		session.setAttribute("Selection", ordertype);
-		session.setAttribute("quantity", quantity);
-		session.setAttribute("stock_symbol", stock_symbol);
-		session.setAttribute("price_type", price_type);
-		session.setAttribute("term", term);
+//		session.setAttribute("Selection", ordertype);
+//		session.setAttribute("quantity", quantity);
+//		session.setAttribute("stock_symbol", stock_symbol);
+//		session.setAttribute("price_type", price_type);
+//		session.setAttribute("term", term);
+		System.out.println("forwarding to comfirmation page");
+		request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
 		
-		request.getRequestDispatcher("Comfirmation.jsp").forward(request, response);
-		
-		session.getAttribute("Selection");
-		session.getAttribute("quantity");
-		session.getAttribute("stock_symbol");
-		session.getAttribute("price_type");
-		session.getAttribute("term");
+//		session.getAttribute("Selection");
+//		session.getAttribute("quantity");
+//		session.getAttribute("stock_symbol");
+//		session.getAttribute("price_type");
+//		session.getAttribute("term");
 		
 		//just for testing
 		PrintWriter pw = response.getWriter();

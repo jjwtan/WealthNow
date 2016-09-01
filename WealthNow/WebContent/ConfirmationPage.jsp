@@ -24,7 +24,8 @@
 
 
 <% 
-	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+	
+Double brokerage_fee = 9.95;
 %>
 
 <p>Stock Confirmation.</p>
@@ -58,7 +59,7 @@
   
   <tr>
     <td >Total price</td>
-    <td width="126"></td>
+    <td width="126">  </td>
   </tr>
 </table><br>
 <input type="submit" value="Comfirm Order"> 

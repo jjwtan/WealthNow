@@ -38,34 +38,33 @@
 
 			</p>
 			<% 
-	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
-	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
-%>
-<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
-,Your Current Balance $<%=ua.getBalance() %></h4>
-			
+				UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+				UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+			%>
+			<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
+			,Your Current Balance $<%=ua.getBalance() %></h4>
 
-			<input type="radio" name="Selection" value="buy" required>
-			Buy <input type="radio" name="Selection" value="sell" required>
-			Sell <br> <br> Quantity: <input type="number"
-				name="quantity" value="quantity" required min="1"> Stock
-			Symbol:<input type="text" name="stock_symbol" value=""
-				pattern="[A-Za-z]{3,4}" required placeholder="3 Characters">
 
-			<br> <br> Price Type:<br> <select required
-				name="price_type" id="price_type">
+			<input type="radio" name="Selection" value="buy" required> Buy <input
+				type="radio" name="Selection" value="sell" required> Sell <br> <br>
+			Quantity: <input type="number" name="quantity"
+				value="quantity" required min="1"> Stock Symbol:<input
+				type="text" name="stock_symbol" value="" pattern="[A-Za-z]{3,4}"
+				required placeholder="3 Characters"> <br> <br> Price Type:<br> <select
+				required name="price_type" id="price_type">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="M" id="M">Market</option>
 				<option value="SL" id="SL">Stop Loss</option>
 				<option value="L" id="L">Limit</option>
 			</select> <input type="number" id="lsl" required
-				placeholder="Limit/Stop Loss Price" min="0"> <br> Term:<br>
-			<select required name="term">
+				placeholder="Limit/Stop Loss Price" min="0"> <br> Term:<br> <select
+				required name="term">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="GD">Good For The Day</option>
 				<option value="GC">Good Till Cancelled</option>
 
-			</select> <br> <br> <input type="submit" value="Submit">
+			</select> <br> <br> 
+			<input type="submit" value="Submit">
 
 		</fieldset>
 	</form>
