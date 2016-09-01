@@ -34,7 +34,6 @@
 			<p>
 				Today's date:
 				<%=(new java.util.Date()).toLocaleString()%>
-				Your Account Balance is:
 
 			</p>
 			<% 
@@ -50,7 +49,7 @@
 			Quantity: <input type="number" name="quantity"
 				value="quantity" required min="1"> Stock Symbol:<input
 				type="text" name="stock_symbol" value="" pattern="[A-Za-z]{3,4}"
-				required placeholder="3 Characters"> <br> <br> Price Type:<br> <select
+				required placeholder="3-4 Characters"  style="text-transform: capitalize"> <br> <br> Price Type:<br> <select
 				required name="price_type" id="price_type">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="M" id="M">Market</option>

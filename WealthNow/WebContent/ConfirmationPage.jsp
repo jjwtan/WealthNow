@@ -1,8 +1,10 @@
+<%@page import="com.fdm.wealthnow.common.InfoType"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page 
-	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService" %>
+	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
+	com.fdm.wealthnow.service.StockService" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -26,6 +28,21 @@
 <% 
 	
 Double brokerage_fee = 9.95;
+
+StockService svc = new StockService();
+
+
+String quantity = request.getParameter("quantity");
+String stock_symbol = request.getParameter("stock_symbol");
+
+Double stock_price =  Double
+.parseDouble(svc.getStockFromExchange(stock_symbol,InfoType.BASIC).getMktPrice().toString());
+
+
+Double total_price = new Double(quantity) * new Double(stock_price) + brokerage_fee;
+
+
+
 %>
 
 <p>Stock Confirmation.</p>
@@ -37,20 +54,20 @@ Double brokerage_fee = 9.95;
   </tr>
   <tr>
     <td>Stock Symbol</td>
-    <td><%= request.getParameter("stock_symbol")%></td>
+    <td><% out.print(stock_symbol);%></td>
   </tr>
   <tr>
     <td>Stock Price</td>
-    <td><%  %></td>  <!--  // get from stock service-->
+    <td><% out.print(stock_price); %></td>  <!--  // get from stock service-->
   </tr>
   <tr>
     <td>Quantity</td>
-    <td><%= request.getParameter("quantity")%></td>
+    <td><% out.print(stock_symbol);%></td>
   </tr>
   
   <tr>
     <td>Fixed Price</td>
-    <td>$9.95</td>
+    <td><% out.print(brokerage_fee); %></td>
   </tr>
   
   <tr>
@@ -59,7 +76,7 @@ Double brokerage_fee = 9.95;
   
   <tr>
     <td >Total price</td>
-    <td width="126">  </td>
+    <td width="126"><% out.print(total_price); %>  </td>
   </tr>
 </table><br>
 <input type="submit" value="Comfirm Order"> 
