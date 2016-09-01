@@ -11,21 +11,27 @@ import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.common.Watchlist;
 import com.fdm.wealthnow.dao.WatchlistDAO;
 import com.fdm.wealthnow.service.StockService;
+import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 public class WatchlistService {
 	
 	static WatchlistDAO watchlistDAO = new WatchlistDAO();
+	//static Connection connection;
 	
 	public Watchlist viewWatchlist(int watchlistId) throws Exception {
 		
 		System.out.println("Inside viewWatchlist");
 		Connection connection = null;
         Watchlist thisWatchlist = new Watchlist();
+        WatchlistDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
         
         try {
         	System.out.println("Inside viewWatchlist try lalalas");
         	connection = WatchlistDAO.getConnection();
             //connection.setAutoCommit(false);
+        	if(connection == null){
+        		System.out.println("is null");
+        	}
 
            System.out.println("Calling check if watchlist exists:");
             Boolean watchlistExists = checkWatchlistExists(watchlistId);
@@ -49,7 +55,8 @@ public class WatchlistService {
           connection.commit();
          }
         catch(Exception e) {
-         // connection.rollback();
+         connection.rollback();
+         System.out.println("Inside exception");
        }
         finally {
           if (connection != null)
