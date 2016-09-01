@@ -24,16 +24,13 @@ public class AuthDAO extends DBUtil{
 				return new UserAuth(getUser(username, InfoType.BASIC), true);
 			} else {
 				incrementFailCount(connect, username);
-				return new UserAuth(false);
 			}
 		} else {
 			System.out.println("max attempt reached");
 		}
 		
-		
-		
 		connect.close();
-		return null;
+		return new UserAuth(false);
 	}
 	
 	public static User getUser(String username, InfoType type) throws Exception {

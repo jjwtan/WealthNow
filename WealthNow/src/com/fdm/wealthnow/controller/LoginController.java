@@ -87,6 +87,8 @@ public class LoginController extends HttpServlet {
 
 		} else {
 			System.out.println("authentication failed");
+			String errorMsg = "Invalid username or password";
+			request.setAttribute("errorMessage", errorMsg); 
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 
@@ -105,5 +107,6 @@ public class LoginController extends HttpServlet {
 		}
 		return null;
 	}
+	
 
 }
