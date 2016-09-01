@@ -35,6 +35,9 @@ public class ConfirmationPageController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		System.out.println("Inside doPost Method");
+		
+		request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
 	}
 
 }
