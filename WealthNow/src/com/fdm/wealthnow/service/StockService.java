@@ -56,6 +56,21 @@ public class StockService {
 		return createListStockObj(rawStockList, type);
 
 	}
+	
+	public List<Stock> getStocksFromExchange(ArrayList<String> stocks, InfoType type) {
+		rawStockList  = new ArrayList<>();
+		
+		for(String stock_symbol: stocks) {
+			requestStock.add(new Stock(stock_symbol));
+		}
+		
+		String url = generateRequestURL(requestStock, type);
+		getFromExhange(url);
+		
+		return createListStockObj(rawStockList, type);
+
+	}
+
 
 	public String generateRequestURL(List<Stock> stocks, InfoType type) {
 		StringBuilder sb = new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
