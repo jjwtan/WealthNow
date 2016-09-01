@@ -25,6 +25,7 @@ public class OrderManagementService extends DBUtil {
 			throws Exception {
 
 		Connection connect = null;
+		
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
