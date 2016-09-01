@@ -35,17 +35,22 @@ public class WatchlistDAOTest {
 		assertEquals("following", watchlistToGet1.getWatchlistName());
 		Watchlist watchlistToGet2 = watchlistDAO.getWatchlist(2, connect);
 		assertEquals("myList", watchlistToGet2.getWatchlistName());
+		// test for invalid watchlistId 
+		Watchlist watchlistToGet3 = watchlistDAO.getWatchlist(33, connect);
+		assertEquals(null, watchlistToGet3.getWatchlistName());
 	}
 
 	@Test
 	public void testGetAllUserWatchlist() {
 
 		WatchlistDAO watchlistDAO = new WatchlistDAO();
-		List<Watchlist> watchlistsBelongingToUser = new ArrayList<Watchlist>();
-		watchlistsBelongingToUser = watchlistDAO.getAllUserWatchlist(3, connect);
+		List<Watchlist> watchlistsBelongingToUser1 = new ArrayList<Watchlist>();
+		watchlistsBelongingToUser1 = watchlistDAO.getAllUserWatchlist(3, connect);
+		List<Watchlist> watchlistsBelongingToUser2 = new ArrayList<Watchlist>();
+		watchlistsBelongingToUser2 = watchlistDAO.getAllUserWatchlist(33, connect);
 
-		assertEquals(4, watchlistsBelongingToUser.size());
-
+		assertEquals(4, watchlistsBelongingToUser1.size());
+		assertEquals(0, watchlistsBelongingToUser2.size());
 	}
 
 	@Test
