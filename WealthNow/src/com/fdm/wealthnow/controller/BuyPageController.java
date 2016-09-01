@@ -30,7 +30,7 @@ public class BuyPageController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	/**
@@ -52,6 +52,10 @@ public class BuyPageController extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 		pw.println(ordertype+ " "+ quantity+ " "+ stock_symbol + " "+ price_type + " "+term);
 		System.out.println(ordertype+ " "+ quantity+ " "+ stock_symbol + " "+ price_type + " "+term);
+		
+		//make sure that UserID has been checked before proceeding
+		
+		//
 		
 		
 	}
