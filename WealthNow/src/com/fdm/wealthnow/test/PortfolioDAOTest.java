@@ -44,9 +44,9 @@ public class PortfolioDAOTest extends DBUtil {
 
 		PortfolioDAO portfolioDAO1 = new PortfolioDAO();
 
-		portfolioDAO1.createStockHoldingInDatabase(connect, new Integer(10), new Integer(1), new Integer(131), "MAC",
+		portfolioDAO1.createStockHoldingInDatabase(connect, new Integer(10), new Integer(1), new Integer(335), "MAC",
 				new Integer(100), new Integer(100), new Double(99.99), "20 Sep 2001");
-
+		connect.commit();
 		List<StockHolding> newTestList = portfolioDAO1.getStockHoldingInDataBase(1, connect);
 
 		for (StockHolding newListTest : newTestList) {
@@ -75,9 +75,9 @@ public class PortfolioDAOTest extends DBUtil {
 		// new Integer(400), new Double(55.50), "20 Sep 2001");
 		Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
 
-		Order order = ord.getOrderFromProcessedOrder(connect, new Integer(145));
+		Order order = ord.getOrderFromProcessedOrder(connect, new Integer(335));
 
-		portfolioDAO.createStockHoldingInDatabase(connect, stockholding_id, new Integer(1), new Integer(145),
+		portfolioDAO.createStockHoldingInDatabase(connect, stockholding_id, new Integer(1), new Integer(335),
 				order.getStock_symbol(), order.getQuantity(), order.getQuantity(), order.getLimit_price(),
 				convertDateObjToString(order.getPlace_order_date()));
 
@@ -87,7 +87,7 @@ public class PortfolioDAOTest extends DBUtil {
 
 		System.out.println("Test Completed: Update Stock holding in database.");
 
-		assertEquals(sh.getRemaining_quantity(), new Integer(60));
+		assertEquals(sh.getRemaining_quantity(), new Integer(160));
 
 	}
 

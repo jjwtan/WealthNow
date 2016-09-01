@@ -138,28 +138,35 @@ public class PortfolioService extends DBUtil {
 		return null;
 	}
 
-	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
-		Connection connect = null;
+	public Integer createStockHoldings(Connection connect, Integer order_id, Integer user_id) throws Exception {
+		//Connection connect = null;
+		System.out.println("connection  is - "+connect);
+		System.out.println("order id to be pulled from processed order - "+order_id);
+		Integer stockholding_id = null;
 		try {
-			connect = getConnection();
+			//connect = getConnection();
 			connect.setAutoCommit(false);
 
 			PortfolioDAO pfdao = new PortfolioDAO();
 			OrderDAO ord = new OrderDAO();
 			Order order = ord.getOrderFromProcessedOrder(connect, order_id);
-			Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
+			stockholding_id = getSequenceID("stockholdings_pk_seq");
 			System.out.println("Stockholding id created : " + stockholding_id);
+			System.out.println("ORder@@@@@@@@@: " + order);
 			pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
 					order.getQuantity(), order.getQuantity(), order.getLimit_price(),
 					convertDateObjToString(order.getPlace_order_date()));
 
 			connect.commit();
 		} catch (Exception e) {
+			System.out.println("simitachi stockholding..");
+			e.printStackTrace();
 			connect.rollback();
 		} finally {
 			if (connect != null)
 				connect.close();
 		}
+		return stockholding_id;
 	}
 
 	public void deleteStockHoldings(Integer order_id) throws SQLException {

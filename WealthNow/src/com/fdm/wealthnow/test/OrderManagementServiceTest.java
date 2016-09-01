@@ -40,7 +40,7 @@ public class OrderManagementServiceTest extends DBUtil {
 	public void createOpenOrder() throws Exception {
 		oms = new OrderManagementService();
 		OrderDAO orderDAO = new OrderDAO();
-		Integer order_id = oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(100), "ASAF", "M", "11 Sep 2011",
+		Integer order_id = oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(100), "Z74", "M", "11 Sep 2011",
 				new Double(20), "GC");
 
 		// Integer user_id, String currency_code, String order_type, Integer
@@ -63,7 +63,7 @@ public class OrderManagementServiceTest extends DBUtil {
 	public void processOrder() throws Exception {
 		oms = new OrderManagementService();
 		OrderDAO orderDAO = new OrderDAO();
-		Integer order_id = oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(100), "ASAF", "M", "11 Sep 2011",
+		Integer order_id = oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(100), "Z74", "M", "11 Sep 2011",
 				new Double(20), "GC");
 		oms.processOrder(new Integer(order_id), new Double(100));
 		System.out.println("Start processOrder..");

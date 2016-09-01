@@ -3,6 +3,7 @@ package com.fdm.wealthnow.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.fdm.wealthnow.common.InfoType;
@@ -62,14 +63,15 @@ public class OrderManagementService extends DBUtil {
 	}
 
 	public void processOrder(Integer order_id, Double closing_price) {
-
 		Connection connect = null;
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
+			System.out.println("connection  is - "+connect);
 
 			OrderDAO ord = new OrderDAO();
 			OrderManagementService oms = new OrderManagementService();
+			Date date = new Date();
 			Order order = ord.getOrderFromOpenOrder(order_id, connect);
 			// format the date to string for create method
 			System.out.println("process order method running...");
@@ -77,9 +79,11 @@ public class OrderManagementService extends DBUtil {
 					order.getCurrency_code(), order.getOrder_type().toString(), order.getQuantity(),
 					order.getStock_symbol(), order.getPrice_type().toString(),
 					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
-					convertDateObjToString(order.getPlace_order_date()), "completed", closing_price);
+					convertDateObjToString(date), "completed", closing_price);
+			connect.commit();
 			System.out.println("created processed order in database - " + order.getOrder_id());
 			ord.deleteOpenOrderInDatabase(connect, order.getOrder_id());
+			connect.commit();
 			System.out.println("deleted open order in database - " + order.getOrder_id());
 			System.out.println("Order has been processed... and needs to be updated in stockholdings.");
 
@@ -87,6 +91,7 @@ public class OrderManagementService extends DBUtil {
 			connect.commit();
 		} catch (Exception e) {
 			try {
+				System.out.println("simitachi@ OMS");
 				connect.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -104,7 +109,7 @@ public class OrderManagementService extends DBUtil {
 
 	}
 
-	public static boolean validateOrderData(Integer user_id, String currency_code, String order_type, Integer quantity,
+	public boolean validateOrderData(Integer user_id, String currency_code, String order_type, Integer quantity,
 			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term) {
 
 		Connection connect = null;
@@ -115,7 +120,7 @@ public class OrderManagementService extends DBUtil {
 			// check nulls for all parameters
 			if (user_id == null || currency_code == null || order_type == null || quantity == null
 					|| stock_symbol == null || price_type == null || opening_order_date == null || 
-					limit_price == null || term == null) {
+					limit_price == null) {
 				System.out.println("something null");
 				return false;
 			}
@@ -181,11 +186,32 @@ public class OrderManagementService extends DBUtil {
 	}
 
 	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
 		PortfolioService ps = new PortfolioService();
 		// placeholder for the portfolio service
 		System.out.println("Calls for portfolio Service - createStockHoldings...");
-		ps.createStockHoldings(order_id, user_id);
-
+		Integer stockholding_id = ps.createStockHoldings(connect,order_id, user_id);
+		System.out.println("created stockholdings - " + stockholding_id);
+		}catch (Exception e) {
+			try {
+				connect.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
 	}
 
 	public void updateStockHoldings(Integer user_id, Integer order_id, Integer sold_quantity) throws Exception {

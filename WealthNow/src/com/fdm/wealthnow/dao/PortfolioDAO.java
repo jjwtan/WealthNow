@@ -51,7 +51,7 @@ public class PortfolioDAO extends DBUtil {
 	}
 
 	public void createStockHoldingInDatabase(Connection connect,Integer stockHolding_id,Integer user_id,Integer order_id,
-	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,String purchase_date) throws Exception{
+	String stock_symbol,Integer purchase_quantity,Integer remaining_quantity,Double purchase_price,String purchase_date){
 		
 		String sql = "INSERT INTO STOCKHOLDING(stockholding_id,USER_ID, ORDER_ID,STOCK_SYMBOL,PURCHASE_QUANTITY,"
 				+ "REMAINING_QUANTITY,PURCHASE_PRICE,PURCHASE_DATE) VALUES("+ stockHolding_id +", "
@@ -63,10 +63,18 @@ public class PortfolioDAO extends DBUtil {
 		 
 		 
 		 System.out.println("Connected to DB");
-		 PreparedStatement ps = connect.prepareStatement(sql);
-		 System.out.println("Executing SQL Queries");
-//		 ResultSet rs =  ps.executeQuery();
-		 ps.executeUpdate();
+		 PreparedStatement ps;
+		try {
+			ps = connect.prepareStatement(sql);
+			 System.out.println("Executing SQL Queries");
+//			 ResultSet rs =  ps.executeQuery();
+			 ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("catch at PortfolioDAO");
+			e.printStackTrace();
+		}
+		
 		 
 		 System.out.println("Data has been inserted");
 		 

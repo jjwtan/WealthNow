@@ -20,16 +20,13 @@ import com.fdm.wealthnow.util.DBUtil;
 
 public class OrderProcessor extends DBUtil implements ServletContextListener {
 	private static final int WORKER_THREAD_POOL_SIZE = 5;
-	private static final int ORDER_FETCH_SIZE = 20;
-
-	
-	
+	private static final int ORDER_FETCH_SIZE = 5;
 
 	ScheduledExecutorService scheduledExecutorService;
 	ExecutorService executorService;
 
 	@Override
-	public void contextInitialized(ServletContextEvent arg0){
+	public void contextInitialized(ServletContextEvent arg0) {
 		System.out.println("************* Server context initialized *************");
 
 		// Create worker thread pool that does stock trading
@@ -38,7 +35,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		// Create a thread that wakes up periodically and scans for open orders.
 		// It fetches the orders and delegates to thread pool
 		scheduledExecutorService = Executors.newScheduledThreadPool(1);
-		scheduledExecutorService.schedule(() -> processOpenOrders(), 60, TimeUnit.SECONDS);
+		scheduledExecutorService.schedule(() -> processOpenOrders(executorService), 60, TimeUnit.SECONDS);
 
 	}
 
@@ -49,49 +46,68 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		scheduledExecutorService.shutdown();
 		executorService.shutdown();
 	}
-	
-	public void testProcessOrders(){
-		processOpenOrders();
+
+	public int testProcessOrders(ExecutorService ex) {
+		return processOpenOrders(ex);
 	}
 
-	private void processOpenOrders() {
+	private int processOpenOrders(ExecutorService ex) {
 		System.out.println("Processing open orders running at:" + new Date());
-		
+
 		// Get 20 open orders from OrderService
 		// Delegate processing to worker thread pool
 		List<Order> orderList = fetchOrderFromDao(ORDER_FETCH_SIZE);
 		System.out.println(orderList);
 		OrderManagementService oms = new OrderManagementService();
 		UserAccountService uas = new UserAccountService();
-		
-		StockService stksvc = new StockService();
-		
 
-		for (Order newOrderList : orderList) {
-			Integer orderID = newOrderList.getOrder_id();
-			Double limitPrice = newOrderList.getLimit_price();
-			String stockSymb = newOrderList.getStock_symbol();
-			Double stockPrice = Double
-					.parseDouble(stksvc.getStockFromExchange(stockSymb, InfoType.BASIC).getMktPrice().toString());
-			Integer quantity = newOrderList.getQuantity();
-			Double total_price = stockPrice * quantity;
-			Double balance = uas.getAccountBalance(newOrderList.getUser_id()).getBalance();
-			
-			//if statement to check if the limit price
-			if(limitPrice<stockPrice && balance > total_price ){
-			executorService.submit(() -> oms.processOrder(orderID, limitPrice));  //Execute the order
+		StockService stksvc = new StockService();
+		int count = 0;
+
+		for (Order order : orderList) {
+			//if the term is null because the it is ordertype "Market" do the following:
+			boolean success;
+			if (order.getTerm() == null) {
+				 success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
+						order.getOrder_type().toString(), order.getQuantity(), order.getStock_symbol(),
+						order.getPrice_type().toString(), convertDateObjToString(order.getPlace_order_date()),
+						order.getLimit_price(), "");
+			} else {
+				 success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
+						order.getOrder_type().toString(), order.getQuantity(), order.getStock_symbol(),
+						order.getPrice_type().toString(), convertDateObjToString(order.getPlace_order_date()),
+						order.getLimit_price(), order.getTerm().toString());
+			}
+
+			if (success == true) {
+				Double stockPrice = Double.parseDouble(
+						stksvc.getStockFromExchange(order.getStock_symbol(), InfoType.BASIC).getMktPrice().toString());
+				Integer quantity = order.getQuantity();
+				Double total_price = stockPrice * quantity;
+				Double balance = uas.getAccountBalance(order.getUser_id()).getBalance();
+				System.out.println("stock price" +stockPrice);
+				System.out.println("limit price" +order.getLimit_price());
+				// if statement to check if the limit price
+				if (order.getLimit_price() < stockPrice && balance > total_price) {
+					System.out.println("Executing processOrder at OrderProcessor.");
+					ex.submit(() -> oms.processOrder(order.getOrder_id(), order.getLimit_price()));
+					count++;
+					System.out.println("Count - " +count);
+				}
+			} else {
+				System.out.println("Validation failed.");
 			}
 		}
-
+		return count;
 	}
-	
-	public List<Order> TestfetchOrderFromDao(int limit){
+
+	public List<Order> TestfetchOrderFromDao(int limit) {
 		return fetchOrderFromDao(limit);
-		
+
 	}
 
 	private List<Order> fetchOrderFromDao(int limit) {
-		
+
 		Connection connect = null;
 		try {
 			connect = getConnection();
@@ -100,7 +116,6 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 			e.printStackTrace();
 		}
 
-		
 		OrderDAO orderDao = new OrderDAO();
 		List<Order> listOfOpenOrder = orderDao.getListOfOpenOrder(connect, limit);
 
