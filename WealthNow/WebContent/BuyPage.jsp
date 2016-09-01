@@ -31,25 +31,19 @@
 	<form action="BuyPageController" method="post">
 		<fieldset>
 			<legend>Buy Stocks</legend>
-			
-			<% 
-	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
-	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
-%>
-<h1> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %></h1>
-<h2>Your balance is $<%=ua.getBalance() %></h2>
 			<p>
 				Today's date:
 				<%=(new java.util.Date()).toLocaleString()%>
 				Your Account Balance is:
 
-				<%--
-				UserAccountService uas = new UserAccountService();
-				UserAccount ua = uas.getAccountBalance(1);
-				out.print(ua.getBalance());
-			--%>
-
 			</p>
+			<% 
+	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+%>
+<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
+,Your Current Balance $<%=ua.getBalance() %></h4>
+			
 
 			<input type="radio" name="Selection" value="buy" required>
 			Buy <input type="radio" name="Selection" value="sell" required>

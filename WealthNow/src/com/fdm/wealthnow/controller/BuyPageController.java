@@ -42,11 +42,26 @@ public class BuyPageController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		doGet(request, response);
+		
 		String ordertype = request.getParameter("Selection");
 		String quantity  = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
 		String price_type = request.getParameter("price_type");
 		String term = request.getParameter("term");
+		
+		session.setAttribute("Selection", ordertype);
+		session.setAttribute("quantity", quantity);
+		session.setAttribute("stock_symbol", stock_symbol);
+		session.setAttribute("price_type", price_type);
+		session.setAttribute("term", term);
+		
+		request.getRequestDispatcher("Comfirmation.jsp").forward(request, response);
+		
+		session.getAttribute("Selection");
+		session.getAttribute("quantity");
+		session.getAttribute("stock_symbol");
+		session.getAttribute("price_type");
+		session.getAttribute("term");
 		
 		//just for testing
 		PrintWriter pw = response.getWriter();
