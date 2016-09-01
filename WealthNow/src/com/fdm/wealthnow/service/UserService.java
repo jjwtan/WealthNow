@@ -9,20 +9,11 @@ import com.fdm.wealthnow.dao.AuthDAO;
 import com.fdm.wealthnow.util.DBUtil;
 
 public class UserService extends DBUtil{
-	static Connection connect;
-	
-	public UserService() {
-		try {
-			connect = getConnection();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
+	
 	public static UserAuth userLogin(String username, String password){
 		try {
-			connect = getConnection();
+			Connection connect = getConnection();
 			return AuthDAO.authenticate(connect, username, password);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
