@@ -25,13 +25,10 @@ public class StockService {
 	
 	public boolean validateStock(String stockSymbol) {
 		Stock stock = getStockFromExchange(stockSymbol, InfoType.BASIC);
-		return (stock.getCompany().equals("N/A")) ? false : true ;
+		return (stock==null) ? false : true ;
 	}
 
 	public Stock getStockFromExchange(String stockSymbol, InfoType type) {
-		if(!validateStock(stockSymbol)) {
-			return null;
-		}
 		List<Stock> wrapper = new ArrayList<>();
 		this.requestStock = wrapper;
 		rawStockList = new ArrayList<>();
@@ -40,7 +37,13 @@ public class StockService {
 		String url = generateRequestURL(wrapper, type);
 		getFromExhange(url);
 		
-		return createListStockObj(rawStockList, type).get(0);
+		Stock result = createListStockObj(rawStockList, type).get(0);
+		
+		if (result.getCompany().equals("N/A")) {
+			result = null;
+		}
+		
+		return result;
 	}
 	
 	public List<Stock> getStocksFromExchange(List<Stock> stocks, InfoType type) {
