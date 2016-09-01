@@ -186,7 +186,7 @@ public class OrderDAO extends DBUtil {
 
 			ResultSet result = ps.executeQuery();
 			System.out.println(SQL + "\nThe SQL statement above has been executed");
-
+			Order order = null;
 			while (result.next()) {
 				Integer order_id = result.getInt("order_id");
 				Integer user_id = result.getInt("user_id");
@@ -199,8 +199,14 @@ public class OrderDAO extends DBUtil {
 				Double limit_price = result.getDouble("limit_price");
 				String term = result.getString("term");
 				String status = "OpenOrder";
-				Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
+				if(term==null){
+					order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
+							opening_order_date, limit_price, null, status);	
+				}
+				else{
+				order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity, stock_symbol, PriceTypeEnum.valueOf(price_type),
 						opening_order_date, limit_price, TermEnum.valueOf(term), status);
+				}
 				OpenOrderList.add(order);
 			}
 			
