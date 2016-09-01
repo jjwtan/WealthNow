@@ -73,7 +73,7 @@ public class LoginController extends HttpServlet {
 		
 		UserAuth user = null;
 		try {
-			user = AuthDAO.authenticate(AuthDAO.getConnection(),username, password);
+			user = AuthDAO.authenticate(AuthDAO.getConnection(),username, hashedPw);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
