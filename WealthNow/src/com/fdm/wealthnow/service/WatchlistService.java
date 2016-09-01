@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.common.Watchlist;
 import com.fdm.wealthnow.dao.WatchlistDAO;
+import com.fdm.wealthnow.service.StockService;
 
 public class WatchlistService {
 	
@@ -16,14 +18,19 @@ public class WatchlistService {
 	
 	public Watchlist viewWatchlist(int watchlistId) throws Exception {
 		
+		System.out.println("Inside viewWatchlist");
 		Connection connection = null;
         Watchlist thisWatchlist = new Watchlist();
         
         try {
-            connection = WatchlistDAO.getConnection();
-            connection.setAutoCommit(false);
+        	System.out.println("Inside viewWatchlist try lalalas");
+        	connection = WatchlistDAO.getConnection();
+            //connection.setAutoCommit(false);
 
-           Boolean watchlistExists = checkWatchlistExists(watchlistId);
+           System.out.println("Calling check if watchlist exists:");
+            Boolean watchlistExists = checkWatchlistExists(watchlistId);
+           System.out.println("True or false: " + watchlistExists);
+           
            if(watchlistExists == false){
         	   System.out.println("Watchlist does not exist!");
         	   thisWatchlist = null;
@@ -42,7 +49,7 @@ public class WatchlistService {
           connection.commit();
          }
         catch(Exception e) {
-          connection.rollback();
+         // connection.rollback();
        }
         finally {
           if (connection != null)
@@ -64,7 +71,7 @@ public class WatchlistService {
            userWatchlists = watchlistDAO.getAllUserWatchlist(userId, connection);
            
            if(userWatchlists.size() == 0){
-        	   System.out.println("There are no stocks in this watchlist!");
+        	   System.out.println("The user does not have any watchlist!");
         	   userWatchlists = null;
            }
 
@@ -93,12 +100,47 @@ public class WatchlistService {
 		
 	}
 	
-	public List<String> listStocksFromWatchlist(Integer watchlistId) throws Exception {
+	public List<Stock> listStocksFromWatchlist(Integer watchlistId) throws Exception {
 		
-		
-		
-		return null;
-		// call get stock info 
+        Connection connection = null;
+        List<String> symbolsList = new ArrayList<String>();
+        List<Stock> stocksList = new ArrayList<Stock>();
+        Stock stock = new Stock();
+        
+        try {
+            connection = WatchlistDAO.getConnection();
+            connection.setAutoCommit(false);
+            
+            symbolsList = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connection);
+            
+            StockService ss = new StockService();
+            
+            for(int i=0; i<symbolsList.size(); i++){
+            	stock = ss.getStockFromExchange(symbolsList.get(i), InfoType.FULL);
+            	stocksList.add(stock);
+            }
+            
+            if(stocksList.size() == 0){
+         	  System.out.println("There are no stocks in this watchlist!");
+         	  stocksList = null;
+            }
+            else {
+            	for(int j=0; j<stocksList.size(); j++){
+            		System.out.println("Stock Symbol: " + stocksList.get(j).getStockSymbol());
+            		System.out.println("Company: " + stocksList.get(j).getCompany());
+            		System.out.println("Market Price: " + stocksList.get(j).getMktPrice());
+            	}
+            }
+          connection.commit();
+         }
+        catch(Exception e) {
+          connection.rollback();
+       }
+        finally {
+          if (connection != null)
+              connection.close();
+        }
+		return stocksList;
 	}
 	
 	public void addStockToWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
@@ -120,9 +162,12 @@ public class WatchlistService {
 	}
 	
 	// 2. create only if it does not exist, pull only if it exists 
+	// return false: watchlist does not exist 
+	// return true: watchlist exists 
 	public boolean checkWatchlistExists(Integer watchlistId) throws Exception {
 		
-        Connection connection = null;
+        System.out.println("checkWatchlistExists says: Inside check watchlist exists");
+		Connection connection = null;
         Watchlist thisWatchlist = new Watchlist();
         
         try {
@@ -132,6 +177,7 @@ public class WatchlistService {
            // if returns null then watchlist does not exist
             thisWatchlist = watchlistDAO.getWatchlist(1, connection);
             if (thisWatchlist == null){
+            	System.out.println("checkWatchlistExists says: Watchlist does not exist.");
             	return false;
             }
           connection.commit();
@@ -143,7 +189,7 @@ public class WatchlistService {
           if (connection != null)
               connection.close();
         }
-		
+        System.out.println("checkWatchlistExists says: Watchlist exists.");
 		return true;
 	}
 

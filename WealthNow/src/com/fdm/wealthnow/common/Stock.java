@@ -16,11 +16,15 @@ public class Stock {
 	public Stock(String stockSymbol) {
 		this.stockSymbol = stockSymbol;
 	}
+	
+	// BASIC
 	public Stock(String stockSymbol, String company, float ask, float bid) {
 		this.stockSymbol = stockSymbol;
 		this.company = company;
 		this.mktPrice = (ask+bid)/2;
 	}
+	
+	// FULL 
 	public Stock(String stockSymbol, String company, float ask, float bid, float open, float close, 
 				 Date lastTradeDate, Date tradeDate, String daysValueChange, String percentChange) {
 		this.stockSymbol = stockSymbol;
