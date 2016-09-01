@@ -18,6 +18,7 @@
 
 $("#submit").click(function () {
 	       alert("Thanks For Your Money Bitch");
+	      
 	   });
 	
 </script>
@@ -29,7 +30,7 @@ $("#submit").click(function () {
 </head>
 <body>
 	<H1>Confirmation Page</H1>
-<%--Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());--%>
+Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());
 
 	<%
 	
@@ -42,9 +43,10 @@ $("#submit").click(function () {
 		String quantity = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
 
-		Double stock_price = 4.45;				
+		Double stock_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());				
 
 		Double total_price = new Double(quantity) * new Double(stock_price) + brokerage_fee;
+	
 	%>
 
 	<p>Stock Confirmation.</p>
@@ -85,7 +87,7 @@ $("#submit").click(function () {
 				<td>Quantity</td>
 				<td>
 					<%
-						out.print(stock_symbol);
+						out.print(quantity);
 					%>
 				</td>
 			</tr>
