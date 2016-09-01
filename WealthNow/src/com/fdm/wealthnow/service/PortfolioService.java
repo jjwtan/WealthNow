@@ -42,11 +42,7 @@ public class PortfolioService extends DBUtil {
 		Connection connect = null;
 		try {
 			connect = getConnection();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+			connect.setAutoCommit(false);
 		OrderDAO orderDao = new OrderDAO();
 		Double netIncome = (double) 0;
 		List<Order> listOfSoldGainsAndLosses = orderDao.getAllSoldOrderInDatabase(connect, 2, 301);
@@ -62,6 +58,15 @@ public class PortfolioService extends DBUtil {
 		}
 		connect.commit();
 		return netIncome;
+		
+		} catch (Exception e) {
+			connect.rollback();
+		} finally {
+			if (connect != null)
+				connect.close();
+		}
+		return (Double) null;
+		
 
 	}
 
@@ -74,10 +79,7 @@ public class PortfolioService extends DBUtil {
 		Connection connect = null;
 		try {
 			connect = getConnection();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			connect.setAutoCommit(false);
 
 		OrderDAO orderDao = new OrderDAO();
 		List<Order> listOfSoldOrders = orderDao.getAllSoldOrderInDatabase(connect, user_id, order_id);
@@ -85,6 +87,14 @@ public class PortfolioService extends DBUtil {
 		connect.commit();
 
 		return listOfSoldOrders;
+		
+	} catch (Exception e) {
+		connect.rollback();
+	} finally {
+		if (connect != null)
+			connect.close();
+	}
+	return null;
 	}
 
 	/*
@@ -94,75 +104,88 @@ public class PortfolioService extends DBUtil {
 		Connection connect = null;
 		try {
 			connect = getConnection();
+			connect.setAutoCommit(false);
+
+			PortfolioDAO pfDAO = new PortfolioDAO();
+
+			List<StockHolding> stockHoldingList = pfDAO.getStockHoldingInDataBase(user_id, connect);
+
+			// for (StockHolding newStockHoldingList : stockHoldingList) {
+			// int stockHoldingID = newStockHoldingList.getStockholding_id();
+			// int userID = newStockHoldingList.getUser_id();
+			// int orderID = newStockHoldingList.getOrder_id();
+			// String symbolStock = newStockHoldingList.getStock_symbol();
+			// int quantity = newStockHoldingList.getRemaining_quantity();
+			// Double price = newStockHoldingList.getPurchase_price();
+			//
+			// System.out.println("Here are the Stock Holdings for User:" +
+			// user_id
+			// + "\n");
+			// System.out.println("Order ID:" + orderID + ", Stock Symbol:" +
+			// symbolStock + ", Quantity Remaining:"
+			// + quantity + ", Price:" + price);
+
+			// }
+			connect.commit();
+
+			return stockHoldingList;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			connect.rollback();
+		} finally {
+			if (connect != null)
+				connect.close();
 		}
-
-		PortfolioDAO pfDAO = new PortfolioDAO();
-
-		List<StockHolding> stockHoldingList = pfDAO.getStockHoldingInDataBase(user_id, connect);
-
-		// for (StockHolding newStockHoldingList : stockHoldingList) {
-		// int stockHoldingID = newStockHoldingList.getStockholding_id();
-		// int userID = newStockHoldingList.getUser_id();
-		// int orderID = newStockHoldingList.getOrder_id();
-		// String symbolStock = newStockHoldingList.getStock_symbol();
-		// int quantity = newStockHoldingList.getRemaining_quantity();
-		// Double price = newStockHoldingList.getPurchase_price();
-		//
-		// System.out.println("Here are the Stock Holdings for User:" + user_id
-		// + "\n");
-		// System.out.println("Order ID:" + orderID + ", Stock Symbol:" +
-		// symbolStock + ", Quantity Remaining:"
-		// + quantity + ", Price:" + price);
-
-		// }
-		connect.commit();
-
-		return stockHoldingList;
+		return null;
 	}
 
 	public void createStockHoldings(Integer order_id, Integer user_id) throws Exception {
 		Connection connect = null;
 		try {
 			connect = getConnection();
+			connect.setAutoCommit(false);
+
+			PortfolioDAO pfdao = new PortfolioDAO();
+			OrderDAO ord = new OrderDAO();
+			Order order = ord.getOrderFromProcessedOrder(connect, order_id);
+			Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
+			System.out.println("Stockholding id created : " + stockholding_id);
+			pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
+					order.getQuantity(), order.getQuantity(), order.getLimit_price(),
+					convertDateObjToString(order.getPlace_order_date()));
+
+			connect.commit();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			connect.rollback();
+		} finally {
+			if (connect != null)
+				connect.close();
 		}
-		PortfolioDAO pfdao = new PortfolioDAO();
-		OrderDAO ord = new OrderDAO();
-		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
-		Integer stockholding_id = getSequenceID("stockholdings_pk_seq");
-		System.out.println("Stockholding id created : " + stockholding_id);
-		pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
-				order.getQuantity(), order.getQuantity(), order.getLimit_price(),
-				convertDateObjToString(order.getPlace_order_date()));
-
-		connect.commit();
-
 	}
 
 	public void deleteStockHoldings(Integer order_id) throws SQLException {
+
 		Connection connect = null;
 		try {
 			connect = getConnection();
+			connect.setAutoCommit(false);
+
+			PortfolioDAO pfdao = new PortfolioDAO();
+			StockHolding sh = pfdao.getStockholding(connect, order_id);
+			if (sh.getPurchase_quantity().equals("0")) {
+				pfdao.deleteStockHolding(connect, order_id);
+				System.out.println("Stockholding with order id - " + order_id + " has been deleted.");
+			} else {
+				System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
+			}
+
+			connect.commit();
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			connect.rollback();
+		} finally {
+			if (connect != null)
+				connect.close();
 		}
-		PortfolioDAO pfdao = new PortfolioDAO();
-		StockHolding sh = pfdao.getStockholding(connect, order_id);
-		if (sh.getPurchase_quantity().equals("0")) {
-			pfdao.deleteStockHolding(connect, order_id);
-			System.out.println("Stockholding with order id - " + order_id + " has been deleted.");
-		} else {
-			System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
-		}
-
-		connect.commit();
-
 	}
 
 }
