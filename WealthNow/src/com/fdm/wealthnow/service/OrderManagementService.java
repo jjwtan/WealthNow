@@ -7,7 +7,9 @@ import java.util.List;
 
 import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.common.StockHolding;
+import com.fdm.wealthnow.common.UserAccount;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.dao.PortfolioDAO;
 import com.fdm.wealthnow.util.DBUtil;
@@ -111,56 +113,53 @@ public class OrderManagementService extends DBUtil {
 
 			// check nulls for all parameters
 			if (user_id == null || currency_code == null || order_type == null || quantity == null
-					|| stock_symbol == null || price_type == null || opening_order_date == null || limit_price == null
-					|| term == null) {
-				System.out.println("1");
-				connect.commit();
+					|| stock_symbol == null || price_type == null || opening_order_date == null || 
+					limit_price == null || term == null) {
+				System.out.println("something null");
 				return false;
 			}
-			//
-			// // check if currency_code is not more than 3 characters.
-			// else if (currency_code.length() > 3) {
-			// System.out.println("2");
-			// return false;
-			// }
-			//
-			// // check if price type is M, LT, SL
-			// else if (!price_type.equals("M") && !price_type.equals("LT") &&
-			// !price_type.equals("SL")) {
-			// System.out.println(price_type);
-			// return false;
-			// }
-			//
-			// // check if only B and S for order type
-			// else if (!order_type.equals("B") && !order_type.equals("S")) {
-			// System.out.println(price_type);
-			// return false;
-			// }
-			//
-			// // check if quantity is not negative
-			// else if (quantity < 1) {
-			// System.out.println("4");
-			// return false;
-			// }
-			//
+
+			// check if quantity is not negative
+			else if (quantity < 1) {
+				System.out.println("quantity negative");
+				return false;
+			}
+
 			// // check if stock symbol not more than 4 characters.
 			// else if (stock_symbol.length() > 4) {
 			// System.out.println("5");
 			// return false;
 			// }
-			//
-			// // check if limit price is not negative
-			// else if (limit_price < 0) {
-			// System.out.println("6");
-			// return false;
-			// }
-			//
-			// // check if term is good to cancel or good for the day
-			// else if (!term.equals("GC") && !term.equals("GD")) {
-			// System.out.println("7");
-			// return false;
-			// }
 
+			// check if limit price is not negative
+			else if (price_type.equals("LT") || price_type.equals("SL")) {
+				if (limit_price < 0) {
+					System.out.println("limit price negative");
+					return false;
+				}
+			}
+
+		StockService ss = new StockService();
+		// set up calls for checking balance.
+		Stock stock = ss.getStockFromExchange(stock_symbol, InfoType.BASIC);
+		UserAccountService uas = new UserAccountService();
+		UserAccount ua = uas.getAccountBalance(user_id);
+
+		// check if stocksymbol exists
+		if (stock == null) {
+			System.out.println("Stock is null.");
+			return false;
+		} else {
+		// check if balance is enough for transaction
+			Double mktprice = Double.parseDouble(stock.getMktPrice().toString());
+			Double totalprice = mktprice * quantity;
+			if (ua.getBalance() < totalprice) {
+				System.out.println("Balance not enough.");
+				return false;
+
+			}
+		}
+		
 		} catch (Exception e) {
 			try {
 				connect.rollback();
@@ -201,19 +200,18 @@ public class OrderManagementService extends DBUtil {
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
-	
 
-		PortfolioDAO pfdao = new PortfolioDAO();
-		StockHolding sh = pfdao.getStockholding(connect, order_id);
-		if (sh.getPurchase_quantity().equals("0")) {
-			pfdao.deleteStockHolding(connect, order_id);
-			System.out.println("Stockholding with order id - " + order_id + " has been deleted.");
-		} else {
-			System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
-		}
-		
-		connect.commit();
-		
+			PortfolioDAO pfdao = new PortfolioDAO();
+			StockHolding sh = pfdao.getStockholding(connect, order_id);
+			if (sh.getPurchase_quantity().equals("0")) {
+				pfdao.deleteStockHolding(connect, order_id);
+				System.out.println("Stockholding with order id - " + order_id + " has been deleted.");
+			} else {
+				System.out.println("Remaining purchase is still available - " + sh.getRemaining_quantity());
+			}
+
+			connect.commit();
+
 		} catch (Exception e) {
 			connect.rollback();
 		} finally {
