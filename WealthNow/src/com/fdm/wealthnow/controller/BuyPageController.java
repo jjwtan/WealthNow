@@ -55,7 +55,8 @@ public class BuyPageController extends HttpServlet {
 		
 		//make sure that UserID has been checked before proceeding
 		
-		//
+		//Checking for user account balance
+	
 		
 		
 	}

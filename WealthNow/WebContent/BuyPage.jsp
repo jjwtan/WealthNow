@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page import="com.fdm.wealthnow.common.UserAuth"%>
-<%@ page import="com.fdm.wealthnow.common.UserAccount"%>
+<%@ page import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -11,19 +10,19 @@
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-	
-	$("#lsl").hide();
-	
-    $("#SL").on("click", function(){
-        $("#lsl").show();
-        
-    });
-    $("#M").on("click", function(){
-        $("#lsl").hide();
-    
-    });
-});
+	$(document).ready(function() {
+
+		$("#lsl").hide();
+
+		$("#SL").on("click", function() {
+			$("#lsl").show();
+
+		});
+		$("#M").on("click", function() {
+			$("#lsl").hide();
+
+		});
+	});
 </script>
 </head>
 <body>
@@ -33,10 +32,24 @@ $(document).ready(function(){
 		<fieldset>
 			<legend>Buy Stocks</legend>
 			
+			<% 
+	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+%>
+<h1> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %></h1>
+<h2>Your balance is $<%=ua.getBalance() %></h2>
 			<p>
-   Today's date: <%= (new java.util.Date()).toLocaleString()%>  Your Account Balance is:
-  
-</p>
+				Today's date:
+				<%=(new java.util.Date()).toLocaleString()%>
+				Your Account Balance is:
+
+				<%--
+				UserAccountService uas = new UserAccountService();
+				UserAccount ua = uas.getAccountBalance(1);
+				out.print(ua.getBalance());
+			--%>
+
+			</p>
 
 			<input type="radio" name="Selection" value="buy" required>
 			Buy <input type="radio" name="Selection" value="sell" required>
@@ -52,8 +65,7 @@ $(document).ready(function(){
 				<option value="SL" id="SL">Stop Loss</option>
 				<option value="L" id="L">Limit</option>
 			</select> <input type="number" id="lsl" required
-				placeholder="Limit/Stop Loss Price" min="0">
-				 <br> Term:<br>
+				placeholder="Limit/Stop Loss Price" min="0"> <br> Term:<br>
 			<select required name="term">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="GD">Good For The Day</option>
