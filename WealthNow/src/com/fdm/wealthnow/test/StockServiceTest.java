@@ -28,6 +28,11 @@ public class StockServiceTest {
 	}
 	
 	@Test
+	public void testValidationOfGet() {
+		assertNull(stockService.getStockFromExchange("zzzz1", InfoType.BASIC));
+	}
+	
+	@Test
 	public void testBasicURL() {
 		String url = stockService.generateRequestURL(stockList, InfoType.BASIC);
 		System.out.println(url);
