@@ -29,6 +29,9 @@ public class StockService {
 	}
 
 	public Stock getStockFromExchange(String stockSymbol, InfoType type) {
+		if(!validateStock(stockSymbol)) {
+			return null;
+		}
 		List<Stock> wrapper = new ArrayList<>();
 		this.requestStock = wrapper;
 		rawStockList = new ArrayList<>();
