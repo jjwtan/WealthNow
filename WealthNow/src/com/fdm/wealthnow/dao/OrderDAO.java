@@ -180,7 +180,7 @@ public class OrderDAO extends DBUtil {
 		PreparedStatement ps;
 		try {
 			ps = connect.prepareStatement(SQL);
-			System.out.println(SQL);
+			
 			ps.executeUpdate();
 			System.out.println("The SQL statement below has been executed\n" + SQL);
 		} catch (SQLException e) {
