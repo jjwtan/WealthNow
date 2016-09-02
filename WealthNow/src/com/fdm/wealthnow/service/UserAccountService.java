@@ -32,5 +32,31 @@ public class UserAccountService extends DBUtil {
 		return null;
 
 	}
+	
+	public double debitBalance(int userId, double amountToDebit) {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			UserAccountDAO userAccountDAO = new UserAccountDAO();
+			return userAccountDAO.debitBalance(connect, userId, amountToDebit);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public double creditBalance(int userId, double amountToCredit) {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			UserAccountDAO userAccountDAO = new UserAccountDAO();
+			return userAccountDAO.creditBalance(connect, userId, amountToCredit);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 }
