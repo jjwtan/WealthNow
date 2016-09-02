@@ -37,7 +37,11 @@ public class WatchlistDAOTest {
 		assertEquals("myList", watchlistToGet2.getWatchlistName());
 		// test for invalid watchlistId 
 		Watchlist watchlistToGet3 = watchlistDAO.getWatchlist(33, connect);
-		assertEquals(null, watchlistToGet3.getWatchlistName());
+		
+		// this is the wrong way to do it 
+		//assertEquals(null, watchlistToGet3.getWatchlistName());
+		//correct way
+		assertNull(watchlistToGet3);
 	}
 
 	@Test
@@ -56,7 +60,7 @@ public class WatchlistDAOTest {
 	@Test
 	public void testAddWatchlist() throws ParseException, SQLException {
 		
-		System.out.println("--> Inside testAddWatchlist");
+		//System.out.println("--> Inside testAddWatchlist");
 		Integer userId;
 			
 		//this is Amy
@@ -98,10 +102,12 @@ public class WatchlistDAOTest {
 		watchlistsBelongingToUser = watchlistDAO.getAllUserWatchlist(3, connect);
 		
 		// test the names of all the watchlists
+		/*
 		for(int i=0; i<watchlistsBelongingToUser.size(); i++){
 			System.out.println("This watchlist name: ");
 			System.out.println(watchlistsBelongingToUser.get(i).getWatchlistName());
 		}
+		*/
 		
 		// should be 3 and not 4
 		assertEquals(3, watchlistsBelongingToUser.size());
@@ -167,10 +173,12 @@ public class WatchlistDAOTest {
 		watchlistDAO.deleteStockFromWatchlist(watchlistId, stockSymbol, connect);
 		stocksListToGet = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connect);
 		
-		System.out.println("Stock symbol in watchlistId: " + watchlistId);
+		//System.out.println("Stock symbol in watchlistId: " + watchlistId);
+		/*
 		for(int i = 0; i<stocksListToGet.size(); i++){
 			System.out.println(stocksListToGet.get(i));
 		}
+		*/
 		
 		assertEquals(1, stocksListToGet.size());
 	}

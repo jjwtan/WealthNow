@@ -14,7 +14,7 @@ public class Watchlist {
 	}
 	
 	public Watchlist(int watchlistId, String watchlistName, String visibility, Date dateCreated, Date dateLastEdited) {
-		super();
+		//super();
 		this.watchlistId = watchlistId;
 		this.watchlistName = watchlistName;
 		this.visibility = visibility;
