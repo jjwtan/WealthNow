@@ -75,5 +75,18 @@ public class StockServiceTest {
 			System.out.println(stock);
 		}
 	}
+	
+	@Test
+	public void testGetUsingSymbol() {
+		List<String> stockList = new ArrayList<>();
+		stockList.add("BTP");
+		stockList.add("Z74");
+		
+		stockService = new StockService();
+		List<Stock> stocks = stockService.getStocksFromExchangeString(stockList, InfoType.FULL);
+		for(Stock stock: stocks) {
+			System.out.println(stock);
+		}
+	}
 
 }

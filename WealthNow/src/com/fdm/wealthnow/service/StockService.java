@@ -59,7 +59,7 @@ public class StockService {
 	
 	public List<Stock> getStocksFromExchangeString(List<String> stocks, InfoType type) {
 		rawStockList  = new ArrayList<>();
-		
+		requestStock = new ArrayList<>();
 		for(String stock_symbol: stocks) {
 			requestStock.add(new Stock(stock_symbol));
 		}
