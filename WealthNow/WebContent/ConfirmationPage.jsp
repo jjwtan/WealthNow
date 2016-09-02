@@ -17,10 +17,11 @@
 <script>
 	
 
-$("#submitbutton").click(function () {
-	       alert("Thanks For Your Money Bitch");
-	      
-	   });
+$(document).ready ( function () {
+    $("#submitbutton").click(function () {
+       alert("Order Confirmed!");
+    });
+});
 	
 </script>
 
@@ -47,7 +48,7 @@ $("#submitbutton").click(function () {
 		
 	
 		Double stock_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());				
-		priceLimit = Double.parseDouble(limit_price);
+		
 		Double total_price = Double.parseDouble(quantity) * stock_price + brokerage_fee;
 	
 	%>
@@ -70,7 +71,7 @@ $("#submitbutton").click(function () {
 			</tr>
 			<tr>
 				<td>Stock Price</td>
-				<td>
+				<td>$
 					<%
 						out.print(stock_price);
 					%>
@@ -91,9 +92,9 @@ $("#submitbutton").click(function () {
 			
 			<tr>
 				<td>Limit/Stop Loss</td>
-				<td>
+				<td>$
 					<%
-						out.print(df.format(priceLimit));
+						out.print(limit_price);
 					%>
 				</td>
 			</tr>
@@ -109,7 +110,7 @@ $("#submitbutton").click(function () {
 
 			<tr>
 				<td>Fixed Price</td>
-				<td>
+				<td>$
 					<%
 						out.print(brokerage_fee);
 					%>
@@ -122,7 +123,7 @@ $("#submitbutton").click(function () {
 
 			<tr>
 				<td>Total price</td>
-				<td width="126">
+				<td width="126">$
 					<%
 						out.print(df.format(total_price));
 					%>
