@@ -57,7 +57,7 @@ public class StockService {
 
 	}
 	
-	public List<Stock> getStocksFromExchange(ArrayList<String> stocks, InfoType type) {
+	public List<Stock> getStocksFromExchangeString(List<String> stocks, InfoType type) {
 		rawStockList  = new ArrayList<>();
 		
 		for(String stock_symbol: stocks) {
