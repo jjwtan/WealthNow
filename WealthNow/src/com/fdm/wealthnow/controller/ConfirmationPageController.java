@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.service.OrderManagementService;
+
 /**
  * Servlet implementation class ConfirmationPageController
  */
@@ -35,7 +38,8 @@ public class ConfirmationPageController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		System.out.println("Inside doPost Method");
+		OrderManagementService oms = new OrderManagementService();
+		
 		
 		request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
 	}

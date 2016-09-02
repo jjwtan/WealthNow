@@ -92,7 +92,7 @@ $("#submitbutton").click(function () {
 				<td>Limit/Stop Loss</td>
 				<td>
 					<%
-						out.print(priceLimit);
+						out.print(df.format(priceLimit));
 					%>
 				</td>
 			</tr>
