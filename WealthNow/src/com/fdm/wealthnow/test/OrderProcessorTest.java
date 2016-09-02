@@ -46,9 +46,10 @@ public class OrderProcessorTest {
 		}
 		
 		assertEquals(order.getUser_id(),new Integer(1) );
+		assertEquals(orderlist.size(), 3);
 		
 		
-		System.out.println("Test Completed: Created Data in database.");	
+		System.out.println("Test Completed: Created Data in database.------------------------------------------------------");	
 	}
 	
 	
@@ -68,13 +69,18 @@ public class OrderProcessorTest {
 				new Double(2), "");
 		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
 				new Double(2), "");
+		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
+				new Double(2), "");
+		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
+				new Double(2), "");
+		System.out.println("processing orders ---------------------------------");
 		int count = orderProcessor.testProcessOrders(executorService);
+		System.out.println("Processing done with " + count + " orders processed.");
+		assertEquals(5,count );
 		
-		assertEquals(count, 3);
-		System.out.println("\n Start testCreatedDataInDatabase");
 		
 		
-		System.out.println("Test Completed: Created Data in database.");	
+		System.out.println("Test Completed: Created Data in database.-----------------------------------------------------------------------");	
 	}
 	
 	@After

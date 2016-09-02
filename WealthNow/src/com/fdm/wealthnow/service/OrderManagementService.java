@@ -89,6 +89,7 @@ public class OrderManagementService extends DBUtil {
 
 			oms.createStockHoldings(order.getOrder_id(), order.getUser_id());
 			connect.commit();
+			System.out.println("Order process done.");
 		} catch (Exception e) {
 			try {
 				System.out.println("simitachi@ OMS");
