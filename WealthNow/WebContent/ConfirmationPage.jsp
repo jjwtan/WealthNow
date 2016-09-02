@@ -32,10 +32,11 @@ $("#submitbutton").click(function () {
 <body>
 	<H1>Confirmation Page</H1>
 
-
+	
+		<%-- priceLimit = Double.parseDouble(limit_price); --%>
 	<%
 		Double brokerage_fee = 9.95;
-	
+		Double priceLimit = 0.00;
 		StockService svc = new StockService();
 		String price_type = request.getParameter("price_type");
 		String quantity = request.getParameter("quantity");
@@ -43,11 +44,10 @@ $("#submitbutton").click(function () {
 		String limit_price = request.getParameter("lsl");
 		DecimalFormat df = new DecimalFormat(".##");
 		
-		
-		Double priceLimit = Double.parseDouble(limit_price);
+	
 		Double stock_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());				
-
-		Double total_price = new Double(quantity) * new Double(stock_price) + brokerage_fee;
+		priceLimit = Double.parseDouble(limit_price);
+		Double total_price = Double.parseDouble(quantity) * stock_price + brokerage_fee;
 	
 	%>
 
@@ -74,8 +74,9 @@ $("#submitbutton").click(function () {
 						out.print(stock_price);
 					%>
 				</td>
-				<!--  // get from stock service-->
+				
 			</tr>
+			
 			<tr>
 				<td>Price Type</td>
 				<td>
@@ -83,8 +84,9 @@ $("#submitbutton").click(function () {
 						out.print(price_type);
 					%>
 				</td>
-				<!--  // get from stock service-->
+				
 			</tr>
+			
 			
 			<tr>
 				<td>Limit/Stop Loss</td>
