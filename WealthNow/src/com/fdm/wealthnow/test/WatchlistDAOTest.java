@@ -37,10 +37,6 @@ public class WatchlistDAOTest {
 		assertEquals("myList", watchlistToGet2.getWatchlistName());
 		// test for invalid watchlistId 
 		Watchlist watchlistToGet3 = watchlistDAO.getWatchlist(33, connect);
-		
-		// this is the wrong way to do it 
-		//assertEquals(null, watchlistToGet3.getWatchlistName());
-		//correct way
 		assertNull(watchlistToGet3);
 	}
 
@@ -54,7 +50,7 @@ public class WatchlistDAOTest {
 		watchlistsBelongingToUser2 = watchlistDAO.getAllUserWatchlist(33, connect);
 
 		assertEquals(4, watchlistsBelongingToUser1.size());
-		assertEquals(0, watchlistsBelongingToUser2.size());
+		assertNull(watchlistsBelongingToUser2);
 	}
 
 	@Test
@@ -133,9 +129,11 @@ public class WatchlistDAOTest {
 		Integer watchlistId;
 		watchlistId = 3;
 		List<String> stocksListToGet = new ArrayList<String>();
-		stocksListToGet = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connect);
-		
+		List<String> stocksListToGet2 = new ArrayList<String>();
+		stocksListToGet = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connect);	
 		assertEquals(2, stocksListToGet.size());
+		stocksListToGet2 = watchlistDAO.getAllStocksFromWatchlist(33, connect);
+		assertNull(stocksListToGet2);
 	}
 	
 	@Test

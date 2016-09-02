@@ -11,6 +11,7 @@ import com.fdm.wealthnow.util.DBUtil;
 public class WatchlistDAO extends DBUtil {
 
 	// return watchlist object
+	// return null if no such watchlist 
 	public Watchlist getWatchlist(int watchlistId, Connection connect) {
 
 		Watchlist newWatchlist = new Watchlist();
@@ -51,9 +52,9 @@ public class WatchlistDAO extends DBUtil {
 	};
 
 	// get all watchlists belonging to one user
+	// return null if user does not have any watchlist 
 	public List<Watchlist> getAllUserWatchlist(int userId, Connection connect) {
 
-		// System.out.println("Inside getAllUserWatchlist in WatchlistDAO");
 		List<Watchlist> watchlistsBelongingToUser = new ArrayList<Watchlist>();
 
 		try {
@@ -62,8 +63,10 @@ public class WatchlistDAO extends DBUtil {
 			ps.setInt(1, userId);
 
 			ResultSet result = ps.executeQuery();
+			Integer counter = 0;
 
 			while (result.next()) {
+				counter ++;
 				Integer watchlistId = result.getInt("watchlist_id");
 				String watchlistName = result.getString("watchlist_name");
 				String visibility = result.getString("visibility");
@@ -72,6 +75,11 @@ public class WatchlistDAO extends DBUtil {
 				Watchlist newWatchlist = new Watchlist(watchlistId, watchlistName, visibility, dateCreated,
 						dateLastEdited);
 				watchlistsBelongingToUser.add(newWatchlist);
+			}
+			
+			if (counter == 0) {
+				System.out.println("getAllUserWatchlist says: User does not have any watchlist!");
+				return null;
 			}
 
 		} catch (SQLException e) {
@@ -87,31 +95,20 @@ public class WatchlistDAO extends DBUtil {
 	public void addWatchlist(int watchlistId, String watchlistName, String visibility, String dateCreated,
 			String dateLastEdited, Integer userId, Connection newConnect) {
 
-		// System.out.println("--> Inside addWatchlist in WatchlistDAO");
-
 		try {
 
-			// PART 1: insert record into watchlist
 			String SQLStatement = "INSERT INTO Watchlist(watchlist_id, watchlist_name, visibility, date_created, date_modified) VALUES ("
 					+ watchlistId + ",'" + watchlistName + "','" + visibility + "','" + dateCreated + "','"
 					+ dateLastEdited + "')";
 
 			PreparedStatement ps = newConnect.prepareStatement(SQLStatement);
 			ps.executeUpdate();
-			// System.out.println("--> Inserting into watchlist SQL executed\n"
-			// + SQLStatement);
 
-			// PART 2: insert userid to watchlistid into mapping table
 			String SQLStatement2 = "INSERT INTO UserWatchlist(user_id , watchlist_id) VALUES (" + userId + ","
 					+ watchlistId + ")";
 
 			PreparedStatement ps2 = newConnect.prepareStatement(SQLStatement2);
 			ps2.executeUpdate();
-			// System.out.println("--> Inserting into userwatchlist SQL
-			// executed\n" + SQLStatement2);
-
-			// turn this on during implementation
-			// connect.commit();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,11 +128,7 @@ public class WatchlistDAO extends DBUtil {
 			PreparedStatement ps2 = connect.prepareStatement(SQLStatement2);
 
 			ps1.executeUpdate();
-			// System.out.println("--> Delete from userwatchlist SQL executed\n"
-			// + SQLStatement1);
 			ps2.executeUpdate();
-			// System.out.println("--> Delete from userwatchlist SQL executed\n"
-			// + SQLStatement2);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -156,10 +149,7 @@ public class WatchlistDAO extends DBUtil {
 					+ "' WHERE watchlist.watchlist_id = " + newWatchlist.getWatchlistId();
 
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
-
 			ps.executeUpdate();
-			// System.out.println("--> Update userwatchlist SQL executed\n" +
-			// SQLStatement);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,6 +159,7 @@ public class WatchlistDAO extends DBUtil {
 	};
 
 	// get stock symbols from watchlist
+	// return null if there are no stocks in watchlist 
 	public List<String> getAllStocksFromWatchlist(Integer watchlistId, Connection connect) {
 
 		List<String> stocksList = new ArrayList<String>();
@@ -179,10 +170,17 @@ public class WatchlistDAO extends DBUtil {
 			ps.setInt(1, watchlistId);
 
 			ResultSet result = ps.executeQuery();
+			Integer count = 0;
 
 			while (result.next()) {
+				count ++;
 				String stockSymbol = result.getString("stock_symbol");
 				stocksList.add(stockSymbol);
+			}
+			
+			if (count == 0) {
+				System.out.println("getAllStocksFromWatchlist says: Watchlist does not have any stock!");
+				return null;
 			}
 			
 		} catch (SQLException e) {

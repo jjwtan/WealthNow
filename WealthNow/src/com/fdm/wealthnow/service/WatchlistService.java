@@ -1,7 +1,6 @@
 package com.fdm.wealthnow.service;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,30 +9,25 @@ import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.common.Watchlist;
 import com.fdm.wealthnow.dao.WatchlistDAO;
 import com.fdm.wealthnow.service.StockService;
-import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 public class WatchlistService {
 
 	static WatchlistDAO watchlistDAO = new WatchlistDAO();
-	// static Connection connection;
 
+	// TESTED
 	public Watchlist viewWatchlist(int watchlistId) throws Exception {
 
-		System.out.println("Inside viewWatchlist");
 		Connection connection = null;
 		Watchlist thisWatchlist = new Watchlist();
-		// WatchlistDAO.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 
 		try {
 
 			connection = WatchlistDAO.getConnection();
 			connection.setAutoCommit(false);
-
-			System.out.println("Calling getWatchlist");
 			thisWatchlist = watchlistDAO.getWatchlist(watchlistId, connection);
 
 			if (thisWatchlist == null) {
-				System.out.println("The watchlist does not exist!");
+				System.out.println("viewWatchlist says: The watchlist does not exist!");
 				return null;
 			} else {
 				System.out.println("Watchlist Id: " + thisWatchlist.getWatchlistId());
@@ -54,6 +48,7 @@ public class WatchlistService {
 		return thisWatchlist;
 	}
 
+	// TESTED
 	public List<Watchlist> getUserWatchlists(int userId) throws Exception {
 
 		Connection connection = null;
@@ -68,6 +63,10 @@ public class WatchlistService {
 			if (userWatchlists.size() == 0) {
 				System.out.println("The user does not have any watchlist!");
 				userWatchlists = null;
+			} else {
+				for (int a = 0; a < userWatchlists.size(); a++) {
+					System.out.println("Watchlist id: " + userWatchlists.get(a).getWatchlistId());
+				}
 			}
 
 			connection.commit();
@@ -98,29 +97,29 @@ public class WatchlistService {
 		Connection connection = null;
 		List<String> symbolsList = new ArrayList<String>();
 		List<Stock> stocksList = new ArrayList<Stock>();
-		Stock stock = new Stock();
 
 		try {
 			connection = WatchlistDAO.getConnection();
 			connection.setAutoCommit(false);
 
 			symbolsList = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connection);
-
 			StockService ss = new StockService();
+			System.out.println("size of symbol list: " + symbolsList.size());
 
-			for (int i = 0; i < symbolsList.size(); i++) {
-				stock = ss.getStockFromExchange(symbolsList.get(i), InfoType.FULL);
-				stocksList.add(stock);
-			}
-
-			if (stocksList.size() == 0) {
-				System.out.println("There are no stocks in this watchlist!");
+			if (symbolsList.size() == 0) {
+				System.out.println("listStocksFromWatchlist: There are no stocks in this watchlist!");
 				stocksList = null;
-			} else {
-				for (int j = 0; j < stocksList.size(); j++) {
-					System.out.println("Stock Symbol: " + stocksList.get(j).getStockSymbol());
-					System.out.println("Company: " + stocksList.get(j).getCompany());
-					System.out.println("Market Price: " + stocksList.get(j).getMktPrice());
+			} 
+			else {
+				System.out.println("Inside else. There are some stocks!");
+				// returns a list of stock
+				stocksList = ss.getStocksFromExchangeString(symbolsList, InfoType.FULL);
+				System.out.println("size of stock list: " + stocksList.size());
+				
+				for(int i=0; i<stocksList.size(); i++){
+					 System.out.println("Stock Symbol: " + stocksList.get(i).getStockSymbol());
+					 System.out.println("Company: " + stocksList.get(i).getCompany());
+					 System.out.println("Market Price: " + stocksList.get(i).getMktPrice());
 				}
 			}
 			connection.commit();
@@ -134,54 +133,18 @@ public class WatchlistService {
 	}
 
 	public void addStockToWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
-		// call validate stock
+		// call stock service validate stock
+		// call in this service check for duplicate stock
 
 	}
 
 	public void deleteStockFromWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
 
 	}
-
-	// Validations:
-
-	// call validate stock
-
-	// 1. Duplicate stock
+	
+	// to be changed later
 	public boolean checkForDuplicateStocks(Integer watchlistId, String stockSymbol) {
 		return true;
 	}
-
-	// 2. create only if it does not exist, pull only if it exists
-	// return false: watchlist does not exist
-	// return true: watchlist exists
-	/*
-	 * public boolean checkWatchlistExists(Integer watchlistId) throws Exception
-	 * {
-	 * 
-	 * System.out.println(
-	 * "checkWatchlistExists says: Inside check watchlist exists"); Connection
-	 * connection = null; Watchlist thisWatchlist = new Watchlist(); Boolean
-	 * ifExist = true;;
-	 * 
-	 * try { connection = WatchlistDAO.getConnection();
-	 * connection.setAutoCommit(false);
-	 * 
-	 * // if returns null then watchlist does not exist thisWatchlist =
-	 * watchlistDAO.getWatchlist(watchlistId, connection); System.out.println(
-	 * "checkWatchlistExists says: This watchklist: " + thisWatchlist);
-	 * 
-	 * System.out.println("Hashcode: " + thisWatchlist.getWatchlistId());
-	 * thisWatchlist = null;
-	 * 
-	 * if (thisWatchlist == null){ System.out.println(
-	 * "checkWatchlistExists says: Watchlist does not exist."); ifExist = false;
-	 * } else if (thisWatchlist != null) { System.out.println(
-	 * "checkWatchlistExists says: Watchlist " + watchlistId + " exists.");
-	 * ifExist = true; } connection.commit(); } catch(Exception e) {
-	 * connection.rollback(); } finally { if (connection != null)
-	 * connection.close(); }
-	 * 
-	 * return ifExist; }
-	 */
 
 }
