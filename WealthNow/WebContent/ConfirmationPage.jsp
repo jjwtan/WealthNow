@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="com.fdm.wealthnow.common.InfoType"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -30,7 +31,7 @@ $("#submit").click(function () {
 </head>
 <body>
 	<H1>Confirmation Page</H1>
-Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());
+
 
 	<%
 	
@@ -42,7 +43,7 @@ Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMkt
 		String price_type = request.getParameter("price_type");
 		String quantity = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
-
+		DecimalFormat df = new DecimalFormat(".##");
 		Double stock_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());				
 
 		Double total_price = new Double(quantity) * new Double(stock_price) + brokerage_fee;
@@ -109,7 +110,7 @@ Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMkt
 				<td>Total price</td>
 				<td width="126">
 					<%
-						out.print(total_price);
+						out.print(df.format(total_price));
 					%>
 				</td>
 			</tr>
