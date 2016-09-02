@@ -24,16 +24,23 @@ public class WatchlistDAO extends DBUtil {
 
 			// execute query
 			ResultSet result = ps.executeQuery();
-			// System.out.println("The SQL statement below has been executed\n"
-			// + SQLStatement);
+			// for checking null
+			Integer counter =0;
 
 			while (result.next()) {
+				counter ++;
 				String watchlistName = result.getString("watchlist_name");
 				String visibility = result.getString("visibility");
 				Date dateCreated = result.getDate("date_created");
 				Date dateLastEdited = result.getDate("date_modified");
 				newWatchlist = new Watchlist(watchlistId, watchlistName, visibility, dateCreated, dateLastEdited);
 			}
+			
+			if (counter == 0) {
+				System.out.println("getWatchlist says: No such watchlist!");
+				return null;
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -50,16 +57,11 @@ public class WatchlistDAO extends DBUtil {
 		List<Watchlist> watchlistsBelongingToUser = new ArrayList<Watchlist>();
 
 		try {
-			// SQL statement
 			String SQLStatement = "Select watchlist.watchlist_id, watchlist.watchlist_name, watchlist.visibility, watchlist.date_created, watchlist.date_modified from watchlist inner join userwatchlist on watchlist.watchlist_id = userwatchlist.watchlist_id inner join user1 on user1.user_id = userwatchlist.user_id where user1.user_id = ?";
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
-			// insert the first ? as watchlistId
 			ps.setInt(1, userId);
 
-			// execute query
 			ResultSet result = ps.executeQuery();
-			// System.out.println("The SQL statement below has been executed\n"
-			// + SQLStatement);
 
 			while (result.next()) {
 				Integer watchlistId = result.getInt("watchlist_id");
@@ -201,7 +203,7 @@ public class WatchlistDAO extends DBUtil {
 
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 			ps.executeUpdate();
-			System.out.println("--> Add stock to userwatchlist SQL executed\n" + SQLStatement);
+			//System.out.println("--> Add stock to userwatchlist SQL executed\n" + SQLStatement);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -60,12 +60,13 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		System.out.println(orderList);
 		OrderManagementService oms = new OrderManagementService();
 		UserAccountService uas = new UserAccountService();
+		
 
 		StockService stksvc = new StockService();
 		int count = 0;
 
 		for (Order order : orderList) {
-			//if the term is null because the it is ordertype "Market" do the following:
+			//if the term is null because the ordertype "Market" do the following:
 			boolean success;
 			if (order.getTerm() == null) {
 				 success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
@@ -85,14 +86,26 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				Integer quantity = order.getQuantity();
 				Double total_price = stockPrice * quantity;
 				Double balance = uas.getAccountBalance(order.getUser_id()).getBalance();
-				System.out.println("stock price" +stockPrice);
-				System.out.println("limit price" +order.getLimit_price());
+				System.out.println("stock price : " +stockPrice);
+				System.out.println("limit price : " +order.getLimit_price());
+				System.out.println("balance is " + balance);
+				System.out.println("total price: "+ total_price);
 				// if statement to check if the limit price
-				if (order.getLimit_price() < stockPrice && balance > total_price) {
-					System.out.println("Executing processOrder at OrderProcessor.");
+				if (order.getPrice_type().toString().equals("M") && balance > total_price) {
+					System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
 					ex.submit(() -> oms.processOrder(order.getOrder_id(), order.getLimit_price()));
 					count++;
-					System.out.println("Count - " +count);
+					System.out.println("Count: " +count);
+					//edit balance account
+				    uas.debitBalance(order.getUser_id(), total_price);
+				}else if((order.getPrice_type().toString().equals("LT")||order.getPrice_type().equals("SL")) && balance > total_price){
+					if(order.getLimit_price()<stockPrice){
+						System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
+						ex.submit(() -> oms.processOrder(order.getOrder_id(), order.getLimit_price()));
+						count++;
+						System.out.println("Count - " +count);
+						uas.debitBalance(order.getUser_id(), total_price);
+					}
 				}
 			} else {
 				System.out.println("Validation failed.");
