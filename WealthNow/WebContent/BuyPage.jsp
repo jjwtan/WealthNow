@@ -73,7 +73,7 @@
 			</select> 
 			
 			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="0.00"> <br> 
-				<br> <select required name="term" id="term" value="null" >
+				<br> <select required selected disabled hidden style='display: none' value="" >
 				<option selected style='display: none' value="null"></option>
 				<option value="GD">Good For The Day</option>
 				<option value="GC">Good Till Cancelled</option>
