@@ -81,7 +81,23 @@ public class WatchlistService {
 
 	public void createWatchlist(int watchlistId, String watchlistName, String visibility, String dateCreated,
 			String dateLastEdited, Integer userId) throws Exception {
+		
+		Connection connection = null;
 
+		try {
+			connection = WatchlistDAO.getConnection();
+			connection.setAutoCommit(false);
+			
+			System.out.println("Calling add watchlist: ");
+			watchlistDAO.addWatchlist(watchlistId, watchlistName, visibility, dateCreated, dateLastEdited, userId, connection);
+			connection.commit();
+		} catch (Exception e) {
+			connection.rollback();
+		} finally {
+			if (connection != null)
+				connection.close();
+		}		
+		
 	}
 
 	public void deleteWatchlist(int watchListId) throws Exception {
@@ -92,6 +108,7 @@ public class WatchlistService {
 
 	}
 
+	//TESTED
 	public List<Stock> listStocksFromWatchlist(Integer watchlistId) throws Exception {
 
 		Connection connection = null;
