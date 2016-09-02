@@ -39,9 +39,23 @@ public class UserAccountTest {
 	}
 	
 	@Test
-	public void test() {
+	public void testGetBalance() {
 		UserAccountDAO userAccountDAO = new UserAccountDAO();
 		System.out.println(userAccountDAO.getAccountBalance(connect, 1).getBalance());
+	}
+	
+	@Test
+	public void testDebitBalance() {
+		UserAccountDAO userAccountDAO = new UserAccountDAO();
+		double finalAmt = userAccountDAO.debitBalance(connect, 1, 1200);
+		System.out.println("After debit: "+ finalAmt);
+	}
+	
+	@Test
+	public void testCreditBalance() {
+		UserAccountDAO userAccountDAO = new UserAccountDAO();
+		double finalAmt = userAccountDAO.creditBalance(connect, 1, 1200);
+		System.out.println("After credit: "+ finalAmt);
 	}
 
 }
