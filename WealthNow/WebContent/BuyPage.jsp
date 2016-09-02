@@ -48,7 +48,7 @@
 				type="radio" name="Selection" value="sell" required> Sell <br> <br>
 			Quantity: <input type="number" name="quantity"
 				value="quantity" required min="1" max="1000" step="1"> Stock Symbol:<input
-				type="text" name="stock_symbol" value="" pattern="[A-Za-z]{3,4}"
+				type="text" name="stock_symbol" value="" pattern="[A-Za-z0-9]{3,4}"
 				required placeholder="3-4 Characters"  style="text-transform: uppercase"> <br> <br> Price Type:<br> <select
 				required name="price_type" id="price_type">
 				<option selected disabled hidden style='display: none' value=''></option>
