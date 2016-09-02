@@ -35,13 +35,16 @@ $("#submitbutton").click(function () {
 
 	<%
 		Double brokerage_fee = 9.95;
-
+	
 		StockService svc = new StockService();
 		String price_type = request.getParameter("price_type");
 		String quantity = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
+		String limit_price = request.getParameter("lsl");
 		DecimalFormat df = new DecimalFormat(".##");
 		
+		
+		Double priceLimit = Double.parseDouble(limit_price);
 		Double stock_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());				
 
 		Double total_price = new Double(quantity) * new Double(stock_price) + brokerage_fee;
@@ -82,6 +85,16 @@ $("#submitbutton").click(function () {
 				</td>
 				<!--  // get from stock service-->
 			</tr>
+			
+			<tr>
+				<td>Limit/Stop Loss</td>
+				<td>
+					<%
+						out.print(priceLimit);
+					%>
+				</td>
+			</tr>
+			
 			<tr>
 				<td>Quantity</td>
 				<td>
