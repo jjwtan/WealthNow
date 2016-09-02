@@ -17,10 +17,11 @@
 <script>
 	
 
-$("#submitbutton").click(function () {
-	       alert("Thanks For Your Money Bitch");
-	      
-	   });
+$(document).ready ( function () {
+    $("#submitbutton").click(function () {
+       alert("Order Confirmed!");
+    });
+});
 	
 </script>
 

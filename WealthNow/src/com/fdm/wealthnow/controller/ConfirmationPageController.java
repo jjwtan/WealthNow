@@ -68,7 +68,7 @@ public class ConfirmationPageController extends HttpServlet {
 		OrderManagementService oms = new OrderManagementService();
 		try {
 			
-			if((lsl == null) && (term==null)){
+			if((lsl == null) && (term.equals("null"))){
 				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
 						price_type, txDate, null, null);
 			}
