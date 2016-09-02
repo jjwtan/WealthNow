@@ -55,7 +55,7 @@
 			%>
 			<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
 			,Your Current Balance $<%=ua.getBalance() %></h4>
-
+			
 
 			<input type="radio" name="Selection" value="B" required> Buy <input
 				type="radio" name="Selection" value="S" required> Sell <br> <br>

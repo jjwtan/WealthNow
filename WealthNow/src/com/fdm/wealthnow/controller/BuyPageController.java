@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fdm.wealthnow.service.StockService;
+
 /**
  * Servlet implementation class BuyPageController
  */
@@ -46,7 +48,13 @@ public class BuyPageController extends HttpServlet {
 		
 		String ordertype = request.getParameter("Selection");
 		String quantity  = request.getParameter("quantity");
+		
 		String stock_symbol = request.getParameter("stock_symbol");
+		
+		StockService ss = new StockService();
+		if(ss.validateStock(stock_symbol)==true){
+			
+		}
 		
 		//check for stock symbol using stock service validate
 		//if else condition
