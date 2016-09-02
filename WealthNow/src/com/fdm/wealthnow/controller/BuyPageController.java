@@ -40,7 +40,7 @@ public class BuyPageController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-//		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		
 		System.out.println("buy page controller");
 		
@@ -49,12 +49,15 @@ public class BuyPageController extends HttpServlet {
 		String stock_symbol = request.getParameter("stock_symbol");
 		String price_type = request.getParameter("price_type");
 		String term = request.getParameter("term");
+		String limit_price = request.getParameter("lsl");
+		String order_type = request.getParameter("Selection");
 		
-//		session.setAttribute("Selection", ordertype);
-//		session.setAttribute("quantity", quantity);
-//		session.setAttribute("stock_symbol", stock_symbol);
-//		session.setAttribute("price_type", price_type);
-//		session.setAttribute("term", term);
+		session.setAttribute("Selection", ordertype);
+		session.setAttribute("quantity", quantity);
+		session.setAttribute("stock_symbol", stock_symbol);
+		session.setAttribute("price_type", price_type);
+		session.setAttribute("term", term);
+		
 		System.out.println("forwarding to comfirmation page");
 		request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
 		

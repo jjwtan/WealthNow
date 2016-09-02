@@ -44,6 +44,7 @@ $("#submitbutton").click(function () {
 		String limit_price = request.getParameter("lsl");
 		DecimalFormat df = new DecimalFormat(".##");
 		
+		
 	
 		Double stock_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());				
 		priceLimit = Double.parseDouble(limit_price);
