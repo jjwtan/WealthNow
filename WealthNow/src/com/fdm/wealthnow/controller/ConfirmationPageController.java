@@ -55,20 +55,28 @@ public class ConfirmationPageController extends HttpServlet {
 
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
-		
+		int user_id = ua.getUserId();
 		String order_type = (String) session.getAttribute("Selection");
-		Integer qty = (Integer) session.getAttribute("quantity");
+		Integer qty = Integer.parseInt(session.getAttribute("quantity").toString());
 		String stock_symbol = (String) session.getAttribute("stock_symbol");
 
 		String price_type =(String) session.getAttribute("price_type");
-		Double lsl = (Double) session.getAttribute("lsl");
+		Double lsl = Double.parseDouble(session.getAttribute("lsl").toString());
 		String term = (String) session.getAttribute("term");
 		String txDate = dbu.convertDateObjToString(new Date());
 
 		OrderManagementService oms = new OrderManagementService();
 		try {
-			oms.createOpenOrder(Integer.parseInt(ua.toString()), "SGD",price_type,qty, stock_symbol,
-					order_type, txDate,lsl, term);
+			
+			if((lsl == null) && (term==null)){
+				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
+						price_type, txDate, null, null);
+			}
+			else{
+				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
+						price_type, txDate, lsl, term);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

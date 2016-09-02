@@ -57,6 +57,8 @@ public class BuyPageController extends HttpServlet {
 		session.setAttribute("stock_symbol", stock_symbol);
 		session.setAttribute("price_type", price_type);
 		session.setAttribute("term", term);
+		session.setAttribute("lsl", limit_price);
+		System.out.println(limit_price);
 		
 		System.out.println("forwarding to comfirmation page");
 		request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);

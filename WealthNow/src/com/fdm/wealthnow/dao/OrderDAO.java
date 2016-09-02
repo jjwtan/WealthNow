@@ -247,6 +247,7 @@ public class OrderDAO extends DBUtil {
 
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		System.out.println("Before executing update..");
+		System.out.println(SQL);
 		ps.executeUpdate();
 		System.out.println(SQL + "\nThe SQL statement above has been executed");
 

@@ -13,13 +13,26 @@
 	$(document).ready(function() {
 
 		$("#lsl").hide();
+		$("#term").hide();
 
 		$("#SL").on("click", function() {
 			$("#lsl").show();
+			$("#term").show();
 
 		});
+		
+		
+		$("#L").on("click", function() {
+			$("#lsl").show();
+			$("#term").show();
+
+		});
+		
+		
 		$("#M").on("click", function() {
 			$("#lsl").hide();
+			$("#term").hide().val("null");
+			
 
 		});
 	});
@@ -44,10 +57,10 @@
 			,Your Current Balance $<%=ua.getBalance() %></h4>
 
 
-			<input type="radio" name="Selection" value="buy" required> Buy <input
-				type="radio" name="Selection" value="sell" required> Sell <br> <br>
+			<input type="radio" name="Selection" value="B" required> Buy <input
+				type="radio" name="Selection" value="S" required> Sell <br> <br>
 			Quantity: <input type="number" name="quantity"
-				value="quantity" required min="1" max="1000" step="1"> 
+				value="quantity" required min="1" max="100000" step="1"> 
 				Stock Symbol:<input type="text" name="stock_symbol" value="" pattern="[A-Za-z0-9]{3,4}"
 				required placeholder="3-4 Characters"  style="text-transform: uppercase">
 				
@@ -59,9 +72,9 @@
 				<option value="L" id="L">Limit</option>
 			</select> 
 			
-			<input type="number" id="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="0.00"> <br> 
-				Term:<br> <select required name="term">
-				<option selected disabled hidden style='display: none' value=''></option>
+			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="0.00"> <br> 
+				<br> <select required name="term" id="term" value="null" >
+				<option selected style='display: none' value="null"></option>
 				<option value="GD">Good For The Day</option>
 				<option value="GC">Good Till Cancelled</option>
 
