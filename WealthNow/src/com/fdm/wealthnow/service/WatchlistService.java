@@ -130,7 +130,7 @@ public class WatchlistService {
 			else {
 				System.out.println("Inside else. There are some stocks!");
 				// returns a list of stock
-				stocksList = ss.getStocksFromExchangeString(symbolsList, InfoType.FULL);
+				stocksList = ss.getStocksFromExchangeString(symbolsList, InfoType.WATCHLIST);
 				System.out.println("size of stock list: " + stocksList.size());
 				
 				for(int i=0; i<stocksList.size(); i++){

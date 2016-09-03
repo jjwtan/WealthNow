@@ -5,9 +5,12 @@ import java.util.Date;
 public class Stock {
 	String stockSymbol, company;
 	Float mktPrice, change, open, close;
+	Float ask, bid;
 	String percentChange;
 	String daysValueChange;
 	Date lastTradeDate, tradeDate, tradeTime, modifiedDate;
+	String bidSize, askSize;
+	float dayHigh, dayLow; 
 	
 	public Stock() {
 		
@@ -22,20 +25,100 @@ public class Stock {
 		this.stockSymbol = stockSymbol;
 		this.company = company;
 		this.mktPrice = (ask+bid)/2;
+		this.ask = ask;
+		this.bid = bid;
 	}
 	
 	// FULL 
 	public Stock(String stockSymbol, String company, float ask, float bid, float open, float close, 
 				 Date lastTradeDate, Date tradeDate, String daysValueChange, String percentChange) {
-		this.stockSymbol = stockSymbol;
-		this.company = company;
-		this.mktPrice = (ask+bid)/2;
+		this(stockSymbol, company, ask, bid);
 		this.open = open;
 		this.close = close;
 		this.lastTradeDate = lastTradeDate;
 		this.tradeDate = tradeDate;
 		this.daysValueChange = daysValueChange;
 		this.percentChange = percentChange;
+	}
+	
+	// WATCHLIST
+	public Stock(String stockSymbol, String company, float ask, float bid, float open, float close, 
+			 Date lastTradeDate, Date tradeDate, String daysValueChange, String percentChange,
+			 Integer bidSize, Integer askSize, float dayHigh, float dayLow, Date modifiedDate) {
+		this(stockSymbol, company, ask, bid, open, close, lastTradeDate, tradeDate, daysValueChange, percentChange);
+		this.bidSize = setSize(bidSize);
+		this.askSize = setSize(askSize);
+		this.dayHigh = dayHigh;
+		this.dayLow = dayLow;
+		this.modifiedDate = modifiedDate;
+		
+	}
+	
+	
+
+	private String setSize(Integer size) {
+		if(size == null) {
+			return "-";
+		}else {
+			return size.toString();
+		}
+	}
+
+
+	public String getBidSize() {
+		return bidSize;
+	}
+
+	public void setBidSize(String bidSize) {
+		this.bidSize = bidSize;
+	}
+
+	public String getAskSize() {
+		return askSize;
+	}
+
+	public void setAskSize(String askSize) {
+		this.askSize = askSize;
+	}
+
+	public void setAsk(Float ask) {
+		this.ask = ask;
+	}
+
+	public void setBid(Float bid) {
+		this.bid = bid;
+	}
+
+	public float getDayHigh() {
+		return dayHigh;
+	}
+
+	public void setDayHigh(float dayHigh) {
+		this.dayHigh = dayHigh;
+	}
+
+	public float getDayLow() {
+		return dayLow;
+	}
+
+	public void setDayLow(float dayLow) {
+		this.dayLow = dayLow;
+	}
+
+	public float getAsk() {
+		return ask;
+	}
+
+	public void setAsk(float ask) {
+		this.ask = ask;
+	}
+
+	public float getBid() {
+		return bid;
+	}
+
+	public void setBid(float bid) {
+		this.bid = bid;
 	}
 
 	public String getStockSymbol() {

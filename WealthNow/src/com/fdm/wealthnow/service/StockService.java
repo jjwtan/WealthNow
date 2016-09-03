@@ -86,6 +86,8 @@ public class StockService {
 		case FULL:
 			sb.append("&f=nabpod1c1p2");
 			break;
+		case WATCHLIST:
+			sb.append("&f=nabpod1c1p2b6a5hg");
 		default:
 			break;
 		}
@@ -161,10 +163,40 @@ public class StockService {
 				stockList.add(stock);
 			}
 			return stockList;
+		case WATCHLIST:
+			counter = 0;
+			for (String item: stocksFromEx) {
+				st = new StringTokenizer(item, ",");
+				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), 
+										st.nextToken().replace("\"", ""), 
+										Float.parseFloat(st.nextToken()), 
+										Float.parseFloat(st.nextToken()),
+										Float.parseFloat(st.nextToken()), 
+										Float.parseFloat(st.nextToken()),
+										getDate(st.nextToken().replace("\"", "")),
+										new Date(),
+										st.nextToken(),
+										st.nextToken().replace("\"", ""),
+										getAmount(st.nextToken()),
+										getAmount(st.nextToken()),
+										Float.parseFloat(st.nextToken()),
+										Float.parseFloat(st.nextToken()),
+										new Date());
+				counter++;
+				stockList.add(stock);
+			}
+			return stockList;
 		default:
 			return null;
 		}
 		
+	}
+
+	private Integer getAmount(String nextToken) {
+		if(nextToken.equals("N/A")) {
+			return null;
+		}
+		else return Integer.parseInt(nextToken);
 	}
 
 	private Date getDate(String nextToken) {

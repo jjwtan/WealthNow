@@ -21,35 +21,10 @@ public class StockServiceTest {
 		stockList.add(new Stock("Z74"));
 	}
 
-	@Test
-	public void testValidateStock() {
-		assertFalse(stockService.validateStock("S307"));
-		assertTrue(stockService.validateStock("Z74"));
-	}
-	
-	@Test
-	public void testValidationOfGet() {
-		assertNull(stockService.getStockFromExchange("zzzz1", InfoType.BASIC));
-	}
-	
-	@Test
-	public void testBasicURL() {
-		String url = stockService.generateRequestURL(stockList, InfoType.BASIC);
-		System.out.println(url);
-	}
-	
-	@Test
-	public void testBasicStock() {
-		stockService = new StockService();
-		List<Stock> stocks = stockService.getStocksFromExchange(stockList, InfoType.BASIC);
-		for(Stock stock: stocks) {
-			System.out.println(stock);
-		}
-	}
 	
 	@Test
 	public void testFullURL() {
-		String url = stockService.generateRequestURL(stockList, InfoType.FULL);
+		String url = stockService.generateRequestURL(stockList, InfoType.WATCHLIST);
 		System.out.println(url);
 		showFullRawData();
 		
@@ -84,6 +59,15 @@ public class StockServiceTest {
 		
 		stockService = new StockService();
 		List<Stock> stocks = stockService.getStocksFromExchangeString(stockList, InfoType.FULL);
+		for(Stock stock: stocks) {
+			System.out.println(stock);
+		}
+	}
+	
+	@Test
+	public void testWatchlistStock() {
+		stockService = new StockService();
+		List<Stock> stocks = stockService.getStocksFromExchange(stockList, InfoType.WATCHLIST);
 		for(Stock stock: stocks) {
 			System.out.println(stock);
 		}

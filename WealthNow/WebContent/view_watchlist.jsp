@@ -55,13 +55,40 @@
 				if(request.getAttribute("watchlist_id")!=null) {
 					Integer id = (Integer)request.getAttribute("watchlist_id");
 					List<Stock> stocks = ws.listStocksFromWatchlist(id);
+					
+					for(Stock stock : stocks) {
 			%>
 				<tr>
 					<td>
-					<%= stocks.get(0).getCompany() %>
+					<%= stock.getCompany() %>
+					</td>
+					<td>
+					<%= stock.getBidSize() %>
+					</td>
+					<td>
+					<%= stock.getBid() %>
+					</td>
+					<td>
+					<%= stock.getAsk() %>
+					</td>
+					<td>
+					<%= stock.getAskSize() %>
+					</td>
+					<td>
+					<%= stock.getDayHigh() %>
+					</td>
+					<td>
+					<%= stock.getDayLow() %>
+					</td>
+					<td>
+					<%= stock.getDaysValueChange() %>
+					</td>
+					<td>
+					<%= stock.getModifiedDate() %>
 					</td>
 				</tr>
 			<%
+					}
 				}
 			%>
 		</table>
