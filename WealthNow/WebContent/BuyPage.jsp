@@ -46,15 +46,16 @@
 			<legend>Buy Stocks</legend>
 			<p>
 				Today's date:
-				<%=(new java.util.Date()).toLocaleString()%>
-
-			</p>
+				<%=(new java.util.Date()).toLocaleString()%>  </p>
+				
 			<% 
 				UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 				UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 			%>
 			<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
 			,Your Current Balance $<%=ua.getBalance() %></h4>
+			
+			<h2 style="color:red;">${errorMessage}</h2>
 			
 
 			<input type="radio" name="Selection" value="B" required> Buy <input
