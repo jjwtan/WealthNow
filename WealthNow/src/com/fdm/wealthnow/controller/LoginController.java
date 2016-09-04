@@ -58,7 +58,7 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
+		String username = request.getParameter("username".toLowerCase());
 		String password = request.getParameter("password");
 		System.out.println("username -> " + request.getParameter("username"));
 		System.out.println("password -> " + request.getParameter("password"));
