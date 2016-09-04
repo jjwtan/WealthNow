@@ -28,11 +28,11 @@
 	<div>
 		<form action="ViewWatchlist" method="post">
 			Select Watchlist: <select required name="watchlistID" onchange="this.form.submit()">
-				<option selected disabled hidden style='display: none' value=''></option>
+				<option <%=(request.getAttribute("watchlist_id")==null)? "selected" : "" %> disabled hidden style='display: none' value=''></option>
 				<%
 					for (Watchlist list : watchlists) {
 				%>
-				<option value="<%=list.getWatchlistId()%>"><%=list.getWatchlistName()%></option>
+				<option value="<%=list.getWatchlistId()%>" <%=(new Integer(list.getWatchlistId()).equals(request.getAttribute("watchlist_id")))? "selected" : "" %>><%=list.getWatchlistName()%></option>
 				<%
 					}
 				%>
@@ -111,6 +111,8 @@
 
 		</table>
 	</div>
+	<button type="button" onClick="window.location.reload();">Refresh</button>
+	
 	<%
 		
 	%>
