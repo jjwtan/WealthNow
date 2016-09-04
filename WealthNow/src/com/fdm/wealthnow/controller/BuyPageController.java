@@ -70,7 +70,7 @@ public class BuyPageController extends HttpServlet {
 		//check for stock symbol using stock service validate
 		//if else condition
 		
-		
+		System.out.println("Setting attributes.BP Controller");
 		
 		session.setAttribute("Selection", ordertype);
 		session.setAttribute("quantity", quantity);
@@ -78,14 +78,10 @@ public class BuyPageController extends HttpServlet {
 		session.setAttribute("price_type", price_type);
 		session.setAttribute("term", term);
 		session.setAttribute("lsl", limit_price);
-		System.out.println(limit_price);
+		System.out.println("limit price:" + limit_price);
 		
 		
-//		session.getAttribute("Selection");
-//		session.getAttribute("quantity");
-//		session.getAttribute("stock_symbol");
-//		session.getAttribute("price_type");
-//		session.getAttribute("term");
+
 		
 		//just for testing
 		PrintWriter pw = response.getWriter();
