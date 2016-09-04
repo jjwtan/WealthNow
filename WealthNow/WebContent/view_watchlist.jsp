@@ -13,6 +13,19 @@
 			com.fdm.wealthnow.service.WatchlistService"%>
 <html>
 <head>
+<style type="text/css">
+.button {
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+
+</style>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>My Watchlist</title>
@@ -26,7 +39,7 @@
 	%>
 	You have <b><%=watchlists.size()%></b> watchlists
 	<div>
-		<form action="ViewWatchlist" method="post">
+		<form id="watchlist_form" action="ViewWatchlist" method="post">
 			Select Watchlist: <select required name="watchlistID" onchange="this.form.submit()">
 				<option <%=(request.getAttribute("watchlist_id")==null)? "selected" : "" %> disabled hidden style='display: none' value=''></option>
 				<%
@@ -38,6 +51,7 @@
 				%>
 	
 			</select>
+			<input type="submit" id="submit-form" style="visibility: hidden"/>
 		</form>
 	</div>
 	<br>
@@ -106,15 +120,12 @@
 						
 					}
 				}
-	
 			%>
 
 		</table>
 	</div>
-	<button type="button" onClick="window.location.reload();">Refresh</button>
-	
-	<%
-		
-	%>
+<div style="padding-top: 1em">
+	<label for="submit-form" class="button">Refresh</label>
+</div>
 </body>
 </html>
