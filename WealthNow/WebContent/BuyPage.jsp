@@ -46,9 +46,8 @@
 			<legend>Buy Stocks</legend>
 			<p>
 				Today's date:
-				<%=(new java.util.Date()).toLocaleString()%>
-
-			</p>
+				<%=(new java.util.Date()).toLocaleString()%>  </p>
+				
 			<% 
 				UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 				UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
@@ -56,11 +55,13 @@
 			<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
 			,Your Current Balance $<%=ua.getBalance() %></h4>
 			
+			<h3 style="color:red;">${errorMessage}</h3>
+			
 
 			<input type="radio" name="Selection" value="B" required> Buy <input
-				type="radio" name="Selection" value="S" required> Sell <br> <br>
+				type="radio" name="Selection" value="S"  disabled> Sell <br> <br>
 			Quantity: <input type="number" name="quantity"
-				value="quantity" required min="1" max="100000" step="1"> 
+				value="" required min="1" max="100000" step="1"> 
 				Stock Symbol:<input type="text" name="stock_symbol" value="" pattern="[A-Za-z0-9]{3,4}"
 				required placeholder="3-4 Characters"  style="text-transform: uppercase">
 				

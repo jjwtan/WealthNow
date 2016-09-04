@@ -50,36 +50,40 @@ public class BuyPageController extends HttpServlet {
 		String quantity  = request.getParameter("quantity");
 		
 		String stock_symbol = request.getParameter("stock_symbol");
-		
-		StockService ss = new StockService();
-		if(ss.validateStock(stock_symbol)==true){
-			
-		}
-		
-		//check for stock symbol using stock service validate
-		//if else condition
-		
 		String price_type = request.getParameter("price_type");
 		String term = request.getParameter("term");
 		String limit_price = request.getParameter("lsl");
 		String order_type = request.getParameter("Selection");
 		
-		session.setAttribute("Selection", ordertype);
-		session.setAttribute("quantity", quantity);
-		session.setAttribute("stock_symbol", stock_symbol);
-		session.setAttribute("price_type", price_type);
-		session.setAttribute("term", term);
-		session.setAttribute("lsl", limit_price);
-		System.out.println(limit_price);
+		StockService ss = new StockService();
+		if(ss.validateStock(stock_symbol)==true){
+			System.out.println("forwarding to comfirmation page");
+			request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
+			
+			System.out.println("Setting attributes.BP Controller");
+			
+			session.setAttribute("Selection", ordertype);
+			session.setAttribute("quantity", quantity);
+			session.setAttribute("stock_symbol", stock_symbol);
+			session.setAttribute("price_type", price_type);
+			session.setAttribute("term", term);
+			session.setAttribute("lsl", limit_price);
+			System.out.println("limit price:" + limit_price);
+			
+		} else { 
+			System.out.println("Inside else method for error");
+			request.setAttribute("errorMessage", "Please Enter a Valid Stock Symbol !");
+			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);	
+        } 
 		
-		System.out.println("forwarding to comfirmation page");
-		request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
 		
-//		session.getAttribute("Selection");
-//		session.getAttribute("quantity");
-//		session.getAttribute("stock_symbol");
-//		session.getAttribute("price_type");
-//		session.getAttribute("term");
+		//check for stock symbol using stock service validate
+		//if else condition
+		
+	
+		
+		
+
 		
 		//just for testing
 		PrintWriter pw = response.getWriter();
