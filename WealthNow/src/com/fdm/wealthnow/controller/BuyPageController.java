@@ -58,10 +58,20 @@ public class BuyPageController extends HttpServlet {
 		StockService ss = new StockService();
 		if(ss.validateStock(stock_symbol)==true){
 			System.out.println("forwarding to comfirmation page");
-			request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);	
+			request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
+			
+			System.out.println("Setting attributes.BP Controller");
+			
+			session.setAttribute("Selection", ordertype);
+			session.setAttribute("quantity", quantity);
+			session.setAttribute("stock_symbol", stock_symbol);
+			session.setAttribute("price_type", price_type);
+			session.setAttribute("term", term);
+			session.setAttribute("lsl", limit_price);
+			System.out.println("limit price:" + limit_price);
 			
 		} else { 
-			
+			System.out.println("Inside else method for error");
 			request.setAttribute("errorMessage", "Please Enter a Valid Stock Symbol !");
 			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);	
         } 
@@ -70,15 +80,7 @@ public class BuyPageController extends HttpServlet {
 		//check for stock symbol using stock service validate
 		//if else condition
 		
-		System.out.println("Setting attributes.BP Controller");
-		
-		session.setAttribute("Selection", ordertype);
-		session.setAttribute("quantity", quantity);
-		session.setAttribute("stock_symbol", stock_symbol);
-		session.setAttribute("price_type", price_type);
-		session.setAttribute("term", term);
-		session.setAttribute("lsl", limit_price);
-		System.out.println("limit price:" + limit_price);
+	
 		
 		
 
