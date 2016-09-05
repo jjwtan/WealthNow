@@ -106,6 +106,8 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						System.out.println("Count - " +count);
 						uas.debitBalance(order.getUser_id(), total_price);
 					}
+				}else{
+					System.out.println("Insufficient funds. Please contact administrator.");
 				}
 			} else {
 				System.out.println("Validation failed.");

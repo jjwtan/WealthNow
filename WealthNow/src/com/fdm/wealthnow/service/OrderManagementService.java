@@ -82,8 +82,12 @@ public class OrderManagementService extends DBUtil {
 					convertDateObjToString(date), "completed", closing_price);
 			connect.commit();
 			System.out.println("created processed order in database - " + order.getOrder_id());
-			ord.deleteOpenOrderInDatabase(connect, order.getOrder_id());
-			connect.commit();
+			if(ord.getOrderFromProcessedOrder(connect, order.getOrder_id()) != null){
+				ord.deleteOpenOrderInDatabase(connect, order.getOrder_id());
+				connect.commit();
+			}
+			
+			
 			System.out.println("deleted open order in database - " + order.getOrder_id());
 			System.out.println("Order has been processed... and needs to be updated in stockholdings.");
 
