@@ -35,7 +35,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		// Create a thread that wakes up periodically and scans for open orders.
 		// It fetches the orders and delegates to thread pool
 		scheduledExecutorService = Executors.newScheduledThreadPool(1);
-		scheduledExecutorService.schedule(() -> processOpenOrders(executorService), 60, TimeUnit.SECONDS);
+		scheduledExecutorService.schedule(() -> processOpenOrders(executorService), 30, TimeUnit.SECONDS);
 
 	}
 
@@ -93,7 +93,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				// if statement to check if the limit price
 				if (order.getPrice_type().toString().equals("M") && balance > total_price) {
 					System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
-					ex.submit(() -> oms.processOrder(order.getOrder_id(), order.getLimit_price()));
+					ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
 					count++;
 					System.out.println("Count: " +count);
 					//edit balance account
