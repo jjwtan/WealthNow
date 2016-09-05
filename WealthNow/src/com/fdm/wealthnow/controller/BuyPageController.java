@@ -70,8 +70,6 @@ public class BuyPageController extends HttpServlet {
 		String order_type = request.getParameter("Selection");
 		String term1 = request.getParameter("term");
 
-	
-
 		StockService ss = new StockService();
 		if (ss.validateStock(stock_symbol) == true) {
 
@@ -81,42 +79,84 @@ public class BuyPageController extends HttpServlet {
 			Double newBalance = uas.getAccountBalance(ua.getUserId()).getBalance();
 			Double afterDebit = newBalance - total_price;
 
-			if (afterDebit < 0) {
+			if (price_type == "M") {
 
-				System.out.println("Inside if afterDebit <0 error");
-				request.setAttribute("errorMessage", "Insufficient Funds! Please Try Again");
-				request.setAttribute("quantity", quantity);
-				request.setAttribute("stock_symbol", stock_symbol);
-				request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
+				if (afterDebit < 0) {
+
+					System.out.println("Inside if afterDebit < 0 error");
+					request.setAttribute("errorMessage", "Insufficient Funds! Please Try Again");
+					request.setAttribute("quantity", quantity);
+					request.setAttribute("stock_symbol", stock_symbol);
+					request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
+
+				}
+				if (afterDebit > 0) {
+					System.out.println("forwarding to comfirmation page");
+					request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
+
+					System.out.println("Setting attributes.BP Controller");
+
+					session.setAttribute("Selection", ordertype);
+					session.setAttribute("quantity", quantity);
+					session.setAttribute("stock_symbol", stock_symbol);
+					session.setAttribute("price_type", price_type);
+					session.setAttribute("term", term1);
+					session.setAttribute("lsl", limit_price);
+
+				}
+
+			} else if (price_type == "L" || price_type == "SL") {
+
+				if (term == "null") {
+					System.out.println("Inside else for term = null");
+
+					request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
+					request.setAttribute("errorMessage", "Please enter TERM.");
+
+					request.setAttribute("quantity", quantity);
+					request.setAttribute("stock_symbol", stock_symbol);
+
+				}
+				if (term != null) {
+
+					if (afterDebit < 0) {
+
+						System.out.println("Inside if afterDebit <0 error");
+						request.setAttribute("errorMessage", "Insufficient Funds! Please Try Again");
+						request.setAttribute("quantity", quantity);
+						request.setAttribute("stock_symbol", stock_symbol);
+						request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
+
+					}
+					if (afterDebit > 0) {
+						System.out.println("forwarding to comfirmation page");
+						request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
+
+						System.out.println("Setting attributes.BP Controller");
+
+						session.setAttribute("Selection", ordertype);
+						session.setAttribute("quantity", quantity);
+						session.setAttribute("stock_symbol", stock_symbol);
+						session.setAttribute("price_type", price_type);
+						session.setAttribute("term", term1);
+						session.setAttribute("lsl", limit_price);
+
+					}
+
+				}
 
 			}
-			if (afterDebit > 0) {
-				System.out.println("forwarding to comfirmation page");
-				request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
 
-				System.out.println("Setting attributes.BP Controller");
-
-				session.setAttribute("Selection", ordertype);
-				session.setAttribute("quantity", quantity);
-				session.setAttribute("stock_symbol", stock_symbol);
-				session.setAttribute("price_type", price_type);
-				session.setAttribute("term", term1);
-				session.setAttribute("lsl", limit_price);
-				
-
-			}
 		}
 
-			else if (ss.validateStock(stock_symbol) == false) {
-				System.out.println("Inside else if method for stock_symbol = false");
-				request.setAttribute("errorMessage", "Please Enter a Valid Stock Symbol !");
-				request.setAttribute("quantity", quantity);
-				request.setAttribute("stock_symbol", stock_symbol);
-				request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
+		else if (ss.validateStock(stock_symbol) == false) {
+			System.out.println("Inside else if method for stock_symbol = false");
+			request.setAttribute("errorMessage", "Please Enter a Valid Stock Symbol !");
+			request.setAttribute("quantity", quantity);
+			request.setAttribute("stock_symbol", stock_symbol);
+			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
 
-			}
-
-		
+		}
 
 		// check for stock symbol using stock service validate
 		// if else condition
