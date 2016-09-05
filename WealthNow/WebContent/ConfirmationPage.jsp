@@ -130,7 +130,7 @@ $(document).ready ( function () {
 			</tr>
 
 			<tr>
-				<td colspan="5">&nbsp;</td>
+				<td colspan="2">&nbsp;</td>
 			</tr>
 
 			<tr>
