@@ -46,7 +46,7 @@ public class UpdateBalanceController extends HttpServlet {
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		int userId = currentUser.getUser().getUserId();
 		
-		String action = request.getParameter("action");
+		String action = request.getParameter("Selection");
 		System.out.println(action);
 		String input;
 		Double amount = null;
