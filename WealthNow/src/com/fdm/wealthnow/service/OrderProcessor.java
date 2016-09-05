@@ -60,21 +60,21 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		System.out.println(orderList);
 		OrderManagementService oms = new OrderManagementService();
 		UserAccountService uas = new UserAccountService();
-		
 
 		StockService stksvc = new StockService();
 		int count = 0;
 
 		for (Order order : orderList) {
-			//if the term is null because the ordertype "Market" do the following:
+			// if the term is null because the ordertype "Market" do the
+			// following:
 			boolean success;
 			if (order.getTerm() == null) {
-				 success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
+				success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
 						order.getOrder_type().toString(), order.getQuantity(), order.getStock_symbol(),
 						order.getPrice_type().toString(), convertDateObjToString(order.getPlace_order_date()),
 						order.getLimit_price(), "");
 			} else {
-				 success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
+				success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
 						order.getOrder_type().toString(), order.getQuantity(), order.getStock_symbol(),
 						order.getPrice_type().toString(), convertDateObjToString(order.getPlace_order_date()),
 						order.getLimit_price(), order.getTerm().toString());
@@ -86,35 +86,42 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				Integer quantity = order.getQuantity();
 				Double total_price = stockPrice * quantity;
 				Double balance = uas.getAccountBalance(order.getUser_id()).getBalance();
-				System.out.println("stock price : " +stockPrice);
-				System.out.println("limit price : " +order.getLimit_price());
+				System.out.println("stock price : " + stockPrice);
+				System.out.println("limit price : " + order.getLimit_price());
 				System.out.println("balance is " + balance);
-				System.out.println("total price: "+ total_price);
+				System.out.println("total price: " + total_price);
+				System.out.println("Order price type is : " + order.getPrice_type().toString());
 				// if statement to check if the limit price
-				if (order.getPrice_type().toString().equals("M") && balance > total_price) {
-					System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
-					ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
-					count++;
-					System.out.println("Count: " +count);
-					//edit balance account
-				    uas.debitBalance(order.getUser_id(), total_price);
-				}else if((order.getPrice_type().toString().equals("LT")&& balance > total_price)||
-						(order.getPrice_type().equals("SL")&& balance > total_price )){
-					if(order.getLimit_price()<stockPrice){
-						System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
-						ex.submit(() -> oms.processOrder(order.getOrder_id(), order.getLimit_price()));
+				if (balance > total_price) {
+					if (order.getPrice_type().toString().equals("SL") || order.getPrice_type().toString().equals("LT")) {
+						if (order.getLimit_price() < stockPrice) {
+							System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
+							ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
+							count++;
+							System.out.println("Count - " + count);
+							uas.debitBalance(order.getUser_id(), total_price);
+						}
+					} 
+					else if (order.getPrice_type().toString().equals("M")) {
+						System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
+						ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
 						count++;
-						System.out.println("Count - " +count);
+						System.out.println("Count: " + count);
+						// edit balance account
 						uas.debitBalance(order.getUser_id(), total_price);
 					}
-				}else{
-					System.out.println("Please contact administrator. UserID : " + order.getUser_id() 
-					+ " OrderID "+ order.getOrder_id());
+					
+					else {
+						System.out.println("Please contact administrator. UserID : " + order.getUser_id() + " OrderID "
+								+ order.getOrder_id());
+					}
 				}
+
 			} else {
 				System.out.println("Validation failed.");
 			}
 		}
+		System.out.println(count + " orders has been processed.");
 		return count;
 	}
 
