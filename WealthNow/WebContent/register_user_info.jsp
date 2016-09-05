@@ -5,15 +5,42 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
+<h3>1: User Profile</h3>
 <form action="#" method="post">  
-	User name:<input type="text" name="username"/><br/>
-	Password:<input type="password" name="password"/><br/>
-	First name:<input type="text" name="first_name"/><br/>
-	Last name:<input type="text" name="last_name"/><br/>
-	Birthday:<input type="text" name="birthday" placeholder="dd-mm-yyyy"/><br/>
-	Email:<input type="email" name="email"/><br/>
-	Address:<input type="text" name="address"/><br/>
-	Phone Number:<input type="number" name="address"/><br/>
+	<table style="width: 40%">
+		<tr>
+			<td>User name</td>
+			<td><input type="text" name="username" required/></td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td><input type="password" name="password" required/></td>
+		</tr>
+		<tr>
+			<td>First name</td>
+			<td><input type="text" name="first_name" required/></td>
+		</tr>
+		<tr>
+			<td>Last name</td>
+			<td><input type="text" name="last_name"/></td>
+		</tr>
+		<tr>
+			<td>Birthday</td>
+			<td><input type="text" name="birthday" placeholder="dd-mm-yyyy" required/></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td><input type="email" name="email" required/></td>
+		</tr>
+		<tr>
+			<td>Address</td>
+			<td><input type="text" name="address" required/></td>
+		</tr>
+		<tr>
+			<td>Phone Number</td>
+			<td><input type="number" name="phone_number" required/></td>
+		</tr>
+	</table>
 	<input type="submit" value="Next"/>  
 </form>  
 </head>
