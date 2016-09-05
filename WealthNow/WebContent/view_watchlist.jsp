@@ -119,7 +119,7 @@
 						<%
 						
 					}
-				}
+				
 			%>
 
 		</table>
@@ -127,5 +127,6 @@
 <div style="padding-top: 1em">
 	<label for="submit-form" class="button">Refresh</label>
 </div>
+<% } %>
 </body>
 </html>
