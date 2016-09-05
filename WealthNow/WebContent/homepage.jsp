@@ -19,7 +19,8 @@
 <h2>Your balance is $<%=ua.getBalance() %></h2>
 
 <a href="view_watchlist.jsp">My Watchlists</a><br/>
-<a href="BuyPage.jsp">Buy/Sell Securities</a>
+<a href="BuyPage.jsp">Buy/Sell Securities</a><br/>
+<a href="update_balance.jsp">Update Balance</a>
 
 </body>
 </html>

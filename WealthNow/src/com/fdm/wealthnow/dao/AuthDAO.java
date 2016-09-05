@@ -27,10 +27,11 @@ public class AuthDAO extends DBUtil{
 			}
 		} else {
 			System.out.println("max attempt reached");
+			return new UserAuth(false, null, "Max login attempts reached\nYour account has been locked");
 		}
 		
 		connect.close();
-		return new UserAuth(false);
+		return new UserAuth(false, null, "Invalid username or password");
 	}
 	
 	public static User getUser(String username, InfoType type) throws Exception {
