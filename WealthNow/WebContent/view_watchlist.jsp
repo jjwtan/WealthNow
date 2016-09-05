@@ -90,7 +90,7 @@
 						Date dateMod = stock.getModifiedDate();
 			%>
 			<tr>
-				<td><%=stock.getCompany()%></td>
+				<td><%=stock.getStockSymbol()+ ": "+ stock.getCompany()%></td>
 				<td><%=stock.getBid()%></td>
 				<td><%=stock.getAsk()%></td>
 				<td><%=stock.getOpen()%></td>
