@@ -98,7 +98,8 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 					System.out.println("Count: " +count);
 					//edit balance account
 				    uas.debitBalance(order.getUser_id(), total_price);
-				}else if((order.getPrice_type().toString().equals("LT")||order.getPrice_type().equals("SL")) && balance > total_price){
+				}else if((order.getPrice_type().toString().equals("LT")&& balance > total_price)||
+						(order.getPrice_type().equals("SL")&& balance > total_price )){
 					if(order.getLimit_price()<stockPrice){
 						System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
 						ex.submit(() -> oms.processOrder(order.getOrder_id(), order.getLimit_price()));
@@ -107,7 +108,8 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						uas.debitBalance(order.getUser_id(), total_price);
 					}
 				}else{
-					System.out.println("Insufficient funds. Please contact administrator. UserID : " + order.getUser_id());
+					System.out.println("Please contact administrator. UserID : " + order.getUser_id() 
+					+ " OrderID "+ order.getOrder_id());
 				}
 			} else {
 				System.out.println("Validation failed.");
