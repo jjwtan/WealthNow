@@ -17,8 +17,8 @@
 %>
 <h2>Your balance is $<%=ua.getBalance() %></h2>
 	<form action="UpdateBalanceController" method="post">
-		<input type="radio" name="Selection" id="deposit" checked="checked" onclick="withdrawDeposit()">Deposit 
-		<input type="radio" name="Selection" id="withdraw" onclick="withdrawDeposit()">	Withdraw <br />
+		<input type="radio" name="Selection" id="deposit" checked="checked" onclick="withdrawDeposit()" value="Deposit">Deposit 
+		<input type="radio" name="Selection" id="withdraw" onclick="withdrawDeposit()" value="Withdraw">	Withdraw <br />
 		<br />
 		<div id="depositing">
 			Deposit Amount $<input type="number" name="deposit_amount" /><br /> <br />
