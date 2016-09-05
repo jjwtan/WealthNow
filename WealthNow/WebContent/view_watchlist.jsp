@@ -67,37 +67,38 @@
 			if (request.getAttribute("watchlist_id") != null) {
 				Integer id = (Integer) request.getAttribute("watchlist_id");
 				Watchlist selectedWl = ws.viewWatchlist(id);
+				SimpleDateFormat sdf = new SimpleDateFormat("E dd/MM/yyyy hh:mm:ssa z");
 		%>
 		<h2><%=selectedWl.getWatchlistName()%></h2>
+		<div style="float: right"><i>Updated: <%=sdf.format(new Date()) %></i></div>
 		<table width="100%" border="1">
 			<tr>
 				<th>Instrument</th>
-				<th>Bid Size</th>
 				<th>Bid</th>
 				<th>Ask</th>
-				<th>Ask Size</th>
+				<th>Opening</th>
+				<th>Prvious Close</th>
 				<th>High</th>
 				<th>Low</th>
 				<th>Net Change</th>
-				<th>Last Updated</th>
+				<th>% Change</th>
 			</tr>
 			<%
 				List<Stock> stocks = ws.listStocksFromWatchlist(id);
 
 					for (Stock stock : stocks) {
 						Date dateMod = stock.getModifiedDate();
-						SimpleDateFormat sdf = new SimpleDateFormat("E dd/MM/yyyy hh:mm:ssa z");
 			%>
 			<tr>
 				<td><%=stock.getCompany()%></td>
-				<td><%=stock.getBidSize()%></td>
 				<td><%=stock.getBid()%></td>
 				<td><%=stock.getAsk()%></td>
-				<td><%=stock.getAskSize()%></td>
+				<td><%=stock.getOpen()%></td>
+				<td><%=stock.getClose()%></td>
 				<td><%=stock.getDayHigh()%></td>
 				<td><%=stock.getDayLow()%></td>
 				<td><%=stock.getDaysValueChange()%></td>
-				<td><%=sdf.format(dateMod)%></td>
+				<td><%=stock.getPercentChange() %></td>
 			</tr>
 			<%
 				}
