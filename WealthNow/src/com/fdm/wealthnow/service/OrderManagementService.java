@@ -26,7 +26,7 @@ public class OrderManagementService extends DBUtil {
 			throws Exception {
 
 		Connection connect = null;
-		
+
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
@@ -67,7 +67,7 @@ public class OrderManagementService extends DBUtil {
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
-			System.out.println("connection  is - "+connect);
+			System.out.println("connection  is - " + connect);
 
 			OrderDAO ord = new OrderDAO();
 			OrderManagementService oms = new OrderManagementService();
@@ -82,19 +82,19 @@ public class OrderManagementService extends DBUtil {
 					convertDateObjToString(date), "completed", closing_price);
 			connect.commit();
 			System.out.println("created processed order in database - " + order.getOrder_id());
-			if(ord.getOrderFromProcessedOrder(connect, order.getOrder_id()) != null){
+			System.out.println("Deleting open order");
+			if (ord.getOrderFromProcessedOrder(connect, order.getOrder_id()) != null) {
 				ord.deleteOpenOrderInDatabase(connect, order.getOrder_id());
 				connect.commit();
+				System.out.println("deleted open order in database - " + order.getOrder_id());
 			}
-			
-			
-			System.out.println("deleted open order in database - " + order.getOrder_id());
+
 			System.out.println("Order has been processed... and needs to be updated in stockholdings.");
 
 			oms.createStockHoldings(order.getOrder_id(), order.getUser_id());
 			connect.commit();
 			System.out.println("Order process done.");
-			
+
 		} catch (Exception e) {
 			try {
 				System.out.println("simitachi@ OMS");
@@ -125,8 +125,8 @@ public class OrderManagementService extends DBUtil {
 
 			// check nulls for all parameters
 			if (user_id == null || currency_code == null || order_type == null || quantity == null
-					|| stock_symbol == null || price_type == null || opening_order_date == null || 
-					limit_price == null) {
+					|| stock_symbol == null || price_type == null || opening_order_date == null
+					|| limit_price == null) {
 				System.out.println("something null");
 				return false;
 			}
@@ -151,27 +151,27 @@ public class OrderManagementService extends DBUtil {
 				}
 			}
 
-		StockService ss = new StockService();
-		// set up calls for checking balance.
-		Stock stock = ss.getStockFromExchange(stock_symbol, InfoType.BASIC);
-		UserAccountService uas = new UserAccountService();
-		UserAccount ua = uas.getAccountBalance(user_id);
+			StockService ss = new StockService();
+			// set up calls for checking balance.
+			Stock stock = ss.getStockFromExchange(stock_symbol, InfoType.BASIC);
+			UserAccountService uas = new UserAccountService();
+			UserAccount ua = uas.getAccountBalance(user_id);
 
-		// check if stocksymbol exists
-		if (stock == null) {
-			System.out.println("Stock is null.");
-			return false;
-		} else {
-		// check if balance is enough for transaction
-			Double mktprice = Double.parseDouble(stock.getMktPrice().toString());
-			Double totalprice = mktprice * quantity;
-			if (ua.getBalance() < totalprice) {
-				System.out.println("Balance not enough.");
+			// check if stocksymbol exists
+			if (stock == null) {
+				System.out.println("Stock is null.");
 				return false;
+			} else {
+				// check if balance is enough for transaction
+				Double mktprice = Double.parseDouble(stock.getMktPrice().toString());
+				Double totalprice = mktprice * quantity;
+				if (ua.getBalance() < totalprice) {
+					System.out.println("Balance not enough.");
+					return false;
 
+				}
 			}
-		}
-		
+
 		} catch (Exception e) {
 			try {
 				connect.rollback();
@@ -196,12 +196,12 @@ public class OrderManagementService extends DBUtil {
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
-		PortfolioService ps = new PortfolioService();
-		// placeholder for the portfolio service
-		System.out.println("Calls for portfolio Service - createStockHoldings...");
-		Integer stockholding_id = ps.createStockHoldings(connect,order_id, user_id);
-		System.out.println("created stockholdings - " + stockholding_id);
-		}catch (Exception e) {
+			PortfolioService ps = new PortfolioService();
+			// placeholder for the portfolio service
+			System.out.println("Calls for portfolio Service - createStockHoldings...");
+			Integer stockholding_id = ps.createStockHoldings(connect, order_id, user_id);
+			System.out.println("created stockholdings - " + stockholding_id);
+		} catch (Exception e) {
 			try {
 				connect.rollback();
 			} catch (SQLException e1) {
@@ -217,7 +217,7 @@ public class OrderManagementService extends DBUtil {
 					e.printStackTrace();
 				}
 		}
-		
+
 	}
 
 	public void updateStockHoldings(Integer user_id, Integer order_id, Integer sold_quantity) throws Exception {

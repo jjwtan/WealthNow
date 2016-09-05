@@ -63,19 +63,19 @@ public class OrderProcessorTest {
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		orderProcessor = new OrderProcessor();
 		OrderManagementService oms = new OrderManagementService();
-		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(100), "Z74", "M", "11 Sep 2011",
-				new Double(2), "");
-		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(200), "Z74", "M", "11 Sep 2011",
-				new Double(2), "");
-		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
-				new Double(2), "");
-		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
-				new Double(2), "");
-		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
-				new Double(2), "");
+//		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(100), "Z74", "M", "11 Sep 2011",
+//				new Double(0), "");
+//		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(200), "Z74", "M", "11 Sep 2011",
+//				new Double(0), "");
+//		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
+//				new Double(0), "");
+		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "SL", "11 Sep 2011",
+				new Double(2), "GC");
+		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "LT", "11 Sep 2011",
+				new Double(1.9), "");
 		System.out.println("processing orders ---------------------------------");
 		int count = orderProcessor.testProcessOrders(executorService);
-		System.out.println("Processing done with " + count + " orders processed.");
+		//System.out.println("Processing done with " + count + " orders processed.");
 		assertEquals(5,count );
 		
 		
