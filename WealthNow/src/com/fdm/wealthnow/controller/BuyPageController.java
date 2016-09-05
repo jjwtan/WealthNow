@@ -54,6 +54,7 @@ public class BuyPageController extends HttpServlet {
 		String term = request.getParameter("term");
 		String limit_price = request.getParameter("lsl");
 		String order_type = request.getParameter("Selection");
+		String term1 = request.getParameter("term");
 		
 		StockService ss = new StockService();
 		if(ss.validateStock(stock_symbol)==true){
@@ -66,14 +67,18 @@ public class BuyPageController extends HttpServlet {
 			session.setAttribute("quantity", quantity);
 			session.setAttribute("stock_symbol", stock_symbol);
 			session.setAttribute("price_type", price_type);
-			session.setAttribute("term", term);
+			session.setAttribute("term", term1);
 			session.setAttribute("lsl", limit_price);
 			System.out.println("limit price:" + limit_price);
 			
 		} else { 
 			System.out.println("Inside else method for error");
 			request.setAttribute("errorMessage", "Please Enter a Valid Stock Symbol !");
+			request.setAttribute("quantity", quantity);
+			request.setAttribute("stock_symbol", stock_symbol);
 			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);	
+			
+			
         } 
 		
 		
@@ -87,8 +92,8 @@ public class BuyPageController extends HttpServlet {
 		
 		//just for testing
 		PrintWriter pw = response.getWriter();
-		pw.println(ordertype+ " "+ quantity+ " "+ stock_symbol + " "+ price_type + " "+term);
-		System.out.println(ordertype+ " "+ quantity+ " "+ stock_symbol + " "+ price_type + " "+term);
+		pw.println(ordertype+ " "+ quantity+ " "+ stock_symbol + " "+ price_type + " "+term1);
+		System.out.println(ordertype+ " "+ quantity+ " "+ stock_symbol + " "+ price_type + " "+term1);
 		
 		//make sure that UserID has been checked before proceeding
 		
