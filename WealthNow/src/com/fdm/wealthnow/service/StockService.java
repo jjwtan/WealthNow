@@ -84,10 +84,10 @@ public class StockService {
 			sb.append("&f=nab");
 			break;
 		case FULL:
-			sb.append("&f=nabpod1c1p2");
+			sb.append("&f=nabopd1c1p2");
 			break;
 		case WATCHLIST:
-			sb.append("&f=nabpod1c1p2b6a5hg");
+			sb.append("&f=nabopd1c1p2b6a5hg");
 		default:
 			break;
 		}

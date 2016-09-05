@@ -41,7 +41,7 @@ public class Stock {
 		this.percentChange = percentChange;
 	}
 	
-	// WATCHLIST
+	// WATCHLIST n a b o p d1 DD c1 p2 b6a5hg
 	public Stock(String stockSymbol, String company, float ask, float bid, float open, float close, 
 			 Date lastTradeDate, Date tradeDate, String daysValueChange, String percentChange,
 			 Integer bidSize, Integer askSize, float dayHigh, float dayLow, Date modifiedDate) {
