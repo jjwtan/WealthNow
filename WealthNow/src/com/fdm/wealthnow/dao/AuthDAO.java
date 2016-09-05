@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.fdm.wealthnow.common.InfoType;
@@ -19,10 +20,12 @@ public class AuthDAO extends DBUtil{
 		int failCount = getFailedCount(connect, username);
 		if (failCount == -1 ) {
 			System.out.println("username does not exist");
-		} else if(failCount <= 5 ) {
+		} else if(failCount < 5 ) {
 			if(checkPassword(connect, username, password)) {
+				resetLastFailedCountAndTime(connect, username);
 				return new UserAuth(getUser(username, InfoType.BASIC), true);
 			} else {
+				setCurrentFailTime(connect, username);
 				incrementFailCount(connect, username);
 			}
 		} else {
@@ -99,16 +102,16 @@ public class AuthDAO extends DBUtil{
 		return null;
 	}
 	
-	public static Date setCurrentFailTime(Connection connect, String username) throws SQLException {
+	public static void setCurrentFailTime(Connection connect, String username) throws SQLException {
 		PreparedStatement ps;
 		ResultSet rs;
-		ps = connect.prepareStatement("Update " + USER_TABLE + " Set fail_login_count = 0, last_failedlogin = null where user_name = ?");
-		ps.setString(1, username);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			return rs.getDate("last_failedlogin");
-		}
-		return null;
+		ps = connect.prepareStatement("Update " + USER_TABLE + " Set last_failedlogin = TO_DATE(?, 'yyyy/mm/dd hh24:mi:ss') where user_name = ?");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		
+		ps.setString(1, sdf.format(new Date()));
+		ps.setString(2, username);
+		ps.executeUpdate();
+
 	}
 	
 	public static void resetLastFailedCountAndTime(Connection connect, String username) throws SQLException {
