@@ -70,17 +70,17 @@ table#t01 th {
 			<th>Market Value</th>  
 		</tr>
 		<tr>
-			<td>symbol</td>
-			<td>B/S Link</td>
-			<td>Last Trade(Price)</td>
-			<td>%</td>
-			<td>$</td>
-			<td>Gain</td>
-			<td>qty</td>
-			<td>price paid</td>
-			<td>%</td>
-			<td>$</td>
-			<td>Market Value</td>
+			<th>symbol</th>
+			<th>B/S Link</th>
+			<th>Last Trade(Price)</th>
+			<th>%</th>
+			<th>$</th>
+			<th>Gain</th>
+			<th>qty</th>
+			<th>price paid</th>
+			<th>%</th>
+			<th>$</th>
+			<th>Market Value</th>
 		</tr>
 		
 		<tr>
