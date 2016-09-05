@@ -73,8 +73,8 @@ table#t01 th {
 		Float change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange();
 		Float day_high = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDayHigh();
 		Float day_low = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDayLow();
-		svc.getStockFromExchange(stock_symbol, InfoType.FULL);
-		svc.getStockFromExchange(stock_symbol, InfoType.FULL);
+		String day_val_change=svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
+		Float mkt_price=svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice();
 		svc.getStockFromExchange(stock_symbol, InfoType.FULL);
 		
 		
@@ -111,17 +111,17 @@ table#t01 th {
 			</tr>
 
 			<tr>
-				<td>out.print(stock_symbol)</td>
+				<td><%=stock_symbol%></td>
 				<td><a href="BuyPage.jsp">Buy/</a><a href="www.google.com">Sell</a></td>
-				<td>Last Trade(Price)</td>
-				<td>out.print(percent_change)</td>
-				<td>$</td>
-				<td>out.print()</td>
-				<td>out.print(quantity)</td>
-				<td>out.print(price_paid)</td>
+				<td><%=change %></td>
+				<td><%=percent_change%></td>
+				<td><%=day_high %></td>
+				<td><%=day_val_change %></td>
+				<td><%=quantity %></td>
+				<td><%=price_paid %></td>
 				<td>%</td>
 				<td>$</td>
-				<td>Market Value</td>
+				<td></td>
 			</tr>
 
 		</table>
