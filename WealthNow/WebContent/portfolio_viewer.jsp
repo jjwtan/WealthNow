@@ -60,13 +60,19 @@ table#t01 th {
 		StockHolding sh = new StockHolding();
 		int user_id = ua.getUserId();
 		PortfolioService pfs = new PortfolioService();
+		
+		
 		List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
 		for(StockHolding newShList:shList){
 			sh = newShList;
+			
 		}
 		String stock_symbol = sh.getStock_symbol();
+		String stock_symbol1 = sh.getStock_symbol();
 		Integer quantity = sh.getRemaining_quantity();
+		Integer quantity1 = sh.getRemaining_quantity();
 		Double price_paid = sh.getPurchase_price();
+		Double price_paid1 = sh.getPurchase_price();
 		
 		StockService svc = new StockService();
 		String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
@@ -119,6 +125,19 @@ table#t01 th {
 				<td><%=day_val_change %></td>
 				<td><%=quantity %></td>
 				<td><%=price_paid %></td>
+				<td>%</td>
+				<td>$</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><%=stock_symbol1%></td>
+				<td><a href="BuyPage.jsp">Buy/</a><a href="www.google.com">Sell</a></td>
+				<td><%=change %></td>
+				<td><%=percent_change%></td>
+				<td><%=day_high %></td>
+				<td><%=day_val_change %></td>
+				<td><%=quantity1 %></td>
+				<td><%=price_paid1 %></td>
 				<td>%</td>
 				<td>$</td>
 				<td></td>
