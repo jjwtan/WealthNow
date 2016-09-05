@@ -15,6 +15,9 @@
 	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 %>
+<div style="float: right">
+	<a href="login.jsp">Logout</a>
+</div>
 <h1> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %></h1>
 <h2>Your balance is $<%=ua.getBalance() %></h2>
 
