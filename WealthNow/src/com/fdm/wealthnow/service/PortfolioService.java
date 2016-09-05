@@ -154,7 +154,7 @@ public class PortfolioService extends DBUtil {
 			System.out.println("Stockholding id created : " + stockholding_id);
 			System.out.println("ORder@@@@@@@@@: " + order);
 			pfdao.createStockHoldingInDatabase(connect, stockholding_id, user_id, order_id, order.getStock_symbol(),
-					order.getQuantity(), order.getQuantity(), order.getLimit_price(),
+					order.getQuantity(), order.getQuantity(), order.getClosing_price(),
 					convertDateObjToString(order.getPlace_order_date()));
 
 			connect.commit();
