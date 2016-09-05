@@ -56,6 +56,8 @@
 			,Your Current Balance $<%=ua.getBalance() %></h4>
 			
 			<h3 style="color:red;">${errorMessage}</h3>
+			<h3 style="color:red;">${errorMessage2}</h3>
+			<h3 style="color:red;">${errorMessage3}</h3>
 			
 
 			<input type="radio" name="Selection" value="B" required> Buy <input
@@ -74,10 +76,10 @@
 			</select> 
 			
 			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
-				<br> <select required hidden value="" id="term">
-				<option selected disabled style='display: none' value="null"></option>
-				<option value="GD">Good For The Day</option>
-				<option value="GC">Good Till Cancelled</option>
+				<br> <select required name="term"  id="term" value="">
+				<option selected disabled hidden style='display: none' value=''></option>
+				<option value="GD" required>Good For The Day</option>
+				<option value="GC" required>Good Till Cancelled</option>
 
 			</select> <br> <br> 
 			<input type="submit" value="Submit">

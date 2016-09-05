@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fdm.wealthnow.common.InfoType;
+import com.fdm.wealthnow.common.UserAccount;
+import com.fdm.wealthnow.common.UserAuth;
 import com.fdm.wealthnow.service.StockService;
+import com.fdm.wealthnow.service.UserAccountService;
 
 /**
  * Servlet implementation class BuyPageController
@@ -41,14 +45,21 @@ public class BuyPageController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		HttpSession session = request.getSession();
+		
+		Double brokerage_fee = 9.95;
+		
+		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+		UserAccountService uas = new UserAccountService();
+		StockService svc = new StockService();
+		
+		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+		
 		
 		System.out.println("buy page controller");
 		
 		String ordertype = request.getParameter("Selection");
 		String quantity  = request.getParameter("quantity");
-		
 		String stock_symbol = request.getParameter("stock_symbol");
 		String price_type = request.getParameter("price_type");
 		String term = request.getParameter("term");
@@ -56,8 +67,20 @@ public class BuyPageController extends HttpServlet {
 		String order_type = request.getParameter("Selection");
 		String term1 = request.getParameter("term");
 		
+		
+		Double stock_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());				
+		
+		Double total_price = Double.parseDouble(quantity) * stock_price + brokerage_fee;
+	
+		Double newBalance = uas.getAccountBalance(ua.getUserId()).getBalance();
+		
+		Double afterDebit = newBalance - total_price;
+		
+		
+		
+		
 		StockService ss = new StockService();
-		if(ss.validateStock(stock_symbol)==true){
+		if(ss.validateStock(stock_symbol)==true && (afterDebit >0)){
 			System.out.println("forwarding to comfirmation page");
 			request.getRequestDispatcher("ConfirmationPage.jsp").forward(request, response);
 			
@@ -71,15 +94,27 @@ public class BuyPageController extends HttpServlet {
 			session.setAttribute("lsl", limit_price);
 			System.out.println("limit price:" + limit_price);
 			
-		} else { 
+		} else if(ss.validateStock(stock_symbol)==false) { 
 			System.out.println("Inside else method for error");
 			request.setAttribute("errorMessage", "Please Enter a Valid Stock Symbol !");
 			request.setAttribute("quantity", quantity);
 			request.setAttribute("stock_symbol", stock_symbol);
 			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);	
-			
-			
         } 
+		
+		else if(afterDebit < 0) {
+			request.setAttribute("errorMessage2", "Insufficient Funds!");
+			request.setAttribute("quantity", quantity);
+			request.setAttribute("stock_symbol", stock_symbol);
+			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);	
+		}
+		
+		else if(ss.validateStock(stock_symbol)==false && afterDebit < 0){
+			request.setAttribute("errorMessage3", " Inufficient Funds and Enter a Valid Symbol!");
+			request.setAttribute("quantity", quantity);
+			request.setAttribute("stock_symbol", stock_symbol);
+			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);	
+		}
 		
 		
 		//check for stock symbol using stock service validate
