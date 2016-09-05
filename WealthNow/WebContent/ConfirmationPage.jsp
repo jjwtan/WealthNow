@@ -43,6 +43,7 @@ $(document).ready ( function () {
 		String quantity = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
 		String limit_price = request.getParameter("lsl");
+		String term = request.getParameter("term");
 		DecimalFormat df = new DecimalFormat(".##");
 		
 		
@@ -98,6 +99,17 @@ $(document).ready ( function () {
 					%>
 				</td>
 			</tr>
+			
+			
+			<tr>
+				<td>Term</td>
+				<td>
+					<%
+						out.print(term);
+					%>
+				</td>
+			</tr>
+			
 			
 			<tr>
 				<td>Quantity</td>
