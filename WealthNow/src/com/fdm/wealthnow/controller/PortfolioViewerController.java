@@ -6,6 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.fdm.wealthnow.common.UserAccount;
+import com.fdm.wealthnow.common.UserAuth;
+import com.fdm.wealthnow.service.UserAccountService;
 
 /**
  * Servlet implementation class PortfolioViewerController
@@ -26,15 +31,21 @@ public class PortfolioViewerController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+			//doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 HttpSession session = request.getSession();
+		 
+		 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+			UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+			int user_id = ua.getUserId();
+			
+			session.getAttribute("stock_symbol");
+			
 	
 	}
 

@@ -101,7 +101,7 @@ public class ConfirmationPageController extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		request.getRequestDispatcher("BuyPage.jsp").forward(request, response);// forward
+		request.getRequestDispatcher("portfolio_viewer.jsp").forward(request, response);// forward
 																				// to
 																				// desired
 																				// page

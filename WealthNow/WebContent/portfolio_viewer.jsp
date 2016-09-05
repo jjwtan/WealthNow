@@ -1,9 +1,12 @@
+<%@page import="com.fdm.wealthnow.service.PortfolioService"%>
+<%@page import="com.fdm.wealthnow.common.InfoType"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ page import ="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
 	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
-	com.fdm.wealthnow.service.StockService"%>
+	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding"%>
 <html>
 <head>
 
@@ -13,7 +16,7 @@ table {
 }
 
 table, th, td {
-	border: 1px solid black;
+	border: 1px solid grey;
 	border-collapse: collapse;
 }
 
@@ -44,60 +47,85 @@ table#t01 th {
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script>
 	
-
-
-	
 </script>
 </head>
 
 
 <body>
 
-
-
-
-	<table id="t01">
-		 
-		<tr>
-			   
-			<th colspan="2">Stock Symbol</th>    
-			<th>Last Trade</th>    
-			<th colspan="2">Change</th>
-			<th>Day's Gain</th>
-			<th>Qty</th>
-			<th>Price Paid</th>
-			<th colspan="2">Total Gain</th>
-			<th>Market Value</th>  
-		</tr>
-		<tr>
-			<th>symbol</th>
-			<th>B/S Link</th>
-			<th>Last Trade(Price)</th>
-			<th>%</th>
-			<th>$</th>
-			<th>Gain</th>
-			<th>qty</th>
-			<th>price paid</th>
-			<th>%</th>
-			<th>$</th>
-			<th>Market Value</th>
-		</tr>
+	<%
+		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+		UserAccountService uas = new UserAccountService();
+		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+		StockHolding sh = new StockHolding();
+		int user_id = ua.getUserId();
+		PortfolioService pfs = new PortfolioService();
+		List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
+		for(StockHolding newShList:shList){
+			sh = newShList;
+		}
+		String stock_symbol = sh.getStock_symbol();
+		Integer quantity = sh.getRemaining_quantity();
+		Double price_paid = sh.getPurchase_price();
 		
-		<tr>
-			<td>symbol</td>
-			<td>B/S Link</td>
-			<td>Last Trade(Price)</td>
-			<td>%</td>
-			<td>$</td>
-			<td>Gain</td>
-			<td>qty</td>
-			<td>price paid</td>
-			<td>%</td>
-			<td>$</td>
-			<td>Market Value</td>
-		</tr>
+		StockService svc = new StockService();
+		String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
+		Float change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange();
+		Float day_high = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDayHigh();
+		Float day_low = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDayLow();
+		svc.getStockFromExchange(stock_symbol, InfoType.FULL);
+		svc.getStockFromExchange(stock_symbol, InfoType.FULL);
+		svc.getStockFromExchange(stock_symbol, InfoType.FULL);
+		
+		
+		
+	%>
 
-	</table>
+
+	<form action="PortfolioViewer" method="post">
+
+		<table id="t01">
+			 
+			<tr>
+				<th colspan="2">Stock Symbol</th>
+				<th>Last Trade</th>
+				<th colspan="2">Change</th>
+				<th>Day's Gain</th>
+				<th>Qty</th>
+				<th>Price Paid</th>
+				<th colspan="2">Total Gain</th>
+				<th>Market Value</th>
+			</tr>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>%</th>
+				<th>$</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>%</th>
+				<th>$</th>
+				<th></th>
+			</tr>
+
+			<tr>
+				<td>out.print(stock_symbol)</td>
+				<td><a href="BuyPage.jsp">Buy/</a><a href="www.google.com">Sell</a></td>
+				<td>Last Trade(Price)</td>
+				<td>out.print(percent_change)</td>
+				<td>$</td>
+				<td>out.print()</td>
+				<td>out.print(quantity)</td>
+				<td>out.print(price_paid)</td>
+				<td>%</td>
+				<td>$</td>
+				<td>Market Value</td>
+			</tr>
+
+		</table>
+	</form>
 
 
 </body>

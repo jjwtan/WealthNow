@@ -12,7 +12,9 @@ public class StockHolding {
 	Double purchase_price;
 	String purchase_date;
 	
-	
+	public StockHolding(){
+		
+	}
 	
 	
 	public StockHolding(String stock_symbol, Integer remaining_quantity, Double purchase_price) {
