@@ -71,6 +71,7 @@ public class BuyPageController extends HttpServlet {
 		String term1 = request.getParameter("term");
 
 		StockService ss = new StockService();
+		
 		if (ss.validateStock(stock_symbol) == true) {
 
 			Double stock_price = Double
@@ -79,7 +80,7 @@ public class BuyPageController extends HttpServlet {
 			Double newBalance = uas.getAccountBalance(ua.getUserId()).getBalance();
 			Double afterDebit = newBalance - total_price;
 
-			if (price_type == "M") {
+			if (price_type.equals("M")) {
 
 				if (afterDebit < 0) {
 
@@ -105,19 +106,18 @@ public class BuyPageController extends HttpServlet {
 
 				}
 
-			} else if (price_type == "L" || price_type == "SL") {
+			} else if (price_type.equals("L") || price_type.equals("SL")) {
 
-				if (term == "null") {
+				if (term1.equals("null")) {
 					System.out.println("Inside else for term = null");
 
-					request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
+					
 					request.setAttribute("errorMessage", "Please enter TERM.");
 
 					request.setAttribute("quantity", quantity);
 					request.setAttribute("stock_symbol", stock_symbol);
-
-				}
-				if (term != null) {
+					request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
+				} else {
 
 					if (afterDebit < 0) {
 
@@ -147,9 +147,7 @@ public class BuyPageController extends HttpServlet {
 
 			}
 
-		}
-
-		else if (ss.validateStock(stock_symbol) == false) {
+		}else if (ss.validateStock(stock_symbol) == false) {
 			System.out.println("Inside else if method for stock_symbol = false");
 			request.setAttribute("errorMessage", "Please Enter a Valid Stock Symbol !");
 			request.setAttribute("quantity", quantity);
