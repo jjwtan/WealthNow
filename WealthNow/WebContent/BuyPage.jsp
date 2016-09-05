@@ -56,28 +56,30 @@
 			,Your Current Balance $<%=ua.getBalance() %></h4>
 			
 			<h3 style="color:red;">${errorMessage}</h3>
+			<h3 style="color:red;">${errorMessage2}</h3>
+			<h3 style="color:red;">${errorMessage3}</h3>
 			
 
 			<input type="radio" name="Selection" value="B" required> Buy <input
 				type="radio" name="Selection" value="S"  disabled> Sell <br> <br>
 			Quantity: <input type="number" name="quantity"
-				value="" required min="1" max="100000" step="1"> 
-				Stock Symbol:<input type="text" name="stock_symbol" value="" pattern="[A-Za-z0-9]{3,4}"
+				value="${quantity}" required min="1" max="100000" step="1"> 
+				Stock Symbol:<input type="text" name="stock_symbol" value="${stock_symbol}" pattern="[A-Za-z0-9]{3,4}"
 				required placeholder="3-4 Characters"  style="text-transform: uppercase">
 				
 				 <br> <br>
-				 Price Type:<br> <select required name="price_type" id="price_type">
+				 Price Type:<br> <select required name="price_type" id="price_type" value="">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="M" id="M">Market</option>
 				<option value="SL" id="SL">Stop Loss</option>
 				<option value="L" id="L">Limit</option>
 			</select> 
 			
-			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value=""> <br> 
-				<br> <select required selected hidden value="Term" id="term">
-				<option selected style='display: none' value="null"></option>
-				<option value="GD">Good For The Day</option>
-				<option value="GC">Good Till Cancelled</option>
+			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
+				<br> <select required name="term"  id="term" value="">
+				<option selected disabled hidden style='display: none' value=''></option>
+				<option value="GD" required>Good For The Day</option>
+				<option value="GC" required>Good Till Cancelled</option>
 
 			</select> <br> <br> 
 			<input type="submit" value="Submit">

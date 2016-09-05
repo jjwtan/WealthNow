@@ -71,10 +71,29 @@ public class ConfirmationPageController extends HttpServlet {
 			if((lsl == null) && (term.equals("null"))){
 				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
 						price_type, txDate, null, null);
+				
+				
+				session.setAttribute("Selection", null);
+				session.setAttribute("quantity", null);
+				session.setAttribute("stock_symbol", null);
+				session.setAttribute("price_type", null);
+				session.setAttribute("term", null);
+				session.setAttribute("lsl", null);
+				
+				
+				
 			}
 			else{
 				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
 						price_type, txDate, lsl, term);
+				
+				session.setAttribute("Selection", null);
+				session.setAttribute("quantity", null);
+				session.setAttribute("stock_symbol", null);
+				session.setAttribute("price_type", null);
+				session.setAttribute("term", null);
+				session.setAttribute("lsl", null);
+				
 			}
 			
 		} catch (Exception e) {
