@@ -30,8 +30,8 @@
 		
 		
 		$("#M").on("click", function() {
-			$("#lsl").hide();
-			$("#term").hide();
+			$("#lsl").hide().val(0);
+			$("#term").hide().val("null");
 			
 
 		});
@@ -74,7 +74,7 @@
 			</select> 
 			
 			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value=""> <br> 
-				<br> <select required selected hidden style='display: none' value="" id="term">
+				<br> <select required selected hidden value="Term" id="term">
 				<option selected style='display: none' value="null"></option>
 				<option value="GD">Good For The Day</option>
 				<option value="GC">Good Till Cancelled</option>
