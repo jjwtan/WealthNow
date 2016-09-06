@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,13 +39,13 @@ public class UserDAO extends DBUtil {
 			ps.setInt(1, userId);
 			rs = ps.executeQuery();
 
-			rs.next();
+			if(rs.next()){
 			User userFull = new User(userId, rs.getString("user_name"), rs.getString("first_name"),
 					rs.getString("last_name"), rs.getDate("birthday"), rs.getString("email"), rs.getString("phone_num"),
 					rs.getString("address"));
-
+			
 			return userFull;
-
+			}
 		default:
 
 			return null;
@@ -75,19 +76,28 @@ public class UserDAO extends DBUtil {
 		String username = user.getUsername();
 		String firstName = user.getFirstName();
 		String lastName = user.getLastName();
-		String birthday = user.getBirthday().toString();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String birthday = sdf.format(user.getBirthday());
 		String email = user.getEmail();
-		String phoneNumber = user.getPhoneNumber();
+		Integer phoneNumber = Integer.parseInt(user.getPhoneNumber());
 		String address = user.getAddress();
 		String maidenName = user.getMaidenName();
 		
 		try {
 
-			String SQLStatement = "INSERT INTO User1(user_id, user_name, user_password, first_name, last_name, birthday, email, address , phone_num, maiden_name) VALUES ("
-					+ userId + ", '" + username + "', '" + password + "', '" + firstName + "', '" + lastName + "', '"
-					+ birthday + "', '" + email + "', '" + address + "', '" + phoneNumber + "', '" + maidenName + "')";
-
+			String SQLStatement = "INSERT INTO user1(user_id, user_name, user_password, first_name, last_name, birthday, email, address , phone_num, maiden_name) VALUES (?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?)";
+			
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
+			ps.setInt	(1, userId);
+			ps.setString(2, username);
+			ps.setString(3, password);
+			ps.setString(4, firstName);
+			ps.setString(5, lastName);
+			ps.setString(6, birthday);
+			ps.setString(7, email);
+			ps.setString(8, address);
+			ps.setInt	(9, phoneNumber);
+			ps.setString(10, maidenName);
 			ps.executeUpdate();
 			System.out.println("--> Adding user SQL executed" + SQLStatement);
 

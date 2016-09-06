@@ -32,58 +32,58 @@ public class UserDAOTest {
 	}
 
 	// test get all user 
-	@Test
-	public void testUserTable() {
-		List<User> users = null;
-		try {
-			users = userDAO.getAllUser(connect);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		for (User user : users) {
-			System.out.println(user.getUsername() + ": " + user);
-		}
-	}
-	
-	@Test
-	public void testSingleBasicUser() {
-		try {
-			User user = userDAO.getUser(1, InfoType.FULL, connect);
-			
-			System.out.println(user);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	public void testSingleFullUser() {
-		try {
-			User user = userDAO.getUser(2, InfoType.FULL, connect);
-			
-			System.out.println("User:   \t" + user.getUsername() + "\n"
-					  +"Name:   \t" + user.getFirstName() + " " + user.getLastName() + "\n"
-					  +"Email:   \t" + user.getEmail() + "\n"
-					  +"Address:\t" + user.getAddress() + "\n"
-					  +"Phone:   \t" + user.getPhoneNumber() + "\n"
-					  +"Birthday:\t" + user.getBirthday());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	@Test
+//	public void testUserTable() {
+//		List<User> users = null;
+//		try {
+//			users = userDAO.getAllUser(connect);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		for (User user : users) {
+//			System.out.println(user.getUsername() + ": " + user);
+//		}
+//	}
+//	
+//	@Test
+//	public void testSingleBasicUser() {
+//		try {
+//			User user = userDAO.getUser(1, InfoType.FULL, connect);
+//			
+//			System.out.println(user);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	@Test
+//	public void testSingleFullUser() {
+//		try {
+//			User user = userDAO.getUser(2, InfoType.FULL, connect);
+//			
+//			System.out.println("User:   \t" + user.getUsername() + "\n"
+//					  +"Name:   \t" + user.getFirstName() + " " + user.getLastName() + "\n"
+//					  +"Email:   \t" + user.getEmail() + "\n"
+//					  +"Address:\t" + user.getAddress() + "\n"
+//					  +"Phone:   \t" + user.getPhoneNumber() + "\n"
+//					  +"Birthday:\t" + user.getBirthday());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	@Test
 	public void testAddUser() {
 		//System.out.println("--> Inside testAddUser");
 		
 		List<User> users = new ArrayList<>();
-		User newUser = new User();
+		User newUser = new User( 4, "SamAccount", "Sam", "Potter", "19/09/2014", "harrypotter@hotmail.com", "89345621", "Happy Town #10-152", "Tan");
 
-		userDAO.addUser(4, "SamAccount", "password123", "Sam", "Potter", "19 Sep 2014", "harrypotter@hotmail.com", "89345621", "Happy Town #10-152", "Tan", connect);
+		userDAO.addUser(connect, newUser, "password123");
 		
 		try {
 			users = userDAO.getAllUser(connect);
@@ -98,45 +98,45 @@ public class UserDAOTest {
 		assertEquals("Sam", newUser.getFirstName());
 		assertEquals("harrypotter@hotmail.com", newUser.getEmail());
 	}
-	
-	@Test
-	public void testUpdateUser(){
-		
-		User updatedUser = new User();
-		
-		userDAO.updateUser(3, "Tommy", "Tom", "Lee", "19 Sep 2014", "harrypotter@hotmail.com", "89345621", "Happy Town #10-152", "Tan", connect);
-		
-		try {
-			updatedUser = userDAO.getUser(3, InfoType.FULL, connect);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		assertEquals("Tommy", updatedUser.getUsername());
-		assertEquals("Lee", updatedUser.getLastName());
-		assertEquals("harrypotter@hotmail.com", updatedUser.getEmail());
-	}
-	
-	@Test
-	public void testUpdatePassword() throws SQLException{
-		
-		Integer userId;
-		userId = 1;
-		
-		userDAO.updatePassword(userId, "newPass", connect);
-		
-		// run SQL statement to pull password 
-		String SQLStatement = "Select user_password from USER1 where user_id = ?";
-		PreparedStatement ps = connect.prepareStatement(SQLStatement);
-		ps.setInt(1, userId);
-		ResultSet rs;
-		rs = ps.executeQuery();
-		rs.next();
-		String userPassword = rs.getString("user_password");
-		
-		assertEquals("newPass", userPassword);
-	}
+//	
+//	@Test
+//	public void testUpdateUser(){
+//		
+//		User updatedUser = new User();
+//		
+//		userDAO.updateUser(3, "Tommy", "Tom", "Lee", "19/09/2014", "harrypotter@hotmail.com", "89345621", "Happy Town #10-152", "Tan", connect);
+//		
+//		try {
+//			updatedUser = userDAO.getUser(3, InfoType.FULL, connect);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		assertEquals("Tommy", updatedUser.getUsername());
+//		assertEquals("Lee", updatedUser.getLastName());
+//		assertEquals("harrypotter@hotmail.com", updatedUser.getEmail());
+//	}
+//	
+//	@Test
+//	public void testUpdatePassword() throws SQLException{
+//		
+//		Integer userId;
+//		userId = 1;
+//		
+//		userDAO.updatePassword(userId, "newPass", connect);
+//		
+//		// run SQL statement to pull password 
+//		String SQLStatement = "Select user_password from USER1 where user_id = ?";
+//		PreparedStatement ps = connect.prepareStatement(SQLStatement);
+//		ps.setInt(1, userId);
+//		ResultSet rs;
+//		rs = ps.executeQuery();
+//		rs.next();
+//		String userPassword = rs.getString("user_password");
+//		
+//		assertEquals("newPass", userPassword);
+//	}
 	
 	@After
 	public void tearDown() {

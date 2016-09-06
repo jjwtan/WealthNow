@@ -1,5 +1,7 @@
 package com.fdm.wealthnow.common;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -43,13 +45,19 @@ public class User {
 	}
 	
 	// used for user updating
-	public User(int userId, String username, String firstName, String lastName, Date birthday, String email,
+	public User(int userId, String username, String firstName, String lastName, String birthday, String email,
 			String phoneNumber, String address, String maidenName) {
 		this.userId = userId;
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.birthday = birthday;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			this.birthday = sdf.parse(birthday);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
