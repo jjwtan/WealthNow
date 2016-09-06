@@ -115,6 +115,62 @@ public class OrderManagementService extends DBUtil {
 		}
 
 	}
+	
+	public void processCancelledOrders(Integer order_id) {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			System.out.println("connection  is - " + connect);
+
+			OrderDAO ord = new OrderDAO();
+			OrderManagementService oms = new OrderManagementService();
+			UserAccountService uas = new UserAccountService();
+			Date date = new Date();
+			Order order = ord.getOrderFromOpenOrder(order_id, connect);
+			// format the date to string for create method
+			System.out.println("process order method running...");
+			ord.createProcessedOrderInDatabase(connect, order.getUser_id(), order.getOrder_id(),
+					order.getCurrency_code(), order.getOrder_type().toString(), order.getQuantity(),
+					order.getStock_symbol(), order.getPrice_type().toString(),
+					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
+					convertDateObjToString(date), "cancelled", 0.00 , 0.00);
+			connect.commit();
+			uas.creditBalance(order.getUser_id(), order.getTotal_price_deducted());
+			System.out.println("Amount deducted will be returned to user - " + order.getUser_id() 
+			+ " with price - " + order.getTotal_price_deducted());
+			System.out.println("Cash balance for user - " + order.getUser_id() 
+			+ " is: " + uas.getAccountBalance(order.getUser_id()).getBalance());
+			System.out.println("created cancelled order in database - " + order.getOrder_id());
+			System.out.println("Deleting open order");
+			if (ord.getOrderFromProcessedOrder(connect, order.getOrder_id()) != null) {
+				ord.deleteOpenOrderInDatabase(connect, order.getOrder_id());
+				connect.commit();
+				System.out.println("deleted open order in database - " + order.getOrder_id());
+			}
+			
+			System.out.println("Order has been cancelled and moved to processedorder table. OrderID - " + order.getOrder_id());
+
+		} catch (Exception e) {
+			try {
+				System.out.println("simitachi@ OMS");
+				connect.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+
+		
+	}
 
 	public boolean validateOrderData(Integer user_id, String currency_code, String order_type, Integer quantity,
 			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term) {
