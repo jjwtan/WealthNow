@@ -36,7 +36,7 @@ public class OrderProcessorTest {
 	public void TestfetchOrderFromDao() throws Exception {
 		OrderManagementService oms = new  OrderManagementService();
 		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(100), "Z74", "M", "11 Sep 2011",
-				new Double(20), "GC");
+				new Double(20), "GC", 150.1);
 		orderProcessor = new OrderProcessor();
 		List <Order> orderlist = orderProcessor.TestfetchOrderFromDao(3);
 		System.out.println(orderlist);
@@ -70,9 +70,9 @@ public class OrderProcessorTest {
 //		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "M", "11 Sep 2011",
 //				new Double(0), "");
 		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "SL", "11 Sep 2011",
-				new Double(2), "GC");
+				new Double(2), "GC", 150.1);
 		oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(50), "Z74", "LT", "11 Sep 2011",
-				new Double(1.9), "");
+				new Double(1.9), "GD", 150.1);
 		System.out.println("processing orders ---------------------------------");
 		int count = orderProcessor.testProcessOrders(executorService);
 		//System.out.println("Processing done with " + count + " orders processed.");

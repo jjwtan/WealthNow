@@ -22,7 +22,8 @@ public class OrderManagementService extends DBUtil {
 	 */
 
 	public Integer createOpenOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
-			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term)
+			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term, 
+			Double total_price_deducted)
 			throws Exception {
 
 		Connection connect = null;
@@ -42,7 +43,7 @@ public class OrderManagementService extends DBUtil {
 			// failed
 			if (validate == true) {
 				ord.createOpenOrderInDatabase(connect, order_id, user_id, currency_code, order_type, quantity,
-						stock_symbol, price_type, opening_order_date, limit_price, term, "OpenOrder");
+						stock_symbol, price_type, opening_order_date, limit_price, term, "OpenOrder", total_price_deducted);
 			} else {
 				System.out.println("Failed creating Open Order..");
 			}
@@ -79,7 +80,7 @@ public class OrderManagementService extends DBUtil {
 					order.getCurrency_code(), order.getOrder_type().toString(), order.getQuantity(),
 					order.getStock_symbol(), order.getPrice_type().toString(),
 					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
-					convertDateObjToString(date), "completed", closing_price);
+					convertDateObjToString(date), "completed", closing_price, order.getTotal_price_deducted());
 			connect.commit();
 			System.out.println("created processed order in database - " + order.getOrder_id());
 			System.out.println("Deleting open order");

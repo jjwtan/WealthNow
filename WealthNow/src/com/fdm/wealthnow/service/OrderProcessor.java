@@ -20,7 +20,7 @@ import com.fdm.wealthnow.util.DBUtil;
 
 public class OrderProcessor extends DBUtil implements ServletContextListener {
 	private static final int WORKER_THREAD_POOL_SIZE = 5;
-	private static final int ORDER_FETCH_SIZE = 5;
+	private static final int ORDER_FETCH_SIZE = 10;
 
 	ScheduledExecutorService scheduledExecutorService;
 	ExecutorService executorService;
@@ -52,7 +52,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 	}
 
 	private int processOpenOrders(ExecutorService ex) {
-		System.out.println("Processing open orders running at:" + new Date());
+		System.out.println("Processing open orders running at:" + new Date() +"-----------------------");
 
 		// Get 20 open orders from OrderService
 		// Delegate processing to worker thread pool
@@ -65,8 +65,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		int count = 0;
 
 		for (Order order : orderList) {
-			// if the term is null because the ordertype "Market" do the
-			// following:
+			//validate the list either with term or not.
 			boolean success;
 			if (order.getTerm() == null) {
 				success = oms.validateOrderData(order.getUser_id(), order.getCurrency_code(),
@@ -99,7 +98,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 							ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
 							count++;
 							System.out.println("Count - " + count);
-							uas.debitBalance(order.getUser_id(), total_price);
+							//uas.debitBalance(order.getUser_id(), total_price);
 						}
 					} 
 					else if (order.getPrice_type().toString().equals("M")) {
@@ -108,7 +107,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						count++;
 						System.out.println("Count: " + count);
 						// edit balance account
-						uas.debitBalance(order.getUser_id(), total_price);
+						//uas.debitBalance(order.getUser_id(), total_price);
 					}
 					
 					else {
@@ -121,7 +120,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				System.out.println("Validation failed.");
 			}
 		}
-		System.out.println(count + " orders has been processed.");
+		System.out.println(count + " order(s) has been processed.");
 		return count;
 	}
 

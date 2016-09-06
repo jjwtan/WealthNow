@@ -39,7 +39,7 @@ public class OrderDAOTest extends DBUtil {
 		Integer order_id1 = getSequenceID("order_id_seq");
 		
 		orderDAO.createOpenOrderInDatabase(connect, order_id1, new Integer(1), "SGD", "B", new Integer(100), "AAPL", "M", "11 Sep 2011",
-				new Double(88.9), "GC", "Open");
+				new Double(88.9), "GC", "Open", 150.1);
 		
 		System.out.println("\n Start testCreatedDataInDatabase");
 		
@@ -73,7 +73,7 @@ public class OrderDAOTest extends DBUtil {
 		Integer order_id1 = getSequenceID("order_id_seq");
 		System.out.println("order id is " + order_id1);
 		orderDAO.createProcessedOrderInDatabase(connect, 1, order_id1, "SGD", "B", 100, "SAISAI","M", "19 Sep 2014", 90.9, 
-				"12 Oct 2015", "cancelled", 90.2);
+				"12 Oct 2015", "cancelled", 90.2, 150.1);
 		Order order = orderDAO.getOrderFromProcessedOrder(connect, order_id1);
 		
 		System.out.println("\n Start testCreateProcessedOrderData");

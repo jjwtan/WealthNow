@@ -43,7 +43,7 @@ public class PortfolioServiceTest extends DBUtil {
 																		// ORDERS
 						OrderDAO ord = new OrderDAO();	
 						ord.createProcessedOrderInDatabase(connect, 2, 303, "SGD", "B", 100, "HKL","M", "19 Sep 2014", 90.0, 
-								"12 Oct 2015", "completed", 100.0);
+								"12 Oct 2015", "completed", 100.0, 150.1);
 											connect.commit();							
 		PortfolioService pfs = new PortfolioService();
 		

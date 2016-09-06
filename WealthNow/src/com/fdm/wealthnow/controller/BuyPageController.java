@@ -79,6 +79,8 @@ public class BuyPageController extends HttpServlet {
 			Double total_price = Double.parseDouble(quantity) * stock_price + brokerage_fee;
 			Double newBalance = uas.getAccountBalance(ua.getUserId()).getBalance();
 			Double afterDebit = newBalance - total_price;
+			//store total_price to session to be used at confirmation page controller
+			session.setAttribute("total_price", total_price);
 
 			if (price_type.equals("M")) {
 
@@ -155,6 +157,8 @@ public class BuyPageController extends HttpServlet {
 			request.getRequestDispatcher("BuyPage.jsp").forward(request, response);
 
 		}
+		
+		
 
 		// check for stock symbol using stock service validate
 		// if else condition

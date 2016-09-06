@@ -17,7 +17,7 @@ public class Order {
 	Date order_completion_date;
 	String status;
 	Double closing_price;
-	Double open_market_price;
+	Double total_price_deducted; // price deducted at confirmation page
 
 	/*
 	 * Order constructor is to be called to create an OpenOrder
@@ -37,12 +37,33 @@ public class Order {
 		this.term = term2;
 		this.status = status;
 	}
+	
+	/*
+	 * New Order constructor for OpenOrder - now store the total price deducted from confirmation page. 
+	 */
+	public Order(Integer user_id, Integer order_id, String currency_code, OrderTypeEnum order_type, Integer quantity,
+			String stock_symbol, PriceTypeEnum price_type, Date opening_order_date, Double limit_price, TermEnum term2,
+			String status, Double total_price_deducted) {
+		this.user_id = user_id;
+		this.order_id = order_id;
+		this.currency_code = currency_code;
+		this.order_type = order_type;
+		this.quantity = quantity;
+		this.stock_symbol = stock_symbol;
+		this.price_type = price_type;
+		this.place_order_date = opening_order_date;
+		this.limit_price = limit_price;
+		this.term = term2;
+		this.status = status;
+		this.total_price_deducted = total_price_deducted;
+	}
+	
 	/*
 	 * Order constructor is to be called to create a ProcessedOrder
 	 */
 	public Order(Integer user_id, Integer order_id, String currency_code, OrderTypeEnum order_type, Integer quantity,
 			String stock_symbol, PriceTypeEnum price_type, Date place_order_date, Double limit_price,
-			Date order_completion_date, String status, Double closing_price, Double open_market_price) {
+			Date order_completion_date, String status, Double closing_price, Double total_price_deducted) {
 		this.user_id = user_id;
 		this.order_id = order_id;
 		this.currency_code = currency_code;
@@ -55,7 +76,7 @@ public class Order {
 		this.order_completion_date = order_completion_date;
 		this.status = status;
 		this.closing_price = closing_price;
-		this.open_market_price = open_market_price;
+		this.total_price_deducted = total_price_deducted;
 	}
 	
 
@@ -137,14 +158,12 @@ public class Order {
 		this.closing_price = closing_price;
 	}
 
-	public Double getOpen_market_price() {
-		return open_market_price;
+	public Double getTotal_price_deducted() {
+		return total_price_deducted;
 	}
-
-	public void setOpen_market_price(Double open_market_price) {
-		this.open_market_price = open_market_price;
+	public void setTotal_price_deducted(Double total_price_deducted) {
+		this.total_price_deducted = total_price_deducted;
 	}
-
 	public Double getLimit_price() {
 		return limit_price;
 	}

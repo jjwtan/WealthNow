@@ -66,11 +66,16 @@ public class ConfirmationPageController extends HttpServlet {
 		String txDate = dbu.convertDateObjToString(new Date());
 
 		OrderManagementService oms = new OrderManagementService();
+		UserAccountService uas = new UserAccountService();
+		Double amountToDebit = (Double) session.getAttribute("total_price");
+		uas.debitBalance(user_id, amountToDebit);
+		
+		
 		try {
 			
 			if((lsl == null) && (term.equals("null"))){
 				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
-						price_type, txDate, null, null);
+						price_type, txDate, null, null, amountToDebit);
 				
 				
 				session.setAttribute("Selection", null);
@@ -79,13 +84,14 @@ public class ConfirmationPageController extends HttpServlet {
 				session.setAttribute("price_type", null);
 				session.setAttribute("term", null);
 				session.setAttribute("lsl", null);
+				session.setAttribute("total_price", null);
 				
 				
 				
 			}
 			else{
 				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
-						price_type, txDate, lsl, term);
+						price_type, txDate, lsl, term , amountToDebit);
 				
 				session.setAttribute("Selection", null);
 				session.setAttribute("quantity", null);
@@ -93,8 +99,11 @@ public class ConfirmationPageController extends HttpServlet {
 				session.setAttribute("price_type", null);
 				session.setAttribute("term", null);
 				session.setAttribute("lsl", null);
+				session.setAttribute("total_price", null);
 				
 			}
+			
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

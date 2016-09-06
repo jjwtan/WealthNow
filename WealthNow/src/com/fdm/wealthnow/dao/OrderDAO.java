@@ -36,14 +36,15 @@ public class OrderDAO extends DBUtil {
 				Double limit_price = result.getDouble("limit_price");
 				String term = result.getString("term");
 				String status = "OpenOrder";
+				Double total_price_deducted = result.getDouble("total_price_deducted");
 				if (term == null) {
 					order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 							stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price,
-							null, status);
+							null, status, total_price_deducted);
 				} else {
 					order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 							stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price,
-							TermEnum.valueOf(term), status);
+							TermEnum.valueOf(term), status, total_price_deducted);
 				}
 			}
 
@@ -79,11 +80,11 @@ public class OrderDAO extends DBUtil {
 				String status = result.getString("status");
 				Date order_completion_date = result.getDate("order_completion_date");
 				Double closing_price = result.getDouble("closing_price");
-				Double open_market_price = result.getDouble("open_market_price");
+				Double total_price_deducted = result.getDouble("total_price_deducted");
 
 				order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 						stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,
-						order_completion_date, status, closing_price, open_market_price);
+						order_completion_date, status, closing_price, total_price_deducted);
 
 			}
 		} catch (Exception e) {
@@ -119,11 +120,11 @@ public class OrderDAO extends DBUtil {
 			String status = result.getString("status");
 			Date order_completion_date = result.getDate("order_completion_date");
 			Double closing_price = result.getDouble("closing_price");
-			Double open_market_price = result.getDouble("open_market_price");
+			Double total_price_deducted = result.getDouble("total_price_deducted");
 
 			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 					stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,
-					order_completion_date, status, closing_price, open_market_price);
+					order_completion_date, status, closing_price, total_price_deducted);
 			processedCompletedOrderfromUser.add(order);
 		}
 
@@ -153,12 +154,12 @@ public class OrderDAO extends DBUtil {
 			Double limit_price = result.getDouble("limit_price");
 			Date order_completion_date = result.getDate("order_completion_date");
 			Double closing_price = result.getDouble("closing_price");
-			Double open_market_price = result.getDouble("open_market_price");
+			Double total_price_deducted = result.getDouble("total_price_deducted");
 			String status = result.getString("status");
 
 			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 					stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,
-					order_completion_date, status, closing_price, open_market_price);
+					order_completion_date, status, closing_price, total_price_deducted);
 			AllSoldOrderInDatabase.add(order);
 		}
 
@@ -168,14 +169,14 @@ public class OrderDAO extends DBUtil {
 	public void createProcessedOrderInDatabase(Connection connect, Integer user_id, Integer order_id,
 			String currency_code, String order_type, Integer quantity, String stock_symbol, String price_type,
 			String opening_order_date, Double limit_price, String order_completion_date, String status,
-			Double closing_price) {
+			Double closing_price, Double total_price_deducted) {
 
 		String SQL = "INSERT INTO PROCESSEDORDER (order_id, user_id, currency_code, "
 				+ "order_type, quantity, stock_symbol, "
-				+ "price_type, status ,place_order_date, limit_price, order_completion_date, closing_price) "
+				+ "price_type, status ,place_order_date, limit_price, order_completion_date, closing_price , total_price_deducted) "
 				+ "VALUES(" + order_id + ", " + user_id + ",'" + currency_code + "','" + order_type + "'," + quantity
 				+ ",'" + stock_symbol + "','" + price_type + "','" + status + "','" + opening_order_date + "',"
-				+ limit_price + ",'" + order_completion_date + "'," + closing_price + ")";
+				+ limit_price + ",'" + order_completion_date + "'," + closing_price + ","+total_price_deducted +")";
 
 		PreparedStatement ps;
 		try {
@@ -215,14 +216,15 @@ public class OrderDAO extends DBUtil {
 				Double limit_price = result.getDouble("limit_price");
 				String term = result.getString("term");
 				String status = "OpenOrder";
+				Double total_price_deducted = result.getDouble("total_price_deducted");
 				if (term == null) {
 					order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 							stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price, null,
-							status);
+							status, total_price_deducted);
 				} else {
 					order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 							stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price,
-							TermEnum.valueOf(term), status);
+							TermEnum.valueOf(term), status, total_price_deducted);
 				}
 				OpenOrderList.add(order);
 			}
@@ -237,20 +239,20 @@ public class OrderDAO extends DBUtil {
 
 	public void createOpenOrderInDatabase(Connection connect, Integer order_id, Integer user_id, String currency_code,
 			String order_type, Integer quantity, String stock_symbol, String price_type, String opening_order_date,
-			Double limit_price, String term, String status) throws Exception {
+			Double limit_price, String term, String status, Double total_price_deducted) throws Exception {
 		String SQL =null;
 		if(term == null){
 			SQL = "INSERT INTO OPENORDER (order_id, user_id, currency_code, "
-					+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price) "
+					+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price, total_price_deducted) "
 					+ "VALUES(" + order_id + ", " + user_id + ",'" + currency_code + "','" + order_type + "'," + quantity
-					+ ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price + ")";
+					+ ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price + ","+total_price_deducted+")";
 		}
 		
 		else{
 			 SQL = "INSERT INTO OPENORDER (order_id, user_id, currency_code, "
-				+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price, term) "
+				+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price, total_price_deducted , term) "
 				+ "VALUES(" + order_id + ", " + user_id + ",'" + currency_code + "','" + order_type + "'," + quantity
-				+ ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price + ",'"
+				+ ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price + ","+total_price_deducted+",'"
 				+ term + "')";
 		}
 		PreparedStatement ps = connect.prepareStatement(SQL);
