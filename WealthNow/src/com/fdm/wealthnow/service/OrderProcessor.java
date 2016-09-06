@@ -1,6 +1,7 @@
 package com.fdm.wealthnow.service;
 
 import java.sql.Connection;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,15 +94,26 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				System.out.println("Order price type is : " + order.getPrice_type().toString());
 				//check for Good for the day order to be cancelled at 5pm daily.
 				
-				SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");//eg. 17:00:00
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//eg. 17:00:00
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 				Date now = new Date();
-			    String nowtime = format.format(now);
-			    System.out.println("TIME CHECK: "+ nowtime+ " - cancel order -GOOD FOR THE DAY" );
-				if(nowtime.equals("15:30:00")){
+			    String nowtime = format2.format(now);
+			    String closetime = nowtime +" 16:00:00";
+			    Date closeDate = null;
+			    try {
+			    	closeDate = (Date) format.parse(closetime);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+			    System.out.println("TIME CHECK: "+ closeDate+ " - cancel order -GOOD FOR THE DAY" );
+				if(now.after(closeDate)){
 					//check if term is GD
 					if(order.getTerm().toString().equals("GD")){
 						oms.processCancelledOrders(order.getOrder_id());
 						System.out.println("This order has been cancelled for the day : orderID - " + order.getOrder_id());
+						count++;
 					}
 				}
 				
