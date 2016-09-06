@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Stock {
 	String stockSymbol, company;
-	Float mktPrice, change, open, close;
+	Float mktPrice, open, close;
+	String change;
 	Float ask, bid;
 	String percentChange;
 	String daysValueChange;
@@ -37,6 +38,7 @@ public class Stock {
 		this.close = close;
 		this.lastTradeDate = lastTradeDate;
 		this.tradeDate = tradeDate;
+		this.change = daysValueChange;
 		this.daysValueChange = daysValueChange;
 		this.percentChange = percentChange;
 	}
@@ -158,12 +160,15 @@ public class Stock {
 		this.close = close;
 	}
 
-	public Float getChange() {
+
+	public String getChange() {
 		return change;
 	}
-	public void setChange(Float change) {
+
+	public void setChange(String change) {
 		this.change = change;
 	}
+
 	public String getPercentChange() {
 		return percentChange;
 	}
