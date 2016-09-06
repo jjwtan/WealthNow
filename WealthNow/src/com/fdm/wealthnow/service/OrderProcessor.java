@@ -1,6 +1,7 @@
 package com.fdm.wealthnow.service;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,9 +91,24 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				System.out.println("balance is " + balance);
 				System.out.println("total price: " + total_price);
 				System.out.println("Order price type is : " + order.getPrice_type().toString());
-				// if statement to check if the limit price
+				//check for Good for the day order to be cancelled at 5pm daily.
+				
+				SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");//eg. 17:00:00
+				Date now = new Date();
+			    String nowtime = format.format(now);
+			    System.out.println("TIME CHECK: "+ nowtime+ " - cancel order -GOOD FOR THE DAY" );
+				if(nowtime.equals("15:30:00")){
+					//check if term is GD
+					if(order.getTerm().toString().equals("GD")){
+						oms.processCancelledOrders(order.getOrder_id());
+						System.out.println("This order has been cancelled for the day : orderID - " + order.getOrder_id());
+					}
+				}
+				
+				//main if statement to ensure balance > total_price
 				if (balance > total_price) {
 					if (order.getPrice_type().toString().equals("SL") || order.getPrice_type().toString().equals("LT")) {
+						// if statement to check if the limit price
 						if (order.getLimit_price() < stockPrice) {
 							System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
 							ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
