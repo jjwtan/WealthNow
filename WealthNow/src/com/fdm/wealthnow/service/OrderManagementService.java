@@ -14,6 +14,7 @@ import com.fdm.wealthnow.common.UserAccount;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.dao.PortfolioDAO;
 import com.fdm.wealthnow.util.DBUtil;
+import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 public class OrderManagementService extends DBUtil {
 	/*
@@ -67,6 +68,7 @@ public class OrderManagementService extends DBUtil {
 	public void processOrder(Integer order_id, Double closing_price) {
 		Connection connect = null;
 		try {
+			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 			connect = getConnection();
 			connect.setAutoCommit(false);
 			System.out.println("connection  is - " + connect);
