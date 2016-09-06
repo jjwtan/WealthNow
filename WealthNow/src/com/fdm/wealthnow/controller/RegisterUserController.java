@@ -70,9 +70,7 @@ public class RegisterUserController extends HttpServlet {
 		
 		int userId;
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			Date convertedDate = null;
-			User userProfile = new User(9, username, firstName, lastName, convertedDate, email, phoneNumber, address, maidenName);
+			User userProfile = new User(9, username, firstName, lastName, birthday, email, phoneNumber, address, maidenName);
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("UserProfile", userProfile);

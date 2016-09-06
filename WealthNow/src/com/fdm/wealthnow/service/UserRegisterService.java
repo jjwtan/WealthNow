@@ -8,19 +8,29 @@ import java.util.Date;
 import java.util.List;
 
 import com.fdm.wealthnow.common.User;
+import com.fdm.wealthnow.dao.SecurityQuestionDAO;
 import com.fdm.wealthnow.util.DBUtil;
 
 @SuppressWarnings("unused")
 public class UserRegisterService extends DBUtil {
 	
 	User user;
-	Connection connect;
 	
 	private static final String USER_TABLE = "user1";
 	
+	public List<String> getAllSecurityQuestions() {
+		try {
+			Connection connect = getConnection();
+			SecurityQuestionDAO sDAO = new SecurityQuestionDAO();
+		} catch (Exception e) {
+			
+		}
+		return null;
+	}
+	
 	public UserRegisterService() {
 		try {
-			connect = getConnection();
+			Connection connect = getConnection();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +57,7 @@ public class UserRegisterService extends DBUtil {
 	 */
 	private boolean validateUserName(String userName, User user){
 		try {
+			Connection connect = getConnection();
 			PreparedStatement ps = connect.prepareStatement("Select * from " + USER_TABLE + " where user_name = ?");
 			ps.setString(1, userName);
 			
@@ -54,6 +65,9 @@ public class UserRegisterService extends DBUtil {
 			
 			return rs.next();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
