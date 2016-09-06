@@ -151,10 +151,10 @@ public class StockService {
 				st = new StringTokenizer(item, ",");
 				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), 
 										st.nextToken().replace("\"", ""), 
-										Float.parseFloat(st.nextToken()), 
-										Float.parseFloat(st.nextToken()),
-										Float.parseFloat(st.nextToken()), 
-										Float.parseFloat(st.nextToken()),
+										getFloatAmount(st.nextToken()), 
+										getFloatAmount(st.nextToken()),
+										getFloatAmount(st.nextToken()), 
+										getFloatAmount(st.nextToken()),
 										getDate(st.nextToken().replace("\"", "")),
 										new Date(),
 										st.nextToken(),
@@ -169,18 +169,18 @@ public class StockService {
 				st = new StringTokenizer(item, ",");
 				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), 
 										st.nextToken().replace("\"", ""), 
-										Float.parseFloat(st.nextToken()), 
-										Float.parseFloat(st.nextToken()),
-										Float.parseFloat(st.nextToken()), 
-										Float.parseFloat(st.nextToken()),
+										getFloatAmount(st.nextToken()), 
+										getFloatAmount(st.nextToken()),
+										getFloatAmount(st.nextToken()), 
+										getFloatAmount(st.nextToken()),
 										getDate(st.nextToken().replace("\"", "")),
 										new Date(),
 										st.nextToken(),
 										st.nextToken().replace("\"", ""),
 										getAmount(st.nextToken()),
 										getAmount(st.nextToken()),
-										Float.parseFloat(st.nextToken()),
-										Float.parseFloat(st.nextToken()),
+										getFloatAmount(st.nextToken()),
+										getFloatAmount(st.nextToken()),
 										new Date());
 				counter++;
 				stockList.add(stock);
@@ -197,6 +197,13 @@ public class StockService {
 			return null;
 		}
 		else return Integer.parseInt(nextToken);
+	}
+	
+	private Float getFloatAmount(String nextToken) {
+		if(nextToken.equals("N/A")) {
+			return new Float(0);
+		}
+		else return Float.parseFloat(nextToken);
 	}
 
 	private Date getDate(String nextToken) {
