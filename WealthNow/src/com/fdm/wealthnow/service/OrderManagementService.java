@@ -55,6 +55,7 @@ public class OrderManagementService extends DBUtil {
 
 		} catch (Exception e) {
 			connect.rollback();
+			e.printStackTrace();
 		} finally {
 			if (connect != null)
 				connect.close();
@@ -100,6 +101,7 @@ public class OrderManagementService extends DBUtil {
 			try {
 				System.out.println("simitachi@ OMS");
 				connect.rollback();
+				e.printStackTrace();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -155,6 +157,7 @@ public class OrderManagementService extends DBUtil {
 			try {
 				System.out.println("simitachi@ OMS");
 				connect.rollback();
+				e.printStackTrace();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -232,6 +235,7 @@ public class OrderManagementService extends DBUtil {
 		} catch (Exception e) {
 			try {
 				connect.rollback();
+				e.printStackTrace();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -261,6 +265,7 @@ public class OrderManagementService extends DBUtil {
 		} catch (Exception e) {
 			try {
 				connect.rollback();
+				e.printStackTrace();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -304,6 +309,7 @@ public class OrderManagementService extends DBUtil {
 
 		} catch (Exception e) {
 			connect.rollback();
+			e.printStackTrace();
 		} finally {
 			if (connect != null)
 				connect.close();
