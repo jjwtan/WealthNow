@@ -53,8 +53,9 @@ table#t01 th {
 
 <body>
 <div style="float: right">
+<a href="BuyPage.jsp">Buy Stocks</a>
 	<a href="login.jsp">Logout</a>
-</div>
+</div>				
 	<%
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
@@ -63,6 +64,8 @@ table#t01 th {
 		int user_id =currentUser.getUser().getUserId();
 		PortfolioService pfs = new PortfolioService();
 	%>
+	<h4> Welcome To Your Portfolio Viewer <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
+			<br>Your Current Balance $<%=ua.getBalance() %></h4>
 
 
 	<form action="PortfolioViewer" method="post">
@@ -71,13 +74,13 @@ table#t01 th {
 			 
 			<tr>
 				<th colspan="2">Stock Symbol</th>
-				<th>Last Trade</th>
+				<th>Last Trade($)</th>
 				<th colspan="2">Change</th>
-				<th>Day's Gain</th>
+				<th>Day's Gain($)</th>
 				<th>Qty</th>
-				<th>Price Paid</th>
+				<th>Price Paid($)</th>
 				<th colspan="2">Total Gain</th>
-				<th>Market Value</th>
+				
 			</tr>
 			<tr>
 				<th></th>
@@ -87,11 +90,12 @@ table#t01 th {
 				<th>$</th>
 				<th></th>
 				<th></th>
-				<th>%</th>
+				<th></th>
 				<th>$</th>
+				<th>%</th>
 
 			</tr>
-			<!--String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();  -->
+			<!--  -->
 
 			<%
 			StockService svc = new StockService();
@@ -109,7 +113,7 @@ table#t01 th {
 				
 				
 				Double change = Double.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
-
+				String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
 				String day_val_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
 				Double mkt_price = Double.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString()));
 				Double closing_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getClose().toString());
@@ -125,8 +129,8 @@ table#t01 th {
 				<td></td>
 				<td><%=quantity%></td>
 				<td><%=purchase_price%></td>
-				<td><%=total_gain_percent %></td>
-				<td><%=total_gain%></td>
+				<td><%=total_gain %></td>
+				<td><%=total_gain_percent%></td>
 
 			</tr>
 			<% }
@@ -134,7 +138,7 @@ table#t01 th {
 				if(shList.size()==0){
 				%>
 			<tr>
-				<td colspan="9" align="center">You Have 0 Portfolio</td>
+				<td colspan="10" align="center">You Have 0 Portfolio</td>
 			</tr>
 			<% } %>
 
