@@ -207,6 +207,9 @@ public class StockService {
 	}
 
 	private Date getDate(String nextToken) {
+		if(nextToken.equals("N/A")){
+			return new Date();
+		}
 		DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 		Date date = null;
 		try {
