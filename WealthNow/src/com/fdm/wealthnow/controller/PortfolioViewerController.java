@@ -52,6 +52,7 @@ public class PortfolioViewerController extends HttpServlet {
 		 HttpSession session = request.getSession();
 		 System.out.println("Inside doPost for Portfolio Viewer");
 		 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+		 
 			UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 			Integer user_id =currentUser.getUser().getUserId();
 			System.out.println("PortFolio for User ID:" + user_id);
@@ -76,13 +77,7 @@ public class PortfolioViewerController extends HttpServlet {
 		       session.setAttribute("stock_symbol", stock_symbol);
 		       session.setAttribute("quantity", qty);
 		        
-		        try {
-					oms.createOpenOrder(user_id, "SGD", "S",qty , stock_symbol, "M", dbu.convertDateObjToString(new Date()), new Double(0.0), "null", final_price);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("error in pfc in selling");
-				}
+		      
 		        
 		        UserAccountService uas = new UserAccountService();
 		        uas.creditBalance(user_id,final_price);
@@ -90,7 +85,7 @@ public class PortfolioViewerController extends HttpServlet {
 		        
 		        
 		       
-			
+		        request.getRequestDispatcher("SellPage.jsp").forward(request, response);
 			
 			
 			
