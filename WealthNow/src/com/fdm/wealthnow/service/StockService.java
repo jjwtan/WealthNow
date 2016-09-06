@@ -24,11 +24,13 @@ public class StockService {
 	static List<Stock> requestStock;
 	
 	public boolean validateStock(String stockSymbol) {
+		if(stockSymbol==null || stockSymbol.equals("")) {return false;}
 		Stock stock = getStockFromExchange(stockSymbol, InfoType.BASIC);
 		return (stock==null) ? false : true ;
 	}
 
 	public Stock getStockFromExchange(String stockSymbol, InfoType type) {
+		if(stockSymbol==null || stockSymbol.equals("")) {return null;}
 		List<Stock> wrapper = new ArrayList<>();
 		this.requestStock = wrapper;
 		rawStockList = new ArrayList<>();
@@ -49,7 +51,7 @@ public class StockService {
 	public List<Stock> getStocksFromExchange(List<Stock> stocks, InfoType type) {
 		this.requestStock = stocks;
 		rawStockList  = new ArrayList<>();
-		
+		if(stocks==null) {return null;}
 		String url = generateRequestURL(stocks, type);
 		getFromExhange(url);
 		
@@ -60,6 +62,7 @@ public class StockService {
 	public List<Stock> getStocksFromExchangeString(List<String> stocks, InfoType type) {
 		rawStockList  = new ArrayList<>();
 		requestStock = new ArrayList<>();
+		if(stocks==null) {return null;}
 		for(String stock_symbol: stocks) {
 			requestStock.add(new Stock(stock_symbol));
 		}
@@ -133,6 +136,9 @@ public class StockService {
 			counter = 0;
 			for (String item: stocksFromEx) {
 				st = new StringTokenizer(item, ",");
+				if(st.countTokens()< 3) {
+					return null;
+				}
 				String company = st.nextToken().replace("\"", "");
 				if(!company.equals("N/A")){
 					Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), company, Float.parseFloat(st.nextToken()), Float.parseFloat(st.nextToken()));
@@ -149,6 +155,9 @@ public class StockService {
 			counter = 0;
 			for (String item: stocksFromEx) {
 				st = new StringTokenizer(item, ",");
+				if(st.countTokens()<8) {
+					return null;
+				}
 				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), 
 										st.nextToken().replace("\"", ""), 
 										getFloatAmount(st.nextToken()), 
@@ -167,6 +176,9 @@ public class StockService {
 			counter = 0;
 			for (String item: stocksFromEx) {
 				st = new StringTokenizer(item, ",");
+				if(st.countTokens() < 12) {
+					return null;
+				}
 				Stock stock = new Stock(requestStock.get(counter).getStockSymbol(), 
 										st.nextToken().replace("\"", ""), 
 										getFloatAmount(st.nextToken()), 
