@@ -11,6 +11,17 @@
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
+	
+	<script>
+	
+
+$(document).ready ( function () {
+    $("#submitbutton").click(function () {
+       alert("Order Confirmed!");
+    });
+});
+	
+</script>
 
 </head>
 <body>
@@ -41,8 +52,7 @@
 	<H1>Selling Page</H1>
 
 
-	<form action="SellPageController" method="post"
-		id="selling">
+	<form action="SellPageController" method="post">
 		<table width="559" border="1" cellpadding="5" cellspacing="0">
 			<tr>
 				<th width="407">Stock</th>
@@ -95,7 +105,7 @@
 				</td>
 			</tr>
 		</table>
-		<br> <input type="submit" value="Comfirm Order" id="submitbutton">
+		<br> <input type="submit" value="Sell Order" id="submitbutton">
 	</form>
 
 

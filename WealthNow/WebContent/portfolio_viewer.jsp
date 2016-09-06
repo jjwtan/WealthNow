@@ -71,7 +71,7 @@ function myFunction() {
 		<br>Your Current Balance $<%=ua.getBalance()%></h4>
 
 
-	<form action="PortfolioViewer" method="post">
+	<form action="PortfolioViewerController" method="post">
 
 		<table id="t01">
 			 
@@ -126,12 +126,14 @@ function myFunction() {
 					DecimalFormat df2 = new DecimalFormat("##.#####");
 			%>
 
+
+<!-- <input type="submit" value="<%=order_id%>" name="order_ID"> -->
 			<tr>
 				<td><%=stock_symbol%></td>
-				<td><button>
-						<a href="BuyPage.jsp">Buy</a>
-					</button>
-					<button name="sellButton" type="submit" value="<%=order_id%>" id="order_ID">Sell</button></td>
+				<td>
+				
+				<button type="submit" value="<%=order_id %>" name="order_ID">Sell</button>
+				
 				<td><%=closing_price%></td>
 				<td><%=change%></td>
 				<td><%=percent_change%></td>

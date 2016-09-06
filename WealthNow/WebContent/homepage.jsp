@@ -26,5 +26,6 @@
 <a href="update_balance.jsp">Update Balance</a><br/>
 <a href="portfolio_viewer.jsp">Portfolio Viewer</a>
 
+
 </body>
 </html>
