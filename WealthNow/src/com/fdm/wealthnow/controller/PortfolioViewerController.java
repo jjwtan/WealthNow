@@ -39,12 +39,15 @@ public class PortfolioViewerController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 HttpSession session = request.getSession();
-		 
+		 System.out.println("Inside doPost for Portfolio Viewer");
 		 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 			UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 			int user_id =currentUser.getUser().getUserId();
 			System.out.println("PortFolio for User ID:" + user_id);
 		
+			
+			
+			
 			
 	
 	}

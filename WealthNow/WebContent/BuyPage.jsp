@@ -71,7 +71,7 @@
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="M" id="M">Market</option>
 				<option value="SL" id="SL">Stop Loss</option>
-				<option value="L" id="L">Limit</option>
+				<option value="LT" id="LT">Limit</option>
 			</select> 
 			
 			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
