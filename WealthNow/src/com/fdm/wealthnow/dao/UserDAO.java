@@ -69,9 +69,18 @@ public class UserDAO extends DBUtil {
 		return users;
 	}
 
-	public void addUser(int userId, String username, String password, String firstName, String lastName,
-			String birthday, String email, String phoneNumber, String address, String maidenName, Connection connect) {
-
+	public void addUser(Connection connect, User user, String password) {
+		
+		int userId = user.getUserId();
+		String username = user.getUsername();
+		String firstName = user.getFirstName();
+		String lastName = user.getLastName();
+		String birthday = user.getBirthday().toString();
+		String email = user.getEmail();
+		String phoneNumber = user.getPhoneNumber();
+		String address = user.getAddress();
+		String maidenName = user.getMaidenName();
+		
 		try {
 
 			String SQLStatement = "INSERT INTO User1(user_id, user_name, user_password, first_name, last_name, birthday, email, address , phone_num, maiden_name) VALUES ("

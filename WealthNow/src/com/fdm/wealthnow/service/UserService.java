@@ -22,6 +22,15 @@ public class UserService extends DBUtil{
 		return null;
 	}
 	
+	public void addUser(User user, String password){
+		try{
+			Connection connect = getConnection();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void updateUserInfo(User user, String fieldToChange, String newData){
 		
 	}
