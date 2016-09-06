@@ -36,7 +36,7 @@ public class OrderManagementServiceTest extends DBUtil {
 	// Test on creating open orders
 	// ==============================================================================
 
-	@Test
+	//@Test
 	public void createOpenOrder() throws Exception {
 		oms = new OrderManagementService();
 		OrderDAO orderDAO = new OrderDAO();
@@ -74,6 +74,16 @@ public class OrderManagementServiceTest extends DBUtil {
 		System.out.println("Test Completed: Processed order.");
 	}
 
+	@Test
+	public void testprocessCancelledOrder() throws Exception {
+		oms = new OrderManagementService();
+		OrderDAO orderDAO = new OrderDAO();
+		Integer order_id = oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(10), "Z74", "M", "11 Sep 2011",
+				new Double(2.0), "GC", 150.1);
+		oms.processCancelledOrders(order_id);
+		
+		assertEquals(order_id,orderDAO.getOrderFromProcessedOrder(getConnection(), order_id).getOrder_id());
+	}
 	@After
 	public void tearDown() throws SQLException {
 		try {

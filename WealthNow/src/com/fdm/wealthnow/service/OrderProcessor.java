@@ -106,7 +106,6 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
 						count++;
 						System.out.println("Count: " + count);
-						// edit balance account
 						//uas.debitBalance(order.getUser_id(), total_price);
 					}
 					
@@ -114,9 +113,14 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						System.out.println("Please contact administrator. UserID : " + order.getUser_id() + " OrderID "
 								+ order.getOrder_id());
 					}
+				}else{
+					//this is when the balance is not enough
+					//should the order be cancelled?
+					oms.processCancelledOrders(order.getOrder_id());
 				}
 
 			} else {
+				//this is when success is false
 				System.out.println("Validation failed.");
 			}
 		}
