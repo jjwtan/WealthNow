@@ -19,6 +19,7 @@ import com.fdm.wealthnow.common.Order;
 import com.fdm.wealthnow.common.UserAccount;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.util.DBUtil;
+import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 public class OrderProcessor extends DBUtil implements ServletContextListener {
 	private static final int WORKER_THREAD_POOL_SIZE = 5;
@@ -165,6 +166,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 
 		Connection connect = null;
 		try {
+			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 			connect = getConnection();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
