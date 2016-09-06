@@ -96,8 +96,8 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");//eg. 17:00:00
 				Date now = new Date();
 			    String nowtime = format.format(now);
-			    System.out.println("time to check to cancel order GOOD FOR THE DAY : " + nowtime);
-				if(nowtime.equals("17:00:00")){
+			    System.out.println("TIME CHECK: "+ nowtime+ " - cancel order -GOOD FOR THE DAY" );
+				if(nowtime.equals("15:30:00")){
 					//check if term is GD
 					if(order.getTerm().toString().equals("GD")){
 						oms.processCancelledOrders(order.getOrder_id());
