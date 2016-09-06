@@ -2,7 +2,7 @@
 <%@page import="com.fdm.wealthnow.common.InfoType"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ page import ="java.util.*" %>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
 	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
@@ -52,40 +52,20 @@ table#t01 th {
 
 
 <body>
-
+<div style="float: right">
+<a href="BuyPage.jsp">Buy Stocks</a>
+	<a href="login.jsp">Logout</a>
+</div>				
 	<%
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 		StockHolding sh = new StockHolding();
-		int user_id = ua.getUserId();
+		int user_id =currentUser.getUser().getUserId();
 		PortfolioService pfs = new PortfolioService();
-		
-		
-		List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
-		for(StockHolding newShList:shList){
-			sh = newShList;
-			
-		}
-		String stock_symbol = sh.getStock_symbol();
-		String stock_symbol1 = sh.getStock_symbol();
-		Integer quantity = sh.getRemaining_quantity();
-		Integer quantity1 = sh.getRemaining_quantity();
-		Double price_paid = sh.getPurchase_price();
-		Double price_paid1 = sh.getPurchase_price();
-		
-		StockService svc = new StockService();
-		String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
-		Float change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange();
-		Float day_high = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDayHigh();
-		Float day_low = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDayLow();
-		String day_val_change=svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
-		Float mkt_price=svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice();
-		svc.getStockFromExchange(stock_symbol, InfoType.FULL);
-		
-		
-		
 	%>
+	<h4> Welcome To Your Portfolio Viewer <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
+			<br>Your Current Balance $<%=ua.getBalance() %></h4>
 
 
 	<form action="PortfolioViewer" method="post">
@@ -94,13 +74,13 @@ table#t01 th {
 			 
 			<tr>
 				<th colspan="2">Stock Symbol</th>
-				<th>Last Trade</th>
+				<th>Last Trade($)</th>
 				<th colspan="2">Change</th>
-				<th>Day's Gain</th>
+				<th>Day's Gain($)</th>
 				<th>Qty</th>
-				<th>Price Paid</th>
+				<th>Price Paid($)</th>
 				<th colspan="2">Total Gain</th>
-				<th>Market Value</th>
+				
 			</tr>
 			<tr>
 				<th></th>
@@ -111,37 +91,56 @@ table#t01 th {
 				<th></th>
 				<th></th>
 				<th></th>
-				<th>%</th>
 				<th>$</th>
-				<th></th>
+				<th>%</th>
+
 			</tr>
+			<!--  -->
+
+			<%
+			StockService svc = new StockService();
+				List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
+				for (StockHolding newShList : shList) {
+					System.out.println(newShList);
+
+				
+				String stock_symbol = sh.getStock_symbol();
+				Integer quantity = sh.getRemaining_quantity();
+				Double purchase_price = sh.getPurchase_price();
+				
+				
+				
+				
+				
+				Double change = Double.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
+				String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
+				String day_val_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
+				Double mkt_price = Double.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString()));
+				Double closing_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getClose().toString());
+				Double total_gain = purchase_price - mkt_price;
+				Double total_gain_percent = total_gain/mkt_price;
+			%>
 
 			<tr>
 				<td><%=stock_symbol%></td>
 				<td><a href="BuyPage.jsp">Buy/</a><a href="www.google.com">Sell</a></td>
-				<td><%=change %></td>
-				<td><%=percent_change%></td>
-				<td><%=day_high %></td>
-				<td><%=day_val_change %></td>
-				<td><%=quantity %></td>
-				<td><%=price_paid %></td>
-				<td>%</td>
-				<td>$</td>
+				<td><%=closing_price%></td>
+				<td><%=change%></td>
 				<td></td>
+				<td><%=quantity%></td>
+				<td><%=purchase_price%></td>
+				<td><%=total_gain %></td>
+				<td><%=total_gain_percent%></td>
+
 			</tr>
+			<% }
+				
+				if(shList.size()==0){
+				%>
 			<tr>
-				<td><%=stock_symbol1%></td>
-				<td><a href="BuyPage.jsp">Buy/</a><a href="www.google.com">Sell</a></td>
-				<td><%=change %></td>
-				<td><%=percent_change%></td>
-				<td><%=day_high %></td>
-				<td><%=day_val_change %></td>
-				<td><%=quantity1 %></td>
-				<td><%=price_paid1 %></td>
-				<td>%</td>
-				<td>$</td>
-				<td></td>
+				<td colspan="10" align="center">You Have 0 Portfolio</td>
 			</tr>
+			<% } %>
 
 		</table>
 	</form>

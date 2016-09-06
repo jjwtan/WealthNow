@@ -150,13 +150,53 @@ public class WatchlistService {
 	}
 
 	public void addStockToWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
-		// call stock service validate stock
-		// call in this service check for duplicate stock
-
+		
+		Connection connection = null;
+		try {
+			connection = WatchlistDAO.getConnection();
+			connection.setAutoCommit(false);
+			
+			// call stock service validate stock
+			StockService ss = new StockService();
+			ss.validateStock(stockSymbol);
+		
+			// call in this service check for duplicate stock
+			WatchlistDAO wldao = new WatchlistDAO();
+			List<String> listofStocks = wldao.getAllStocksFromWatchlist(watchlistId, connection);
+			
+			for (String stocksymbol : listofStocks){
+				if (stocksymbol.equalsIgnoreCase(stockSymbol)){
+					System.out.println("Duplicate stock!");
+				}else{
+					wldao.addStockToWatchlist(watchlistId, stockSymbol, connection);
+				}
+			}
+			connection.commit();
+			System.out.println(connection);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (connection != null)
+				connection.close();
+		}
 	}
 
 	public void deleteStockFromWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
+		Connection connection = null;
+		try {
+			connection = WatchlistDAO.getConnection();
+			connection.setAutoCommit(false);
 
+			WatchlistDAO wldao = new WatchlistDAO();
+			wldao.deleteStockFromWatchlist(watchlistId, stockSymbol, connection);
+			
+		}catch (Exception e) {
+			connection.rollback();
+		} finally {
+			if (connection != null)
+				connection.close();
+		}
 	}
 	
 	// to be changed later
