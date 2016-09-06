@@ -10,35 +10,28 @@ import java.util.List;
 import com.fdm.wealthnow.common.User;
 import com.fdm.wealthnow.dao.SecurityQuestionDAO;
 import com.fdm.wealthnow.util.DBUtil;
+import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 @SuppressWarnings("unused")
 public class UserRegisterService extends DBUtil {
 	
-	User user;
-	
 	private static final String USER_TABLE = "user1";
-	
-	public List<String> getAllSecurityQuestions() {
-		try {
-			Connection connect = getConnection();
-			SecurityQuestionDAO sDAO = new SecurityQuestionDAO();
-		} catch (Exception e) {
-			
-		}
-		return null;
-	}
-	
-	public UserRegisterService() {
-		try {
-			Connection connect = getConnection();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public Integer registerUser(User user){
 		return 1;
+	}
+	
+	public List<String> getAllSecurityQuestions() {
+		try {
+			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+			Connection connect = getConnection();
+			SecurityQuestionDAO sDAO = new SecurityQuestionDAO();
+			return sDAO.getAllQuestions(connect);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("returning null");
+		return null;
 	}
 	
 	private boolean validatePassword(User user, String password){

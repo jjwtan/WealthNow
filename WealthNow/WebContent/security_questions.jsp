@@ -11,17 +11,28 @@
 </head>
 <body>
 <h3>2: Security Questions</h3>
-	Security Qustion 1
-	<select>
-		<%
-		UserRegisterService urs = new UserRegisterService();
-		List<String> questions = urs.getAllSecurityQuestions();
-		for(String question:questions) {
-		%>
-			<option><%=question %></option>
-		<%
-		}
-		%>
-	</select>
+<table>
+		<tr>
+			<td>Security Qustion 1</td>
+			<td>
+			<select>
+					<%
+						UserRegisterService urs = new UserRegisterService();
+						List<String> questions = urs.getAllSecurityQuestions();
+						for (String question : questions) {
+					%>
+					<option><%=question%></option>
+					<%
+						}
+					%>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="text" required/></td>
+		</tr>
+
+	</table>
 </body>
 </html>
