@@ -288,6 +288,37 @@ public class OrderManagementService extends DBUtil {
 		System.out.println("Calls for portfolio Service - updateStockHoldings");
 		ps.updateStockHolding(user_id, order_id, sold_quantity);
 	}
+	
+	public Order getOrderFromProcessedOrder(Integer order_id){
+		Connection connect = null;
+		Order order = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			OrderDAO ord = new OrderDAO();
+			order = ord.getOrderFromProcessedOrder(connect, order_id);
+
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+		
+		return order;
+	}
 
 	public void deleteStockHoldings(Integer order_id) throws SQLException {
 
