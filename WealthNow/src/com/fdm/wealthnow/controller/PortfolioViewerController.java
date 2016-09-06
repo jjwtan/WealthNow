@@ -42,9 +42,9 @@ public class PortfolioViewerController extends HttpServlet {
 		 
 		 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 			UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
-			int user_id = ua.getUserId();
-			
-			session.getAttribute("stock_symbol");
+			int user_id =currentUser.getUser().getUserId();
+			System.out.println("PortFolio for User ID:" + user_id);
+		
 			
 	
 	}
