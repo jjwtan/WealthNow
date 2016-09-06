@@ -127,7 +127,7 @@ function myFunction() {
 			%>
 
 
-<!-- <input type="submit" value="<%=order_id%>" name="order_ID"> -->
+
 			<tr>
 				<td><%=stock_symbol%></td>
 				<td>

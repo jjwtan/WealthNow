@@ -46,6 +46,7 @@ public class SellPageController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
 		System.out.println("Inside doPost for SellPage");
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));

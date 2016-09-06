@@ -19,13 +19,14 @@ public class PortfolioDAO extends DBUtil {
 
 		
 		
-		System.out.println("Connected to DB");
+		System.out.println("Connected to DB stockholding portfolioDao");
 		
 		PreparedStatement ps = connect.prepareStatement("SELECT STOCKHOLDING_ID, USER_ID,ORDER_ID, STOCK_SYMBOL,REMAINING_QUANTITY,PURCHASE_PRICE FROM "
 				+ "STOCKHOLDING WHERE USER_ID=" + user_id );
 		
 		System.out.println("Executing SQL Queries");
 		ResultSet rs = ps.executeQuery();
+		System.out.println("after execute");
 		
 		
 		List<StockHolding> stockHoldingList = new ArrayList();
