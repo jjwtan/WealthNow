@@ -103,14 +103,9 @@ table#t01 th {
 				for (StockHolding newShList : shList) {
 					System.out.println(newShList);
 
-				
 				String stock_symbol = sh.getStock_symbol();
 				Integer quantity = sh.getRemaining_quantity();
 				Double purchase_price = sh.getPurchase_price();
-				
-				
-				
-				
 				
 				Double change = Double.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
 				String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
