@@ -105,8 +105,7 @@
 					if (stocks.size() == 0) {
 			%>
 			<tr>
-				<td colspan="9" align="center">You have no stocks in this
-					watchlist</td>
+				<td colspan="9" align="center">You have no stocks in this watchlist</td>
 			</tr>
 			<%
 				}
