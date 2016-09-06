@@ -22,7 +22,7 @@
 		});
 		
 		
-		$("#L").on("click", function() {
+		$("#LT").on("click", function() {
 			$("#lsl").show();
 			$("#term").show();
 
