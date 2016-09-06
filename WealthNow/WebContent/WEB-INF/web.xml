@@ -15,8 +15,7 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
-  
-    <filter>
+  <filter>
     <display-name>AuthenticationFilter</display-name>
     <filter-name>AuthenticationFilter</filter-name>
     <filter-class>com.fdm.wealthnow.filter.AuthenticationFilter</filter-class>
@@ -25,7 +24,6 @@
     <filter-name>AuthenticationFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
   <listener>
     <listener-class>com.fdm.wealthnow.service.OrderProcessor</listener-class>
   </listener>

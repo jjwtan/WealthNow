@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.DecimalFormat"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
 	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
@@ -46,7 +47,8 @@ table#t01 th {
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script>
-	
+function myFunction() {
+    window.location.reload();
 </script>
 </head>
 
@@ -94,24 +96,24 @@ table#t01 th {
 				<th>%</th>
 
 			</tr>
-	
-		
+
+
 			<%
 				List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
 				for (StockHolding newShList : shList) {
 					System.out.println("List $$$$$$$$" + newShList);
-	
+
 					String stock_symbol = newShList.getStock_symbol();
-					
+
 					System.out.println("Stocksymbol@@@@@@@ " + stock_symbol);
 					Integer quantity = newShList.getRemaining_quantity();
 					Double purchase_price = newShList.getPurchase_price();
-					
+
 					StockService svc = new StockService();
-					
+
 					Double change = Double
 							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
-					
+
 					String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
 					String day_val_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
 					Double mkt_price = Double
@@ -120,6 +122,7 @@ table#t01 th {
 							.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getClose().toString());
 					Double total_gain = purchase_price - mkt_price;
 					Double total_gain_percent = total_gain / mkt_price;
+					DecimalFormat df2 = new DecimalFormat("##.#####");
 			%>
 
 			<tr>
@@ -127,11 +130,11 @@ table#t01 th {
 				<td><a href="BuyPage.jsp">Buy/</a><a href="www.google.com">Sell</a></td>
 				<td><%=closing_price%></td>
 				<td><%=change%></td>
-				<td><%= percent_change%></td>
+				<td><%=percent_change%></td>
 				<td><%=quantity%></td>
 				<td><%=purchase_price%></td>
-				<td><%=total_gain%></td>
-				<td><%=total_gain_percent%></td>
+				<td><%= df2.format(total_gain)%></td>
+				<td><%=df2.format(total_gain_percent)%></td>
 
 			</tr>
 			<%
@@ -145,8 +148,10 @@ table#t01 th {
 			<%
 				}
 			%>
-
+			
 		</table>
+		<button onclick="history.go(0)">Refresh</button>
+		
 	</form>
 
 

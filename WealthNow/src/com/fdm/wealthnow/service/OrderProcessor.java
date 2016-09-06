@@ -35,7 +35,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		// Create a thread that wakes up periodically and scans for open orders.
 		// It fetches the orders and delegates to thread pool
 		scheduledExecutorService = Executors.newScheduledThreadPool(1);
-		scheduledExecutorService.schedule(() -> processOpenOrders(executorService), 30, TimeUnit.SECONDS);
+		scheduledExecutorService.scheduleAtFixedRate(() -> processOpenOrders(executorService), 30, 30, TimeUnit.SECONDS);
 
 	}
 
