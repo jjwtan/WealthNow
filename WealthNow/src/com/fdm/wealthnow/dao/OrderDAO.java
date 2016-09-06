@@ -239,14 +239,15 @@ public class OrderDAO extends DBUtil {
 
 	public void createOpenOrderInDatabase(Connection connect, Integer order_id, Integer user_id, String currency_code,
 			String order_type, Integer quantity, String stock_symbol, String price_type, String opening_order_date,
-			Double limit_price, String term, String status, Double total_price_deducted) throws Exception {
+			Double limit_price, String term, String status, Double total_price_deducted) {
 		String SQL =null;
-		if(term == null){
+		if(term.equalsIgnoreCase("null")){
 			SQL = "INSERT INTO OPENORDER (order_id, user_id, currency_code, "
 					+ "order_type, quantity, stock_symbol, " + "price_type, opening_order_date, limit_price, total_price_deducted) "
 					+ "VALUES(" + order_id + ", " + user_id + ",'" + currency_code + "','" + order_type + "'," + quantity
 					+ ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price + ","+total_price_deducted+")";
 		}
+		
 		
 		else{
 			 SQL = "INSERT INTO OPENORDER (order_id, user_id, currency_code, "
@@ -255,11 +256,18 @@ public class OrderDAO extends DBUtil {
 				+ ",'" + stock_symbol + "','" + price_type + "','" + opening_order_date + "'," + limit_price + ","+total_price_deducted+",'"
 				+ term + "')";
 		}
-		PreparedStatement ps = connect.prepareStatement(SQL);
-		System.out.println("Before executing update..");
-		System.out.println(SQL);
-		ps.executeUpdate();
-		System.out.println(SQL + "\nThe SQL statement above has been executed");
+		PreparedStatement ps;
+		try {
+			ps = connect.prepareStatement(SQL);
+			System.out.println("Before executing update..");
+			System.out.println(SQL);
+			ps.executeUpdate();
+			System.out.println(SQL + "\nThe SQL statement above has been executed");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
