@@ -108,7 +108,7 @@ public class BuyPageController extends HttpServlet {
 
 				}
 
-			} else if (price_type.equals("L") || price_type.equals("SL")) {
+			} else if (price_type.equals("LT") || price_type.equals("SL")) {
 
 				if (term1.equals("null")) {
 					System.out.println("Inside else for term = null");
