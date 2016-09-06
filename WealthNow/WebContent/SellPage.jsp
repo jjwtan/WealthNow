@@ -20,9 +20,19 @@
 	
 	 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
-		
-
 	DecimalFormat df = new DecimalFormat(".##"); 
+	
+	String stock_symbol= session.getAttribute("stock_symbol").toString();
+	Integer quantity = Integer.parseInt(session.getAttribute("quantity").toString());
+	Double selling_price = Double.parseDouble(session.getAttribute("selling_price").toString());
+	Double final_price = Double.parseDouble(session.getAttribute("final_price").toString());
+	
+	Double fixed_price = 9.95;
+	
+	
+	
+	
+	
 
 
 %>
@@ -31,8 +41,8 @@
 	<H1>Selling Page</H1>
 
 
-	<form action="ConfirmationPageController" method="post"
-		id="confirmation">
+	<form action="SellPageController" method="post"
+		id="selling">
 		<table width="559" border="1" cellpadding="5" cellspacing="0">
 			<tr>
 				<th width="407">Stock</th>
@@ -42,62 +52,33 @@
 				<td>Stock Symbol</td>
 				<td>
 					<%
-						out.print("A");
+						out.print(stock_symbol);
 					%>
 				</td>
 			</tr>
 			<tr>
-				<td>Stock Price</td>
+				<td>Selling Stock Price</td>
 				<td>$ <%
-						out.print("B");
+						out.print(selling_price);
 					%>
 				</td>
 
 			</tr>
-
-			<tr>
-				<td>Price Type</td>
-				<td>
-					<%
-						out.print("C");
-					%>
-				</td>
-
-			</tr>
-
-
-			<tr>
-				<td>Limit/Stop Loss</td>
-				<td>$ <%
-						out.print("D");
-					%>
-				</td>
-			</tr>
-
-
-			<tr>
-				<td>Term</td>
-				<td>
-					<%
-						out.print("E");
-					%>
-				</td>
-			</tr>
-
 
 			<tr>
 				<td>Quantity</td>
 				<td>
 					<%
-						out.print("F");
+						out.print(quantity);
 					%>
 				</td>
+
 			</tr>
 
 			<tr>
 				<td>Fixed Price</td>
 				<td>$ <%
-						out.print("G");
+						out.print(fixed_price);
 					%>
 				</td>
 			</tr>
@@ -109,7 +90,7 @@
 			<tr>
 				<td>Total Selling price</td>
 				<td width="126">$ <%
-						out.print(df.format(1.23456));
+						out.print(df.format(final_price));
 					%>
 				</td>
 			</tr>

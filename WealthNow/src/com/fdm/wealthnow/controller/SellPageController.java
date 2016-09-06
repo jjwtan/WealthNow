@@ -48,7 +48,10 @@ public class SellPageController extends HttpServlet {
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 		int user_id = currentUser.getUser().getUserId();
 		
-		request.getAttribute("order_id");
+		session.setAttribute("final_price", null);
+		session.setAttribute("selling_price", null);
+		session.setAttribute("quantity", null);
+		session.setAttribute("stock_symbol", null);
 	}
 
 }

@@ -98,7 +98,8 @@ function myFunction() {
 			</tr>
 
 
-			<% int counter = 1;
+			<%
+				int counter = 1;
 				List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
 				for (StockHolding newShList : shList) {
 					System.out.println("List $$$$$$$$" + newShList);
@@ -127,18 +128,21 @@ function myFunction() {
 
 			<tr>
 				<td><%=stock_symbol%></td>
-				<td><button><a href="BuyPage.jsp">Buy</a></button>
-				<button name="sellButton" type="submit" value="order_id">Sell</button></td>
+				<td><button>
+						<a href="BuyPage.jsp">Buy</a>
+					</button>
+					<button name="sellButton" type="submit" value="<%=order_id%>" id="order_ID">Sell</button></td>
 				<td><%=closing_price%></td>
 				<td><%=change%></td>
 				<td><%=percent_change%></td>
 				<td><%=quantity%></td>
 				<td><%=purchase_price%></td>
-				<td><%= df2.format(total_gain)%></td>
+				<td><%=df2.format(total_gain)%></td>
 				<td><%=df2.format(total_gain_percent)%></td>
 
 			</tr>
-			<% counter ++;
+			<%
+				counter++;
 				}
 
 				if (shList.size() == 0) {
@@ -149,10 +153,10 @@ function myFunction() {
 			<%
 				}
 			%>
-			
+
 		</table>
 		<button onclick="history.go(0)">Refresh</button>
-		
+
 	</form>
 
 
