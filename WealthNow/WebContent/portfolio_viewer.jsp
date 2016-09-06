@@ -52,20 +52,21 @@ table#t01 th {
 
 
 <body>
-<div style="float: right">
-<a href="BuyPage.jsp">Buy Stocks</a>
-	<a href="login.jsp">Logout</a>
-</div>				
+	<div style="float: right">
+		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
+	</div>
 	<%
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 		StockHolding sh = new StockHolding();
-		int user_id =currentUser.getUser().getUserId();
+		int user_id = currentUser.getUser().getUserId();
 		PortfolioService pfs = new PortfolioService();
 	%>
-	<h4> Welcome To Your Portfolio Viewer <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
-			<br>Your Current Balance $<%=ua.getBalance() %></h4>
+	<h4>
+		Welcome To Your Portfolio Viewer
+		<%=currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName()%>
+		<br>Your Current Balance $<%=ua.getBalance()%></h4>
 
 
 	<form action="PortfolioViewer" method="post">
@@ -76,11 +77,10 @@ table#t01 th {
 				<th colspan="2">Stock Symbol</th>
 				<th>Last Trade($)</th>
 				<th colspan="2">Change</th>
-				<th>Day's Gain($)</th>
 				<th>Qty</th>
 				<th>Price Paid($)</th>
 				<th colspan="2">Total Gain</th>
-				
+
 			</tr>
 			<tr>
 				<th></th>
@@ -90,30 +90,36 @@ table#t01 th {
 				<th>$</th>
 				<th></th>
 				<th></th>
-				<th></th>
 				<th>$</th>
 				<th>%</th>
 
 			</tr>
-			<!--  -->
-
+	
+		
 			<%
-			StockService svc = new StockService();
 				List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
 				for (StockHolding newShList : shList) {
-					System.out.println(newShList);
-
-				String stock_symbol = sh.getStock_symbol();
-				Integer quantity = sh.getRemaining_quantity();
-				Double purchase_price = sh.getPurchase_price();
-				
-				Double change = Double.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
-				String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
-				String day_val_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
-				Double mkt_price = Double.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString()));
-				Double closing_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getClose().toString());
-				Double total_gain = purchase_price - mkt_price;
-				Double total_gain_percent = total_gain/mkt_price;
+					System.out.println("List $$$$$$$$" + newShList);
+	
+					String stock_symbol = newShList.getStock_symbol();
+					
+					System.out.println("Stocksymbol@@@@@@@ " + stock_symbol);
+					Integer quantity = newShList.getRemaining_quantity();
+					Double purchase_price = newShList.getPurchase_price();
+					
+					StockService svc = new StockService();
+					
+					Double change = Double
+							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
+					
+					String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
+					String day_val_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
+					Double mkt_price = Double
+							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString()));
+					Double closing_price = Double
+							.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getClose().toString());
+					Double total_gain = purchase_price - mkt_price;
+					Double total_gain_percent = total_gain / mkt_price;
 			%>
 
 			<tr>
@@ -121,21 +127,24 @@ table#t01 th {
 				<td><a href="BuyPage.jsp">Buy/</a><a href="www.google.com">Sell</a></td>
 				<td><%=closing_price%></td>
 				<td><%=change%></td>
-				<td></td>
+				<td><%= percent_change%></td>
 				<td><%=quantity%></td>
 				<td><%=purchase_price%></td>
-				<td><%=total_gain %></td>
+				<td><%=total_gain%></td>
 				<td><%=total_gain_percent%></td>
 
 			</tr>
-			<% }
-				
-				if(shList.size()==0){
-				%>
+			<%
+				}
+
+				if (shList.size() == 0) {
+			%>
 			<tr>
-				<td colspan="10" align="center">You Have 0 Portfolio</td>
+				<td colspan="9" align="center">You Have 0 Portfolio</td>
 			</tr>
-			<% } %>
+			<%
+				}
+			%>
 
 		</table>
 	</form>
