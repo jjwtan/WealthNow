@@ -57,5 +57,18 @@ public class UserAccountTest {
 		double finalAmt = userAccountDAO.creditBalance(connect, 1, 1200);
 		System.out.println("After credit: "+ finalAmt);
 	}
+	
+	@Test
+	public void testAddAccount() {
+		UserAccountDAO userAccountDAO = new UserAccountDAO();
+		userAccountDAO.addUserAccount(connect, 55, 5113.50f, "SGD");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("user 55 balance: "+ userAccountDAO.getAccountBalance(connect, 55));
+	}
 
 }
