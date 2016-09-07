@@ -43,7 +43,7 @@ public class WatchlistService {
 			}
 			connection.commit();
 		} catch (Exception e) {
-			connection.rollback();
+			e.printStackTrace();
 			System.out.println("Inside exception");
 		} finally {
 			if (connection != null)
@@ -79,7 +79,7 @@ public class WatchlistService {
 
 			connection.commit();
 		} catch (Exception e) {
-			connection.rollback();
+			e.printStackTrace();
 		} finally {
 			if (connection != null)
 				connection.close();
@@ -111,7 +111,7 @@ public class WatchlistService {
 			connection.commit();
 			
 		} catch (Exception e) {
-				connection.rollback();
+				e.printStackTrace();
 		} finally {
 			if (connection != null)
 				connection.close();
@@ -134,7 +134,7 @@ public class WatchlistService {
 			watchlistDAO.deleteWatchlist(watchListId, connection);
 			connection.commit();
 		} catch (Exception e) {
-				connection.rollback();
+				e.printStackTrace();
 		} finally {
 				if (connection != null)
 					connection.close();
@@ -186,7 +186,7 @@ public class WatchlistService {
 			}
 			connection.commit();
 		} catch (Exception e) {
-			connection.rollback();
+			e.printStackTrace();
 		} finally {
 			if (connection != null)
 				connection.close();
@@ -240,7 +240,7 @@ public class WatchlistService {
 			watchlistDAO.deleteStockFromWatchlist(watchlistId, stockSymbol, connection);
 			
 		}catch (Exception e) {
-			connection.rollback();
+			e.printStackTrace();
 		} finally {
 			if (connection != null)
 				connection.close();
