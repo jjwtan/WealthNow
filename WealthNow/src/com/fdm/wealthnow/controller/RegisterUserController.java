@@ -44,7 +44,7 @@ public class RegisterUserController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
+		String username = request.getParameter("username").toLowerCase();
 		
 		if(!validateUsername(request, response, username)){
 			request.getRequestDispatcher("register_user_info.jsp").forward(request, response);
@@ -74,6 +74,7 @@ public class RegisterUserController extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("UserProfile", userProfile);
+			session.setAttribute("password", password);
 			System.out.println("forwarding to security questions");
 			request.getRequestDispatcher("security_questions.jsp").forward(request, response);
 		} catch (Exception e1) {

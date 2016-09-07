@@ -61,14 +61,11 @@ public class UserAccountTest {
 	@Test
 	public void testAddAccount() {
 		UserAccountDAO userAccountDAO = new UserAccountDAO();
-		userAccountDAO.addUserAccount(connect, 55, 5113.50f, "SGD");
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("user 55 balance: "+ userAccountDAO.getAccountBalance(connect, 55));
+		userAccountDAO.addUserAccount(connect, 50, 5113.50f, "SGD");
+		
+		System.out.println("user added");
+
+		System.out.println("user 50 balance: "+ userAccountDAO.getAccountBalance(connect, 50).getBalance());
 	}
 
 }

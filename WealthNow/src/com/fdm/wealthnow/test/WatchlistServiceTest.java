@@ -38,58 +38,68 @@ public class WatchlistServiceTest extends DBUtil {
 	}
 	
 	//==============================================================================
-	// Test on view Watchlist
+	// Test on view Watchlist (Tested)
 	//==============================================================================
 	
-
+	//@Test
 	public void testViewWatchlist() throws Exception {
 		wls = new WatchlistService();
-		wls.addStockToWatchlist(7, "Z74");
+		Watchlist watchlist = wls.viewWatchlist(2);
 		
-//		Watchlist wl = wl.getOrderFromProcessedOrder(connect, order_id1);
-		wldao.getAllStocksFromWatchlist(7, connect);
-
-		System.out.println("\n Start addStockToWatchlist");
-	
-		System.out.println("Test Completed: Added stock in watchlist.");	
+		System.out.println("\nStart viewWatchlist");
+		System.out.println(watchlist);
+		System.out.println("Test Completed: View watchlist.");	
 	}
 	
 	//==============================================================================
 	// Test on get user Watchlist
 	//==============================================================================
 	
+	@Test
+	public void testGetUserWatchlist() throws Exception {
+		wls = new WatchlistService();
+		List<Watchlist> watchlist = wls.getUserWatchlists(2);
+
+		System.out.println("\nStart getUserWatchlist");
+		
+		for(Watchlist watch : watchlist){
+		assertEquals(watchlist.size(), 4);
+		}
+		
+		System.out.println("Test Completed: Get user watchlist.");	
+	}
+	
 	//==============================================================================
-	// Test on creating Watchlist
+	// Test on creating Watchlist (Tested)
 	//==============================================================================
 	
-	@Test
+	//@Test
 	public void testCreateWatchlist() throws Exception {
 		wls = new WatchlistService();
 		int watchlist_id = getSequenceID("watchlist_id_seq");
-		Date date = convertStringToDateObject("25-MAR-2016");
-
-		wlist = new Watchlist(watchlist_id, "Test Watchlist", null, date, date);
+		
+		wlist = new Watchlist(watchlist_id, "Test Watchlist", "", new Date(), new Date());
 		wls.createWatchlist(wlist, 1);
 		
 		wldao = new WatchlistDAO();
 		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
 		
 		System.out.println("\n Start createWatchlist");
-		assertEquals(watchlist.size(), 2);
+		assertEquals(watchlist.size(), 3);
 		System.out.println("Test Completed: Create watchlist.");	
 	}
 	
 	//==============================================================================
-	// Test on deleting Watchlist
+	// Test on deleting Watchlist (Tested)
 	//==============================================================================
-	
-	
+
+	//@Test
 	public void testDeleteWatchlist() throws Exception {
 		
 		wls = new WatchlistService();
 		int watchlist_id = getSequenceID("watchlist_id_seq");
 
-		//wls.deleteWatchlist(watchListId);
+		wls.deleteWatchlist(47);
 	
 		wldao = new WatchlistDAO();
 		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
@@ -107,7 +117,7 @@ public class WatchlistServiceTest extends DBUtil {
 	// Test on listing stocks from Watchlist (Tested)
 	//==============================================================================
 	
-	
+	//@Test
 	public void testListStocksFromWatchlist() throws Exception {
 		wls = new WatchlistService();
 		
@@ -124,7 +134,7 @@ public class WatchlistServiceTest extends DBUtil {
 	// Test on adding stock to Watchlist (Tested)
 	//==============================================================================
 
-
+	//@Test
 	public void testAddStockToWatchlist() throws Exception {
 		wls = new WatchlistService();
 		wls.addStockToWatchlist(2, "Z74"); // Key in new ticker code every test OR run both add and delete test
@@ -141,7 +151,7 @@ public class WatchlistServiceTest extends DBUtil {
 	// Test on deleting stocks from Watchlist (Tested)
 	//==============================================================================
 	
-
+	//@Test
 	public void testDeleteStockToWatchlist() throws Exception {
 		wls = new WatchlistService();
 		wls.deleteStockFromWatchlist(2, "Z74");
@@ -158,7 +168,7 @@ public class WatchlistServiceTest extends DBUtil {
 	// Test on checking for duplicate stock from Watchlist (Tested)
 	//==============================================================================
 	
- 
+	//@Test
 	public void testCheckForDuplicateStocks() throws Exception {
 		wls = new WatchlistService();
 		wls.addStockToWatchlist(2, "B2F");

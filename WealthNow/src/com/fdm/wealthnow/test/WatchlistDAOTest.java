@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -14,9 +15,10 @@ import org.junit.Test;
 
 import com.fdm.wealthnow.common.Watchlist;
 import com.fdm.wealthnow.dao.WatchlistDAO;
+import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
-public class WatchlistDAOTest {
+public class WatchlistDAOTest extends DBUtil {
 
 	static WatchlistDAO watchlistDAO;
 	static Connection connect;
@@ -67,7 +69,8 @@ public class WatchlistDAOTest {
 		// create watchlist for user
 		//System.out.println("--> Calling addWatchlist for userId: " + userId);
 		// pass the connection too
-		watchlistDAO.addWatchlist(10, "Amys watchlist five", "PRIVATE", "19 Sep 2014", "19 Sep 2014", userId, connect);
+		Date date = convertStringToDateObject("19 Sep 2014");
+		watchlistDAO.addWatchlist(10, "Amys watchlist five", "PRIVATE", date, date, userId, connect);
 		
 		// check that all the user's watchlists are present
 		List<Watchlist> watchlistsBelongingToUser = new ArrayList<Watchlist>();

@@ -67,7 +67,8 @@ public class AddingWatchlistController extends HttpServlet {
 	session.setAttribute("new_watchlist", new_watchlist);
 	WatchlistService wls = new WatchlistService();
 	
-	Watchlist wl = new Watchlist(watchlist_id, new_watchlist, "", new Date(), new Date());
+	Date dateNew = dbu.convertStringToDateObject("07/Sep/2016");	
+	Watchlist wl = new Watchlist(watchlist_id, new_watchlist, "",dateNew, dateNew );
 	
 	try {
 		wls.createWatchlist(wl, user_id);

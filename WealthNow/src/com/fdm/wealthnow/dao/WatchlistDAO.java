@@ -97,9 +97,10 @@ public class WatchlistDAO extends DBUtil {
 
 		try {
 			String SQLStatement = "INSERT INTO Watchlist(watchlist_id, watchlist_name, visibility, date_created, date_modified) VALUES ("
-					+ watchlistId + ",'" + watchlistName + "','" + visibility + "','" + dateCreated + "','"
-					+ dateLastEdited + "')";
+					+ watchlistId + ",'" + watchlistName + "','" + visibility + "','" + convertDateObjToString(dateCreated) + "','"
+					+ convertDateObjToString(dateLastEdited) + "')";
 			System.out.println(SQLStatement);
+			
 			PreparedStatement ps = newConnect.prepareStatement(SQLStatement);
 			ps.executeUpdate();
 
