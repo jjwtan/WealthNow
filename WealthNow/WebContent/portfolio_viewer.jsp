@@ -57,8 +57,12 @@ table#t01 th {
 	<div style="float: right">
 		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
 	</div>
+	<div style="float: left">
+		<label for="order_ID" class="button">Refresh</label>
+	</div>
+	
+	
 	<%
-		response.setIntHeader("Refresh", 60);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
@@ -97,7 +101,7 @@ table#t01 th {
 				<th>%</th>
 
 			</tr>
-
+	
 
 			<%
 				int counter = 1;
