@@ -18,13 +18,14 @@ public class Order {
 	String status;
 	Double closing_price;
 	Double total_price_deducted; // price deducted at confirmation page
+	Integer old_order_id;
 
 	/*
 	 * Order constructor is to be called to create an OpenOrder
 	 */
 	public Order(Integer user_id, Integer order_id, String currency_code, OrderTypeEnum order_type, Integer quantity,
 			String stock_symbol, PriceTypeEnum price_type, Date opening_order_date, Double limit_price, TermEnum term2,
-			String status) {
+			String status, Integer old_order_id) {
 		this.user_id = user_id;
 		this.order_id = order_id;
 		this.currency_code = currency_code;
@@ -36,6 +37,7 @@ public class Order {
 		this.limit_price = limit_price;
 		this.term = term2;
 		this.status = status;
+		this.old_order_id = old_order_id;
 	}
 	
 	/*
@@ -43,7 +45,7 @@ public class Order {
 	 */
 	public Order(Integer user_id, Integer order_id, String currency_code, OrderTypeEnum order_type, Integer quantity,
 			String stock_symbol, PriceTypeEnum price_type, Date opening_order_date, Double limit_price, TermEnum term2,
-			String status, Double total_price_deducted) {
+			String status, Double total_price_deducted, Integer old_order_id) {
 		this.user_id = user_id;
 		this.order_id = order_id;
 		this.currency_code = currency_code;
@@ -56,6 +58,7 @@ public class Order {
 		this.term = term2;
 		this.status = status;
 		this.total_price_deducted = total_price_deducted;
+		this.old_order_id = old_order_id;
 	}
 	
 	/*
@@ -63,7 +66,8 @@ public class Order {
 	 */
 	public Order(Integer user_id, Integer order_id, String currency_code, OrderTypeEnum order_type, Integer quantity,
 			String stock_symbol, PriceTypeEnum price_type, Date place_order_date, Double limit_price,
-			Date order_completion_date, String status, Double closing_price, Double total_price_deducted) {
+			Date order_completion_date, String status, Double closing_price, Double total_price_deducted,
+			Integer old_order_id) {
 		this.user_id = user_id;
 		this.order_id = order_id;
 		this.currency_code = currency_code;
@@ -77,8 +81,17 @@ public class Order {
 		this.status = status;
 		this.closing_price = closing_price;
 		this.total_price_deducted = total_price_deducted;
+		this.old_order_id = old_order_id;
 	}
 	
+
+	public Integer getOld_order_id() {
+		return old_order_id;
+	}
+
+	public void setOld_order_id(Integer old_order_id) {
+		this.old_order_id = old_order_id;
+	}
 
 	public Order(Integer user_id2, Integer order_id2, String currency_code2, OrderTypeEnum order_type2, Integer quantity2,
 			String stock_symbol2, PriceTypeEnum price_type2, Date opening_order_date, Double limit_price2, TermEnum term2,

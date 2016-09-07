@@ -7,6 +7,7 @@ import com.fdm.wealthnow.common.StockHolding;
 import com.fdm.wealthnow.dao.AuthDAO;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.dao.PortfolioDAO;
+import com.fdm.wealthnow.service.OrderManagementService;
 import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
@@ -39,7 +40,7 @@ public class PortfolioDAOTest extends DBUtil {
 	// Test on creating stockholding in database
 	// ==============================================================================
 
-	@Test
+	//@Test
 	public void testCreateStockHoldingInDatabase() throws Exception {
 
 		PortfolioDAO portfolioDAO1 = new PortfolioDAO();
@@ -63,7 +64,7 @@ public class PortfolioDAOTest extends DBUtil {
 	// Test on updating stockholding database
 	// ==============================================================================
 
-	@Test
+	//@Test
 	public void testUpdateStockHoldingInDatabase() throws Exception {
 
 		PortfolioDAO portfolioDAO = new PortfolioDAO();
@@ -95,6 +96,17 @@ public class PortfolioDAOTest extends DBUtil {
 	// After test
 	// ==============================================================================
 
+	@Test
+	public void testGetStockHolding() throws Exception{
+		PortfolioDAO pfdao = new PortfolioDAO();
+		OrderManagementService oms = new OrderManagementService();
+		Integer order_id = oms.createOpenOrder(new Integer(1), "SGD", "B", new Integer(10), "Z74", "M", "11 Sep 2011",
+				new Double(2.0), "null", 150.1);
+		oms.processOrder(order_id, new Double(2.0));
+		StockHolding sh = pfdao.getStockholding(connect, order_id);
+		
+		assertEquals(sh.getOrder_id(), order_id);
+	}
 	@After
 	public void tearDown() throws SQLException {
 		try {

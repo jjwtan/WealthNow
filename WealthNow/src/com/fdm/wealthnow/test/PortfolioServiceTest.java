@@ -57,7 +57,7 @@ public class PortfolioServiceTest extends DBUtil {
 		connect.close();
 	}
 
-	@Test
+	//@Test
 	public void testUpdateStockHolding() throws Exception {// test update and
 															// get together
 		OrderManagementService oms = new OrderManagementService();

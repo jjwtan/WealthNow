@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.common.StockHolding;
 import com.fdm.wealthnow.dao.OrderDAO;
 import com.fdm.wealthnow.service.OrderManagementService;
+import com.fdm.wealthnow.service.PortfolioService;
 import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 public class OrderManagementServiceTest extends DBUtil {
 
@@ -59,7 +62,7 @@ public class OrderManagementServiceTest extends DBUtil {
 	// ==============================================================================
 	// Test on processing orders
 	// ==============================================================================
-	@Test
+	//@Test
 	public void processOrder() throws Exception {
 		oms = new OrderManagementService();
 		OrderDAO orderDAO = new OrderDAO();
@@ -74,7 +77,7 @@ public class OrderManagementServiceTest extends DBUtil {
 		System.out.println("Test Completed: Processed order.");
 	}
 
-	@Test
+	//@Test
 	public void testprocessCancelledOrder() throws Exception {
 		oms = new OrderManagementService();
 		OrderDAO orderDAO = new OrderDAO();
@@ -83,6 +86,26 @@ public class OrderManagementServiceTest extends DBUtil {
 		oms.processCancelledOrders(order_id);
 		
 		assertEquals(order_id,orderDAO.getOrderFromProcessedOrder(getConnection(), order_id).getOrder_id());
+	}
+	
+	@Test
+	public void testprocessSellOrders() throws Exception{
+		oms = new OrderManagementService();
+		PortfolioService ps = new PortfolioService();
+		System.out.println("Start create open order in test");
+		Integer order_id1 = oms.createOpenOrder(new Integer(3), "SGD", "B", new Integer(10), "Z74", "M", "11 Sep 2011",
+				new Double(2.0), "null", 150.1);
+		oms.processOrder(order_id1, new Double(2.0));
+		System.out.println("============================end of process buy order");
+		Integer order_id = oms.createSellOrder(order_id1,new Integer(3), "SGD", "S", new Integer(5), "Z74", "M", "11 Sep 2011",
+				new Double(2.0), "null", 150.1); 
+		oms.processSellOrder(order_id,order_id1, new Double(2.0), new Integer(5));
+		System.out.println(order_id1);
+		StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order_id1);
+		
+		assertEquals(order_id1, sh.getOrder_id());
+		
+		
 	}
 	@After
 	public void tearDown() throws SQLException {

@@ -134,6 +134,7 @@ public class PortfolioDAO extends DBUtil {
 		while (result.next()) {
 			Integer stockholding_id = result.getInt("stockholding_id");
 			Integer user_id = result.getInt("user_id");
+			order_id = result.getInt("order_id");
 			String stock_symbol = result.getString("stock_symbol");
 			Integer purchase_quantity = result.getInt("purchase_quantity");
 			Integer remaining_quantity = result.getInt("remaining_quantity");

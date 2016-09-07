@@ -201,13 +201,15 @@ public class PortfolioService extends DBUtil {
 		
 		try {
 			sh = pdao.getStockholding(connect, order_id);
+			System.out.println(sh);
+			System.out.println("fetch stockholding.. - " + sh.getOrder_id() + sh.getStock_symbol());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("stockholding object - " + sh);
 			e.printStackTrace();
 		}
 		
-		System.out.println("fetch stockholding.. - " + sh.getOrder_id() + sh.getStock_symbol());
+		
 		return sh;
 	}
 
