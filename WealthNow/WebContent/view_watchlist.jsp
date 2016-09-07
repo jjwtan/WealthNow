@@ -45,7 +45,6 @@
 		int userId = currentUser.getUser().getUserId();
 		List<Watchlist> watchlists = ws.getUserWatchlists(userId);
 		
-		String new_watchlist = session.getAttribute("new_watchlist").toString();
 	%>
 	You have <b><%=watchlists.size()%></b> watchlists
 	<div> 
