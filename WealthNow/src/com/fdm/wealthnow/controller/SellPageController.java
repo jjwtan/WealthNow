@@ -28,7 +28,7 @@ public class SellPageController extends HttpServlet {
 	 */
 	public SellPageController() {
 		super();
-		
+
 	}
 
 	/**
@@ -54,16 +54,22 @@ public class SellPageController extends HttpServlet {
 		int user_id = currentUser.getUser().getUserId();
 		DBUtil dbu = new DBUtil();
 		OrderManagementService oms = new OrderManagementService();
-
+		
+		Integer order_ID = Integer.parseInt(session.getAttribute("order_ID").toString());
+		System.out.println(order_ID);
+		
 		String stock_symbol = session.getAttribute("stock_symbol").toString();
+//		Integer qty = request.getAttribute("quantity");
 		Integer qty = Integer.parseInt(session.getAttribute("quantity").toString());
 		Double selling_price = Double.parseDouble(session.getAttribute("selling_price").toString());
 		Double final_price = Double.parseDouble(session.getAttribute("final_price").toString());
 		
 		System.out.println("try to create open order in doPost for sell page controller");
 		try {
-			oms.createOpenOrder(user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()),
-					new Double(0.0), "null", final_price);
+			oms.createSellOrder(user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()), new Double(0.0),
+					"null", final_price);
+//			oms.createOpenOrder(user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()),
+//					new Double(0.0), "null", final_price);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,7 +85,7 @@ public class SellPageController extends HttpServlet {
 		
 		 UserAccountService uas = new UserAccountService();
 		 System.out.println("crediting back to user" );
-	        uas.creditBalance(user_id,final_price);//
+	        //uas.creditBalance(user_id,final_price);
 	        System.out.println(final_price);
 		
 		request.getRequestDispatcher("portfolio_viewer.jsp").forward(request, response);

@@ -58,6 +58,7 @@ function myFunction() {
 		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
 	</div>
 	<%
+		response.setIntHeader("Refresh", 30);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
@@ -106,6 +107,7 @@ function myFunction() {
 
 					String stock_symbol = newShList.getStock_symbol();
 					Integer order_id = newShList.getOrder_id();
+					System.out.println("ORDEEERRRRRR£££££ :" + order_id);
 					System.out.println("Stocksymbol@@@@@@@ " + stock_symbol);
 					Integer quantity = newShList.getRemaining_quantity();
 					Double purchase_price = newShList.getPurchase_price();
@@ -132,7 +134,7 @@ function myFunction() {
 				<td><%=stock_symbol%></td>
 				<td>
 				
-				<button type="submit" value="<%=order_id %>" name="order_ID">Sell</button>
+				<button type="submit" value="<%=order_id %>" name="order_ID" id="order_ID">Sell</button>
 				
 				<td><%=closing_price%></td>
 				<td><%=change%></td>
@@ -157,7 +159,7 @@ function myFunction() {
 			%>
 
 		</table>
-		<button onclick="history.go(0)">Refresh</button>
+	
 
 	</form>
 
