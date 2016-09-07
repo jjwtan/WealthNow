@@ -38,7 +38,7 @@ public class OrderDAOTest extends DBUtil {
 		orderDAO = new OrderDAO();
 		Integer order_id1 = getSequenceID("order_id_seq");
 		
-		orderDAO.createOpenOrderInDatabase(connect, order_id1, new Integer(1), "SGD", "B", new Integer(100), "AAPL", "M", "11 Sep 2011",
+		orderDAO.createOpenOrderInDatabase(connect, null,order_id1, new Integer(1), "SGD", "B", new Integer(100), "AAPL", "M", "11 Sep 2011",
 				new Double(88.9), "GC", "Open", 150.1);
 		
 		System.out.println("\n Start testCreatedDataInDatabase");
