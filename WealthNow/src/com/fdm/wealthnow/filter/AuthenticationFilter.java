@@ -50,7 +50,10 @@ public class AuthenticationFilter implements Filter {
 				!uri.endsWith("/LoginController")&&
 				!uri.endsWith("/register_user_info.jsp") &&
 				!uri.endsWith("/RegisterUserController")&&
-				!uri.endsWith("/security_questions.jsp");
+				!uri.endsWith("/security_questions.jsp") &&
+				!uri.endsWith("/SecurityQuestionController") &&
+				!uri.endsWith("/initial_user_account.jsp") &&
+				!uri.endsWith("/CompleteRegistrationController");
 
 	}
 

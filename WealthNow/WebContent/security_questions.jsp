@@ -10,18 +10,19 @@
 <title>Security Questions</title>
 </head>
 <body>
-<h3>2: Security Questions</h3>
+<h3>2: Security Question</h3>
+<form action="SecurityQuestionController" method="POST">
 <table>
 		<tr>
-			<td>Security Qustion 1</td>
+			<td>Security Qustion</td>
 			<td>
-			<select>
+			<select name="question" >
 					<%
 						UserRegisterService urs = new UserRegisterService();
 						List<String> questions = urs.getAllSecurityQuestions();
 						for (String question : questions) {
 					%>
-					<option><%=question%></option>
+					<option value="<%=question %>"><%=question%></option>
 					<%
 						}
 					%>
@@ -30,9 +31,10 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td><input type="text" required/></td>
+			<td><input type="text" style="width: 99%" name="answer" required/></td>
 		</tr>
 
 	</table>
+	<input type="submit" value="Next"/>
 </body>
 </html>
