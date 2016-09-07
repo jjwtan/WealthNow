@@ -33,15 +33,22 @@
 <body>
 <div style="float: right">
 	<a href="login.jsp">Logout</a>
+	
+</div>
+<div style="float:right;padding-right:600px;padding-top:10px;" >
+<a href="adding_watchlist.jsp"><button>Add New WatchList</button></a> 
+
 </div>
 	<%
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		WatchlistService ws = new WatchlistService();
 		int userId = currentUser.getUser().getUserId();
 		List<Watchlist> watchlists = ws.getUserWatchlists(userId);
+		
+		String new_watchlist = session.getAttribute("new_watchlist").toString();
 	%>
 	You have <b><%=watchlists.size()%></b> watchlists
-	<div>
+	<div> 
 		<form id="watchlist_form" action="ViewWatchlist" method="post">
 			Select Watchlist: <select required name="watchlistID"
 				onchange="this.form.submit()">

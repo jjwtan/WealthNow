@@ -65,7 +65,7 @@ public class SellConfirmationPageController extends HttpServlet {
 		
 		System.out.println("try to create open order in doPost for sell page controller");
 		try {
-			oms.createSellOrder(user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()), new Double(0.0),
+			oms.createSellOrder(order_ID,user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()), new Double(0.0),
 					"null", final_price);
 //			oms.createOpenOrder(user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()),
 //					new Double(0.0), "null", final_price);
