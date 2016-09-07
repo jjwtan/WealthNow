@@ -14,14 +14,17 @@ public class WatchlistService {
 
 	static WatchlistDAO watchlistDAO = new WatchlistDAO();
 
-	// TESTED
+	
+	//==============================================================================
+	// Create Watchlist (Tested)
+	//==============================================================================
+	
 	public Watchlist viewWatchlist(int watchlistId) throws Exception {
 
 		Connection connection = null;
 		Watchlist thisWatchlist = new Watchlist();
 
 		try {
-
 			connection = WatchlistDAO.getConnection();
 			connection.setAutoCommit(false);
 			thisWatchlist = watchlistDAO.getWatchlist(watchlistId, connection);
@@ -48,7 +51,11 @@ public class WatchlistService {
 		return thisWatchlist;
 	}
 
-	// TESTED
+
+	//==============================================================================
+	// Get User Watchlist (Tested)
+	//==============================================================================
+	
 	public List<Watchlist> getUserWatchlists(int userId) throws Exception {
 
 		Connection connection = null;
@@ -79,6 +86,11 @@ public class WatchlistService {
 		return userWatchlists;
 	}
 
+	
+	//==============================================================================
+	// Create Watchlist (Tested)
+	//==============================================================================
+	
 	public void createWatchlist(int watchlistId, String watchlistName, String visibility, String dateCreated,
 			String dateLastEdited, Integer userId) throws Exception {
 		
@@ -99,11 +111,36 @@ public class WatchlistService {
 		}		
 		
 	}
-
+	
+	
+	//==============================================================================
+	// Delete Watchlist
+	//==============================================================================
+	
 	public void deleteWatchlist(int watchListId) throws Exception {
-
+		Connection connection = null;
+		
+		try {
+			connection = WatchlistDAO.getConnection();
+			connection.setAutoCommit(false);
+		
+			System.out.println("Calling add watchlist: ");
+			watchlistDAO.deleteWatchlist(watchListId, connection);
+			connection.commit();
+		} catch (Exception e) {
+				connection.rollback();
+		} finally {
+				if (connection != null)
+					connection.close();
+		}		
+		
 	}
-
+	
+	
+	//==============================================================================
+	// Update Watchlist
+	//==============================================================================
+	
 	public void updateWatchlist(Watchlist newWatchlist) throws Exception {
 
 	}
@@ -148,7 +185,11 @@ public class WatchlistService {
 		}
 		return stocksList;
 	}
-
+	
+	//==============================================================================
+	// Add stock to Watchlist
+	//==============================================================================
+	
 	public void addStockToWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
 		
 		Connection connection = null;
@@ -181,7 +222,12 @@ public class WatchlistService {
 				connection.close();
 		}
 	}
-
+	
+	
+	//==============================================================================
+	// Delete stock from Watchlist
+	//==============================================================================
+	
 	public void deleteStockFromWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
 		Connection connection = null;
 		try {
