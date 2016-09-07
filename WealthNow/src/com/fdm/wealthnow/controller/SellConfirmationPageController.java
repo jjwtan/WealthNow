@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class SellConfirmationPage
  */
 @WebServlet("/SellConfirmationPage")
-public class SellConfirmationPage extends HttpServlet {
+public class SellConfirmationPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SellConfirmationPage() {
+    public SellConfirmationPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
