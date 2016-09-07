@@ -74,6 +74,7 @@ public class RegisterUserController extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("UserProfile", userProfile);
+			session.setAttribute("password", password);
 			System.out.println("forwarding to security questions");
 			request.getRequestDispatcher("security_questions.jsp").forward(request, response);
 		} catch (Exception e1) {

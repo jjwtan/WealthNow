@@ -98,6 +98,8 @@ public class UserDAO extends DBUtil {
 			ps.setString(8, address);
 			ps.setInt	(9, phoneNumber);
 			ps.setString(10, maidenName);
+			
+			System.out.println("execute update");
 			ps.executeUpdate();
 			System.out.println("--> Adding user SQL executed" + SQLStatement);
 

@@ -50,6 +50,8 @@ public class CompleteRegistrationController extends HttpServlet {
 		Float amount = Float.parseFloat(request.getParameter("deposit_amount"));
 		System.out.println("intial balance: " + amount);
 		
+		String password = (String) session.getAttribute("password");
+		
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 

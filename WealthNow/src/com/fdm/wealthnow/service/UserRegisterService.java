@@ -52,7 +52,8 @@ public class UserRegisterService extends DBUtil {
 			SecurityQuestionDAO securityQuestionDAO = new SecurityQuestionDAO();
 			securityQuestionDAO.addSecurityAnswer(connect, user.getUserId(), sqa);
 			
-//			UserAccountDAO userAccountDAO = new UserAccountDAO();
+			UserAccountDAO userAccountDAO = new UserAccountDAO();
+			userAccountDAO.addUserAccount(connect, user.getUserId(), balance, "SGD");
 			
 			if(toCommit) {
 				connect.commit();

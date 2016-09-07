@@ -78,7 +78,7 @@ public class UserDAOTest {
 	
 	@Test
 	public void testAddUser() {
-		//System.out.println("--> Inside testAddUser");
+		System.out.println("--> Inside testAddUser");
 		
 		List<User> users = new ArrayList<>();
 		User newUser = new User( 4, "SamAccount", "Sam", "Potter", "19/09/2014", "harrypotter@hotmail.com", "89345621", "Happy Town #10-152", "Tan");
