@@ -3,6 +3,7 @@ package com.fdm.wealthnow.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fdm.wealthnow.common.InfoType;
@@ -90,20 +91,27 @@ public class WatchlistService {
 	// Create Watchlist
 	//==============================================================================
 	
-	public void createWatchlist(int watchlistId, String watchlistName, String visibility, String dateCreated,
-			String dateLastEdited, Integer userId) throws Exception {
+	public void createWatchlist(Watchlist watchlist, Integer userId) throws Exception {
 		
 		Connection connection = null;
-
+		
+		int watchlistId = watchlist.getWatchlistId();
+		String watchlistName = watchlist.getWatchlistName();
+		String visibility = watchlist.getVisibility();
+		Date dateCreated = watchlist.getDateCreated();
+		Date dateLastEdited = watchlist.getDateLastEdited();
+		
 		try {
 			connection = WatchlistDAO.getConnection();
 			connection.setAutoCommit(false);
 			
 			System.out.println("Calling add watchlist: ");
 			watchlistDAO.addWatchlist(watchlistId, watchlistName, visibility, dateCreated, dateLastEdited, userId, connection);
+
 			connection.commit();
+			
 		} catch (Exception e) {
-			connection.rollback();
+				connection.rollback();
 		} finally {
 			if (connection != null)
 				connection.close();

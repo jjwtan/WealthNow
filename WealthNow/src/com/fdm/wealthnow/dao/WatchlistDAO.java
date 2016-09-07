@@ -92,15 +92,14 @@ public class WatchlistDAO extends DBUtil {
 
 	// return watchlist id
 	// use String here for the dates instead of Date
-	public void addWatchlist(int watchlistId, String watchlistName, String visibility, String dateCreated,
-			String dateLastEdited, Integer userId, Connection newConnect) {
+	public void addWatchlist(int watchlistId, String watchlistName, String visibility, Date dateCreated,
+			Date dateLastEdited, Integer userId, Connection newConnect) {
 
 		try {
-
 			String SQLStatement = "INSERT INTO Watchlist(watchlist_id, watchlist_name, visibility, date_created, date_modified) VALUES ("
 					+ watchlistId + ",'" + watchlistName + "','" + visibility + "','" + dateCreated + "','"
 					+ dateLastEdited + "')";
-
+			System.out.println(SQLStatement);
 			PreparedStatement ps = newConnect.prepareStatement(SQLStatement);
 			ps.executeUpdate();
 

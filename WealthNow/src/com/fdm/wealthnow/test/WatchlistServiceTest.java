@@ -16,10 +16,12 @@ import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.common.Watchlist;
 import com.fdm.wealthnow.dao.WatchlistDAO;
 import com.fdm.wealthnow.service.WatchlistService;
+import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
-public class WatchlistServiceTest {
+public class WatchlistServiceTest extends DBUtil {
 	static Connection connect;
+	private Watchlist wlist;
 	private WatchlistDAO wldao;
 	private WatchlistService wls;
 
@@ -60,18 +62,16 @@ public class WatchlistServiceTest {
 	//==============================================================================
 	
 	@Test
-	public void testCreateWatchlistlist() throws Exception {
-		
-	wls = new WatchlistService();
-		wls.createWatchlist(77, "testWatchList", "PRIVATE", "22-APR-16", "22-APR-16", 2);
+	public void testCreateWatchlist() throws Exception {
+		wls = new WatchlistService();
+		int watchlist_id = getSequenceID("watchlist_id_seq");
+		//wls.createWatchlist(watchlist);
 		
 		wldao = new WatchlistDAO();
-		List<String> watchlist = wldao.getAllStocksFromWatchlist(2, connect);
+		Watchlist watchlist = wldao.getWatchlist(watchlist_id, connect);
 		
 		System.out.println("\n Start addStockToWatchlist");
-		
-		assertEquals(watchlist.size(), 3);
-		
+		assertEquals(watchlist.getWatchlistId(), watchlist_id);
 		System.out.println("Test Completed: Added stock in watchlist.");	
 	}
 	
@@ -79,20 +79,18 @@ public class WatchlistServiceTest {
 	// Test on deleting Watchlist
 	//==============================================================================
 	
-	@Test
-	public void testDeleteWatchlistlist() throws Exception {
+	
+	public void testDeleteWatchlist() throws Exception {
 		
-	wls = new WatchlistService();
-		wls.deleteWatchlist(watchListId);
+		wls = new WatchlistService();
+		wls.deleteWatchlist(77);
 		
 		wldao = new WatchlistDAO();
-		List<String> watchlist = wldao.getAllStocksFromWatchlist(2, connect);
+		List<Watchlist> userWatchlist = wls.getUserWatchlists(2);
 		
-		System.out.println("\n Start addStockToWatchlist");
-		
-		assertEquals(watchlist.size(), 3);
-		
-		System.out.println("Test Completed: Added stock in watchlist.");	
+		System.out.println("\n Start deleteWatchlist");
+		assertEquals(userWatchlist.size(), 0);
+		System.out.println("Test Completed: Delete watchlist.");	
 	}
 	
 	//==============================================================================
@@ -110,10 +108,8 @@ public class WatchlistServiceTest {
 		List<Stock> watchlist = wls.listStocksFromWatchlist(2);
 
 		System.out.println("\nStart listStocksFromWatchlist");
-			
 		assertEquals(watchlist.size(), 4);
 		System.out.println("Number of stocks in list: " +watchlist.size());
-
 		System.out.println("Test Completed: List stocks in watchlist.");	
 	}
 	
@@ -122,7 +118,7 @@ public class WatchlistServiceTest {
 	// Test on adding stock to Watchlist (Tested)
 	//==============================================================================
 
-	@Test
+
 	public void testAddStockToWatchlist() throws Exception {
 		wls = new WatchlistService();
 		wls.addStockToWatchlist(2, "Z74"); // Key in new ticker code every test OR run both add and delete test
@@ -131,9 +127,7 @@ public class WatchlistServiceTest {
 		List<String> watchlist = wldao.getAllStocksFromWatchlist(2, connect);
 		
 		System.out.println("\n Start addStockToWatchlist");
-		
 		assertEquals(watchlist.size(), 3);
-		
 		System.out.println("Test Completed: Added stock in watchlist.");	
 	}
 	
@@ -141,7 +135,7 @@ public class WatchlistServiceTest {
 	// Test on deleting stocks from Watchlist (Tested)
 	//==============================================================================
 	
-	@Test
+
 	public void testDeleteStockToWatchlist() throws Exception {
 		wls = new WatchlistService();
 		wls.deleteStockFromWatchlist(2, "Z74");
@@ -150,9 +144,7 @@ public class WatchlistServiceTest {
 		List<String> watchlist = wldao.getAllStocksFromWatchlist(2, connect);
 	
 		System.out.println("\n Start deleteStockFromWatchlist");
-		
 		assertEquals(watchlist.size(), 2);
-	
 		System.out.println("Test Completed: Deleted stock in watchlist.");	
 	}
 	
@@ -169,9 +161,7 @@ public class WatchlistServiceTest {
 		boolean isDuplicate = true;
 
 		System.out.println("\n Start checkForDuplicateStocks");
-			
 		assertEquals(checkDuplicate, isDuplicate);	
-		
 		System.out.println("Test Completed: Check for duplicate stocks.");	
 	}
 	
