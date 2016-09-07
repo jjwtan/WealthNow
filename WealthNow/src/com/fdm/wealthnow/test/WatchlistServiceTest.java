@@ -66,8 +66,9 @@ public class WatchlistServiceTest extends DBUtil {
 	public void testCreateWatchlist() throws Exception {
 		wls = new WatchlistService();
 		int watchlist_id = getSequenceID("watchlist_id_seq");
+		Date date = convertStringToDateObject("25-MAR-2016");
 
-		wlist = new Watchlist(watchlist_id, "Test Watchlist", null, new Date(2016, 02, 11), new Date(2016, 02, 11));
+		wlist = new Watchlist(watchlist_id, "Test Watchlist", null, date, date);
 		wls.createWatchlist(wlist, 1);
 		
 		wldao = new WatchlistDAO();
@@ -86,14 +87,16 @@ public class WatchlistServiceTest extends DBUtil {
 	public void testDeleteWatchlist() throws Exception {
 		
 		wls = new WatchlistService();
-		wls.deleteWatchlist(77);
-		
+		int watchlist_id = getSequenceID("watchlist_id_seq");
+
+		//wls.deleteWatchlist(watchListId);
+	
 		wldao = new WatchlistDAO();
-		List<Watchlist> userWatchlist = wls.getUserWatchlists(2);
-		
-		System.out.println("\n Start deleteWatchlist");
-		assertEquals(userWatchlist.size(), 0);
-		System.out.println("Test Completed: Delete watchlist.");	
+		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
+	
+		System.out.println("\n Start createWatchlist");
+		assertEquals(watchlist.size(), 2);
+		System.out.println("Test Completed: Create watchlist.");	
 	}
 	
 	//==============================================================================
