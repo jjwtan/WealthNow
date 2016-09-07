@@ -66,7 +66,7 @@ public class WatchlistServiceTest extends DBUtil {
 	public void testCreateWatchlist() throws Exception {
 		wls = new WatchlistService();
 		int watchlist_id = getSequenceID("watchlist_id_seq");
-		Date date = convertStringToDateObject("25-MAR-2016");
+		Date date = convertStringToDateObject("25 MAR 2016");
 
 		wlist = new Watchlist(watchlist_id, "Test Watchlist", null, date, date);
 		wls.createWatchlist(wlist, 1);
@@ -95,7 +95,7 @@ public class WatchlistServiceTest extends DBUtil {
 		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
 	
 		System.out.println("\n Start createWatchlist");
-		assertEquals(watchlist.size(), 2);
+		assertEquals(watchlist.size(), 1);
 		System.out.println("Test Completed: Create watchlist.");	
 	}
 	
