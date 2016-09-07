@@ -77,8 +77,9 @@ $(document).ready ( function () {
 
 			<tr>
 				<td>Quantity</td>
-				<td>
+				<td><!--  
 					<input type="number" name="quantity" step="1" min="1" value="0" max="<%=quantity%>">
+					-->
 				</td>
 
 			</tr>

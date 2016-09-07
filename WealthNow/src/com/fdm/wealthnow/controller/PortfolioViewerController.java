@@ -50,7 +50,7 @@ public class PortfolioViewerController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBUtil dbu = new DBUtil();
 		 HttpSession session = request.getSession();
-		 System.out.println("Inside doPost for Portfolio Viewer");
+		 System.out.println("----------Inside doPost for Portfolio Viewer---------");
 		 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		 
 			UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
@@ -72,7 +72,7 @@ public class PortfolioViewerController extends HttpServlet {
 		        Double selling_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString());
 		       Double final_price = qty*selling_price;
 		       
-		       session.setAttribute("orderID", orderID);
+		       session.setAttribute("order_ID", orderID);
 		       session.setAttribute("final_price", final_price);
 		       session.setAttribute("selling_price", selling_price);
 		       session.setAttribute("stock_symbol", stock_symbol);
