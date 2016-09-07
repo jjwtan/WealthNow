@@ -15,12 +15,6 @@
 	<script>
 	
 
-$(document).ready ( function () {
-    $("#submitbutton").click(function () {
-       alert("Order Confirmed!");
-    });
-});
-	
 </script>
 
 </head>
@@ -36,7 +30,6 @@ $(document).ready ( function () {
 	String stock_symbol= session.getAttribute("stock_symbol").toString();
 	Integer quantity = Integer.parseInt(session.getAttribute("quantity").toString());
 	Double selling_price = Double.parseDouble(session.getAttribute("selling_price").toString());
-	Double final_price = Double.parseDouble(session.getAttribute("final_price").toString());
 	
 	Double fixed_price = 9.95;
 	
@@ -77,32 +70,14 @@ $(document).ready ( function () {
 
 			<tr>
 				<td>Quantity</td>
-				<td><!--  
+				<td>
 					<input type="number" name="quantity" step="1" min="1" value="0" max="<%=quantity%>">
-					-->
+					
 				</td>
 
 			</tr>
 
-			<tr>
-				<td>Fixed Price</td>
-				<td>$ <%
-						out.print(fixed_price);
-					%>
-				</td>
-			</tr>
-
-			<tr>
-				<td colspan="2">&nbsp;</td>
-			</tr>
-
-			<tr>
-				<td>Total Selling price</td>
-				<td width="126">$ <%
-						out.print(df.format(final_price));
-					%>
-				</td>
-			</tr>
+			
 		</table>
 		<br> <input type="submit" value="Sell Order" id="submit_button">
 	</form>
