@@ -52,7 +52,7 @@ $(document).ready ( function () {
 	<H1>Selling Page</H1>
 
 
-	<form action="SellPageController" method="post">
+	<form action="SellPageController" method="post" id="selling">
 		<table width="559" border="1" cellpadding="5" cellspacing="0">
 			<tr>
 				<th width="407">Stock</th>

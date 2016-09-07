@@ -77,12 +77,6 @@ public class PortfolioViewerController extends HttpServlet {
 		       session.setAttribute("stock_symbol", stock_symbol);
 		       session.setAttribute("quantity", qty);
 		        
-		      
-		        
-		        UserAccountService uas = new UserAccountService();
-		        uas.creditBalance(user_id,final_price);
-		        System.out.println(final_price);
-		        
 		        
 		       
 		        request.getRequestDispatcher("SellPage.jsp").forward(request, response);

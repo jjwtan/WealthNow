@@ -19,7 +19,7 @@ import com.fdm.wealthnow.util.DBUtil;
 /**
  * Servlet implementation class SellPage
  */
-@WebServlet("/SellPage")
+@WebServlet("/SellPageController")
 public class SellPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class SellPageController extends HttpServlet {
 	 */
 	public SellPageController() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
@@ -74,7 +74,13 @@ public class SellPageController extends HttpServlet {
 		session.setAttribute("quantity", null);
 		session.setAttribute("stock_symbol", null);
 		
+		 UserAccountService uas = new UserAccountService();
+	        uas.creditBalance(user_id,final_price);
+	        System.out.println(final_price);
+		
 		request.getRequestDispatcher("portfolio_viewer.jsp").forward(request, response);
+		
+	        
 		
 
 	}
