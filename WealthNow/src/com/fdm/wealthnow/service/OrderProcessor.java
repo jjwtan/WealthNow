@@ -119,19 +119,18 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 			}
 
 			System.out.println("TIME CHECK: " + closeDate);
-			if (order.getTerm() != null) {
-				if (order.getTerm().toString().equals("GD")) {
-					System.out.println("after close date");
-					// check if term is GD
-					if (now.after(closeDate)) {
-						oms.processCancelledOrders(order.getOrder_id());
-						System.out.println(
-								"This order has been cancelled for the day : orderID - " + order.getOrder_id());
-						count++;
-					}
+			if (order.getTerm() != null && order.getTerm().toString().equals("GD")) {
+				System.out.println("after close date");
+				// check if term is GD
+				if (now.after(closeDate)) {
+					oms.processCancelledOrders(order.getOrder_id());
+					System.out.println("This order has been cancelled for the day : orderID - " + order.getOrder_id());
+					count++;
 				}
+
 			} else {
 				// if it is a buy order type, do the following
+				System.out.println("inside else");
 				if (order.getOrder_type().toString().equals("B")) {
 					System.out.println("Inside B order");
 					// if statement to ensure balance > total_price
@@ -206,6 +205,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		}
 		System.out.println(count + " order(s) has been processed.");
 		return count;
+
 	}
 
 	public List<Order> TestfetchOrderFromDao(int limit) {

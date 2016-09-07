@@ -59,14 +59,13 @@ table#t01 th {
 	<h1>Completed/Cancelled Orders</h1>
 	<table  id="t01">
 			<tr>
-				<th>Date</th>
+				<th>Date Placed Order</th>
 				<th>Order No</th>
 				<th>Type</th>
 				<th>Quantity</th>
 				<th>Symbol</th>
 				<th>Price Type</th>
-				<th>Term</th>
-				<th>Price</th>
+				<th>Price</th>		
 				<th>Status</th>
 			</tr>
 			<%
@@ -78,14 +77,13 @@ table#t01 th {
 			<tr>
 				
 				<td><%=order.getPlace_order_date()%></td>
-				<td><%=order.getOrder_id()%></td>
+				<td><b># <%=order.getOrder_id()%></b></td>
 				<td><%=order.getOrder_type().toString()%></td>
 				<td><%=order.getQuantity()%></td>
 				<td><%=order.getStock_symbol()%></td>
 				<td><%=order.getPrice_type()%></td>
-				<td><%=order.getTerm()%></td>
-				<td><%=order.getClosing_price()%></td>
-				<td><%=order.getStatus()%></td>
+				<td>$ <%=order.getClosing_price()%></td>
+				<td><b><%=order.getStatus()%></b></td>
 			</tr>
 			<%
 				}
