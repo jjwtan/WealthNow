@@ -78,9 +78,7 @@ $(document).ready ( function () {
 			<tr>
 				<td>Quantity</td>
 				<td>
-					<%
-						out.print(quantity);
-					%>
+					<input type="number" name="quantity" step="1" min="1" value="0" max="<%=quantity%>">
 				</td>
 
 			</tr>
@@ -105,7 +103,7 @@ $(document).ready ( function () {
 				</td>
 			</tr>
 		</table>
-		<br> <input type="submit" value="Sell Order" id="submitbutton">
+		<br> <input type="submit" value="Sell Order" id="submit_button">
 	</form>
 
 
