@@ -31,23 +31,23 @@
 <title>My Watchlist</title>
 </head>
 <body>
-<div style="float: right">
-	<a href="login.jsp">Logout</a>
-	
-</div>
-<div style="float:right;padding-right:600px;padding-top:10px;" >
-<a href="adding_watchlist.jsp"><button>Add New WatchList</button></a> 
+	<div style="float: right">
+		<a href="login.jsp">Logout</a>
 
-</div>
+	</div>
+	<div style="float: right; padding-right: 600px; padding-top: 10px;">
+		<a href="adding_watchlist.jsp"><button>Add New WatchList</button></a>
+
+	</div>
 	<%
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		WatchlistService ws = new WatchlistService();
 		int userId = currentUser.getUser().getUserId();
 		List<Watchlist> watchlists = ws.getUserWatchlists(userId);
-		
 	%>
-	You have <b><%=watchlists.size()%></b> watchlists
-	<div> 
+	You have
+	<b><%=watchlists.size()%></b> watchlists
+	<div>
 		<form id="watchlist_form" action="ViewWatchlist" method="post">
 			Select Watchlist: <select required name="watchlistID"
 				onchange="this.form.submit()">
@@ -69,7 +69,7 @@
 	</div>
 	<br>
 	<div>
-	
+
 		<%
 			if (request.getAttribute("watchlist_id") != null) {
 				Integer id = (Integer) request.getAttribute("watchlist_id");
@@ -77,8 +77,10 @@
 				SimpleDateFormat sdf = new SimpleDateFormat("E dd/MM/yyyy hh:mm:ssa z");
 		%>
 		<h2><%=selectedWl.getWatchlistName()%></h2>
-		<div style="float: right"><i>Updated: <%=sdf.format(new Date()) %></i></div>
-		<form>
+		<div style="float: right">
+			<i>Updated: <%=sdf.format(new Date())%></i>
+		</div>
+
 		<table width="100%" border="1">
 			<tr>
 				<th>Instrument</th>
@@ -98,7 +100,7 @@
 						Date dateMod = stock.getModifiedDate();
 			%>
 			<tr>
-				<td><%=stock.getStockSymbol()+ ": "+ stock.getCompany()%></td>
+				<td><%=stock.getStockSymbol() + ": " + stock.getCompany()%></td>
 				<td><%=stock.getBid()%></td>
 				<td><%=stock.getAsk()%></td>
 				<td><%=stock.getOpen()%></td>
@@ -106,21 +108,29 @@
 				<td><%=stock.getDayHigh()%></td>
 				<td><%=stock.getDayLow()%></td>
 				<td><%=stock.getDaysValueChange()%></td>
-				<td><%=stock.getPercentChange() %></td>
+				<td><%=stock.getPercentChange()%></td>
 			</tr>
+
+			
+			<button type="submit" value="" name="order_ID"
+				id="order_ID">Add Stock</button>
+
+
 			<%
 				}
 					if (stocks.size() == 0) {
 			%>
 			<tr>
-				<td colspan="9" align="center">You have no stocks in this watchlist</td>
+				<td colspan="9" align="center">You have no stocks in this
+					watchlist</td>
 			</tr>
+			<a href="add_stock_watchlist.jsp"><button>Add New Stock</button></a>
 			<%
 				}
 			%>
 
 		</table>
-		</form>
+
 	</div>
 	<div style="padding-top: 1em">
 		<label for="submit-form" class="button">Refresh</label>
