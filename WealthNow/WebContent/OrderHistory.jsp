@@ -1,9 +1,11 @@
+<%@page import="com.fdm.wealthnow.dao.OrderDAO"%>
+<%@page import="com.fdm.wealthnow.service.OrderManagementService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="com.fdm.wealthnow.service.PortfolioService"%>
 <%@ page
 	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
-	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding"%>
+	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding, java.util.List, com.fdm.wealthnow.common.Order"%>
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -46,13 +48,50 @@ table#t01 th {
 	</div>
 
 	<%
-		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
-		UserAccountService uas = new UserAccountService();
-		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+	OrderManagementService oms = new OrderManagementService();
+	PortfolioService ps = new PortfolioService();
+	OrderDAO ord = new OrderDAO();
+	Integer user_id = currentUser.getUser().getUserId();
 		
-		int user_id = currentUser.getUser().getUserId();
 		
 	%>
+	<h1>Completed/Cancelled Orders</h1>
+	<table  id="t01">
+			<tr>
+				<th>Date</th>
+				<th>Order No</th>
+				<th>Type</th>
+				<th>Quantity</th>
+				<th>Symbol</th>
+				<th>Price Type</th>
+				<th>Term</th>
+				<th>Price</th>
+				<th>Status</th>
+			</tr>
+			<%
+			List <Order> orderList = oms.getAllProcessedOrderFromOrderDAO(user_id);
+
+					for (Order order : orderList) {
+						
+			%>
+			<tr>
+				
+				<td><%=order.getPlace_order_date()%></td>
+				<td><%=order.getOrder_id()%></td>
+				<td><%=order.getOrder_type().toString()%></td>
+				<td><%=order.getQuantity()%></td>
+				<td><%=order.getStock_symbol()%></td>
+				<td><%=order.getPrice_type()%></td>
+				<td><%=order.getTerm()%></td>
+				<td><%=order.getClosing_price()%></td>
+				<td><%=order.getStatus()%></td>
+			</tr>
+			<%
+				}
+					
+			%>
+		
 
 </body>
 </html>

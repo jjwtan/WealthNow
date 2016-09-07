@@ -88,8 +88,8 @@ public class OrderManagementService extends DBUtil {
 			// validate data of the order, only true create data else print
 			// failed
 			if (validate == true) {
-				ord.createOpenOrderInDatabase(connect, OLDorder_id, order_id, user_id, currency_code, order_type, quantity,
-						stock_symbol, price_type, opening_order_date, limit_price, term, "OpenOrder",
+				ord.createOpenOrderInDatabase(connect, OLDorder_id, order_id, user_id, currency_code, order_type,
+						quantity, stock_symbol, price_type, opening_order_date, limit_price, term, "OpenOrder",
 						total_price_deducted);
 			} else {
 				System.out.println("Validation failed at createSellOrder.");
@@ -138,10 +138,9 @@ public class OrderManagementService extends DBUtil {
 			// format the date to string for create method
 			System.out.println("process order method running...");
 			ord.createProcessedOrderInDatabase(connect, order.getUser_id(), order_id, order.getCurrency_code(),
-					order.getOrder_type().toString(), newQty, order.getStock_symbol(),
-					order.getPrice_type().toString(), convertDateObjToString(order.getPlace_order_date()),
-					order.getLimit_price(), convertDateObjToString(date), "completed", price,
-					order.getTotal_price_deducted());
+					order.getOrder_type().toString(), newQty, order.getStock_symbol(), order.getPrice_type().toString(),
+					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
+					convertDateObjToString(date), "completed", price, order.getTotal_price_deducted());
 			connect.commit();
 			System.out.println("created processed order in database - " + order.getOrder_id());
 			System.out.println("Check for delete open order");
@@ -517,6 +516,37 @@ public class OrderManagementService extends DBUtil {
 				connect.close();
 		}
 
+	}
+
+	public List<Order> getAllProcessedOrderFromOrderDAO(Integer user_id) {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			OrderDAO ord = new OrderDAO();
+			List<Order> orderList = ord.getAllProcessedOrderFromUser(connect, user_id);
+			connect.commit();
+			return orderList;
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return null;
 	}
 
 }

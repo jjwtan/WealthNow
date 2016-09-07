@@ -24,7 +24,8 @@
 <a href="view_watchlist.jsp">My Watchlists</a><br/>
 <a href="BuyPage.jsp">Buy/Sell Securities</a><br/>
 <a href="update_balance.jsp">Update Balance</a><br/>
-<a href="portfolio_viewer.jsp">Portfolio Viewer</a>
+<a href="portfolio_viewer.jsp">Portfolio Viewer</a><br/>
+<a href="OrderHistory.jsp">Order History</a>
 
 
 </body>

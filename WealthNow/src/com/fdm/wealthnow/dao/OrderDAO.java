@@ -101,7 +101,7 @@ public class OrderDAO extends DBUtil {
 	public List getAllProcessedOrderFromUser(Connection connect, Integer user_id) throws Exception {
 		List<Order> processedCompletedOrderfromUser = new ArrayList<Order>();
 
-		String SQL = "SELECT * FROM PROCESSEDORDER WHERE STATUS = 'completed' AND USER_ID = ?";
+		String SQL = "SELECT * FROM PROCESSEDORDER WHERE USER_ID = ? ORDER BY place_order_date desc";
 
 		PreparedStatement ps = connect.prepareStatement(SQL);
 		ps.setInt(1, user_id);
