@@ -100,6 +100,7 @@ public class WatchlistDAO extends DBUtil {
 					+ watchlistId + ",'" + watchlistName + "','" + visibility + "','" + convertDateObjToString(dateCreated) + "','"
 					+ convertDateObjToString(dateLastEdited) + "')";
 			System.out.println(SQLStatement);
+			
 			PreparedStatement ps = newConnect.prepareStatement(SQLStatement);
 			ps.executeUpdate();
 
