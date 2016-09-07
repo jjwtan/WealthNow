@@ -83,9 +83,9 @@ public class SellConfirmationPageController extends HttpServlet {
 		session.setAttribute("stock_symbol", null);
 		
 		 UserAccountService uas = new UserAccountService();
-		 System.out.println("crediting back to user" );
+//		 System.out.println("crediting back to user" );
 	        //uas.creditBalance(user_id,final_price);
-	        System.out.println(final_price);
+//	        System.out.println(final_price);
 		
 		request.getRequestDispatcher("portfolio_viewer.jsp").forward(request, response);
 	}
