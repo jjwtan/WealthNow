@@ -38,8 +38,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		// Create a thread that wakes up periodically and scans for open orders.
 		// It fetches the orders and delegates to thread pool
 		scheduledExecutorService = Executors.newScheduledThreadPool(1);
-		scheduledExecutorService.scheduleAtFixedRate(() -> processOpenOrders(executorService), 30, 30,
-				TimeUnit.SECONDS);
+		scheduledExecutorService.scheduleAtFixedRate(() -> processOpenOrders(executorService), 2, 30, TimeUnit.SECONDS);
 
 	}
 
@@ -102,6 +101,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 			System.out.println("total price: " + total_price);
 			System.out.println("Order price type is : " + order.getPrice_type().toString());
 			System.out.println("Order type is : " + order.getOrder_type().toString());
+
 			// check for Good for the day order to be cancelled at 5pm daily.
 
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// eg.
@@ -118,76 +118,87 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				e.printStackTrace();
 			}
 
-			System.out.println("TIME CHECK: " + closeDate + " - any GD order will be cancelled after this.");
-			if (now.after(closeDate)) {
-				// check if term is GD
+			System.out.println("TIME CHECK: " + closeDate);
+			if (order.getTerm() != null) {
 				if (order.getTerm().toString().equals("GD")) {
-					oms.processCancelledOrders(order.getOrder_id());
-					System.out.println("This order has been cancelled for the day : orderID - " + order.getOrder_id());
-					count++;
+					System.out.println("after close date");
+					// check if term is GD
+					if (now.after(closeDate)) {
+						oms.processCancelledOrders(order.getOrder_id());
+						System.out.println(
+								"This order has been cancelled for the day : orderID - " + order.getOrder_id());
+						count++;
+					}
 				}
-			}
-			// if it is a buy order type, do the following
-			if (order.getOrder_type().toString().equals("B")) {
-				//if statement to ensure balance > total_price
-				if (balance > total_price) {
+			} else {
+				// if it is a buy order type, do the following
+				if (order.getOrder_type().toString().equals("B")) {
+					System.out.println("Inside B order");
+					// if statement to ensure balance > total_price
+					if (balance > total_price) {
+						if (order.getPrice_type().toString().equals("SL")
+								|| order.getPrice_type().toString().equals("LT")) {
+							// if statement to check if the limit price
+							if (order.getLimit_price() < stockPrice) {
+								System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
+								ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
+								count++;
+								System.out.println("Count - " + count);
+								// uas.debitBalance(order.getUser_id(),
+								// total_price);
+							}
+						} else if (order.getPrice_type().toString().equals("M")) {
+							System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
+							ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
+							count++;
+							System.out.println("Count: " + count);
+							// uas.debitBalance(order.getUser_id(),
+							// total_price);
+						}
+
+						else {
+							System.out.println("Please contact administrator. UserID : " + order.getUser_id()
+									+ " OrderID " + order.getOrder_id());
+						}
+					} else {
+						// this is when the balance is not enough
+						// should the order be cancelled?
+						System.out.println("problem with balance account - " + order.getUser_id() + "");
+						oms.processCancelledOrders(order.getOrder_id());
+					}
+				}
+				// if it is a sell order, do the following..
+				else if (order.getOrder_type().toString().equals("S")) {
+					System.out.println("Inside S order");
+					// if the order price type is SL or LT
 					if (order.getPrice_type().toString().equals("SL")
 							|| order.getPrice_type().toString().equals("LT")) {
 						// if statement to check if the limit price
 						if (order.getLimit_price() < stockPrice) {
 							System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
-							ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
+							ex.submit(() -> oms.processSellOrder(order.getOrder_id(), order.getOld_order_id(),
+									stockPrice, order.getQuantity()));
 							count++;
 							System.out.println("Count - " + count);
-							// uas.debitBalance(order.getUser_id(),
-							// total_price);
+							uas.creditBalance(order.getUser_id(), total_price);
+							System.out.println(
+									"Amount - " + total_price + " has been credited to user " + order.getUser_id());
 						}
 					} else if (order.getPrice_type().toString().equals("M")) {
 						System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
-						ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
+						ex.submit(() -> oms.processSellOrder(order.getOrder_id(), order.getOld_order_id(), stockPrice,
+								order.getQuantity()));
 						count++;
 						System.out.println("Count: " + count);
-						// uas.debitBalance(order.getUser_id(), total_price);
+						uas.creditBalance(order.getUser_id(), total_price);
+						System.out.println(
+								"Amount - " + total_price + " has been credited to user " + order.getUser_id());
 					}
 
-					else {
-						System.out.println("Please contact administrator. UserID : " + order.getUser_id() + " OrderID "
-								+ order.getOrder_id());
-					}
 				} else {
-					// this is when the balance is not enough
-					// should the order be cancelled?
-					System.out.println("problem with balance account - " + order.getUser_id() + "");
-					oms.processCancelledOrders(order.getOrder_id());
+					System.out.println("Got problem.");
 				}
 			}
-			//if it is a sell order, do the following..
-			else if(order.getOrder_type().toString().equals("S")){
-				// if the order price type is SL or LT
-				if (order.getPrice_type().toString().equals("SL")
-						|| order.getPrice_type().toString().equals("LT")) {
-					// if statement to check if the limit price
-					if (order.getLimit_price() < stockPrice) {
-						System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
-						ex.submit(() -> oms.processSellOrder(order.getOrder_id(), order.getOld_order_id(), 
-								stockPrice,order.getQuantity()));
-						count++;
-						System.out.println("Count - " + count);
-						uas.creditBalance(order.getUser_id(),total_price);
-						System.out.println("Amount - " + total_price +" has been credited to user "+ order.getUser_id());
-					}
-				} else if (order.getPrice_type().toString().equals("M")) {
-					System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
-					ex.submit(() ->  oms.processSellOrder(order.getOrder_id(), order.getOld_order_id(), 
-							stockPrice,order.getQuantity()));
-					count++;
-					System.out.println("Count: " + count);
-					uas.creditBalance(order.getUser_id(), total_price);
-					System.out.println("Amount - " + total_price +" has been credited to user "+ order.getUser_id());
-				}
-				
-			}
-
 			// } else {
 			// //this is when success is false
 			// System.out.println("Validation failed.");

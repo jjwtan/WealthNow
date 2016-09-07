@@ -473,6 +473,7 @@ public class OrderManagementService extends DBUtil {
 		} catch (Exception e) {
 			try {
 				connect.rollback();
+				e.printStackTrace();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
