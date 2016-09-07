@@ -69,15 +69,15 @@ public class PortfolioViewerController extends HttpServlet {
 		       StockService svc = new StockService();
 		       
 		        String stock_symbol = order.getStock_symbol();
+		        System.out.println("--------Stock symbol inside portfolioViewer---------"+stock_symbol);
 		        Double selling_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString());
-		       Double final_price = qty*selling_price;
-		       
+		      
+		       System.out.println("Selling price" + selling_price);
 		       session.setAttribute("order_ID", orderID);
-		       session.setAttribute("final_price", final_price);
 		       session.setAttribute("selling_price", selling_price);
 		       session.setAttribute("stock_symbol", stock_symbol);
 		       session.setAttribute("quantity", qty);
-		        
+		        System.out.println("$$$$$$$quantity inside portfolio viewer:" + qty);
 		        
 		       
 		        request.getRequestDispatcher("SellPage.jsp").forward(request, response);

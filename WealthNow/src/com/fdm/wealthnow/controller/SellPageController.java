@@ -59,36 +59,17 @@ public class SellPageController extends HttpServlet {
 		System.out.println(order_ID);
 		
 		String stock_symbol = session.getAttribute("stock_symbol").toString();
-//		Integer qty = request.getAttribute("quantity");
-		Integer qty = Integer.parseInt(session.getAttribute("quantity").toString());
+		Integer qty = Integer.parseInt(request.getParameter("quantity"));
+//		Integer qty = Integer.parseInt(session.getAttribute("quantity1").toString());
+		System.out.println("Quantity in Sell Page controller $$$$$$$$:" + qty);
 		Double selling_price = Double.parseDouble(session.getAttribute("selling_price").toString());
-		Double final_price = Double.parseDouble(session.getAttribute("final_price").toString());
+//		Double total_price = selling_price*qty;
 		
-		System.out.println("try to create open order in doPost for sell page controller");
-		try {
-			oms.createSellOrder(user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()), new Double(0.0),
-					"null", final_price);
-//			oms.createOpenOrder(user_id, "SGD", "S", qty, stock_symbol, "M", dbu.convertDateObjToString(new Date()),
-//					new Double(0.0), "null", final_price);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("error in pfc in selling");
-		}
+		session.setAttribute("quantity", qty);
+//		session.setAttribute("total_price", total_price);
+	      
 		
-		System.out.println("setting sessions to null");
-		session.setAttribute("orderID", null);
-		session.setAttribute("final_price", null);
-		session.setAttribute("selling_price", null);
-		session.setAttribute("quantity", null);
-		session.setAttribute("stock_symbol", null);
-		
-		 UserAccountService uas = new UserAccountService();
-		 System.out.println("crediting back to user" );
-	        //uas.creditBalance(user_id,final_price);
-	        System.out.println(final_price);
-		
-		request.getRequestDispatcher("portfolio_viewer.jsp").forward(request, response);
+		request.getRequestDispatcher("SellConfirmationPage.jsp").forward(request, response);
 		
 	        
 		

@@ -1,6 +1,7 @@
 package com.fdm.wealthnow.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class WatchlistService {
 
 	
 	//==============================================================================
-	// Create Watchlist (Tested)
+	// View Watchlist
 	//==============================================================================
 	
 	public Watchlist viewWatchlist(int watchlistId) throws Exception {
@@ -51,9 +52,8 @@ public class WatchlistService {
 		return thisWatchlist;
 	}
 
-
 	//==============================================================================
-	// Get User Watchlist (Tested)
+	// Get User Watchlist
 	//==============================================================================
 	
 	public List<Watchlist> getUserWatchlists(int userId) throws Exception {
@@ -86,9 +86,8 @@ public class WatchlistService {
 		return userWatchlists;
 	}
 
-	
 	//==============================================================================
-	// Create Watchlist (Tested)
+	// Create Watchlist
 	//==============================================================================
 	
 	public void createWatchlist(int watchlistId, String watchlistName, String visibility, String dateCreated,
@@ -111,7 +110,6 @@ public class WatchlistService {
 		}		
 		
 	}
-	
 	
 	//==============================================================================
 	// Delete Watchlist
@@ -136,16 +134,18 @@ public class WatchlistService {
 		
 	}
 	
-	
 	//==============================================================================
 	// Update Watchlist
 	//==============================================================================
 	
 	public void updateWatchlist(Watchlist newWatchlist) throws Exception {
-
+		
 	}
 
-	//TESTED
+	//==============================================================================
+	// Lsit stocks from Watchlist
+	//==============================================================================
+	
 	public List<Stock> listStocksFromWatchlist(Integer watchlistId) throws Exception {
 
 		Connection connection = null;
@@ -193,6 +193,8 @@ public class WatchlistService {
 	public void addStockToWatchlist(Integer watchlistId, String stockSymbol) throws Exception {
 		
 		Connection connection = null;
+		WatchlistService wls = new WatchlistService();
+		
 		try {
 			connection = WatchlistDAO.getConnection();
 			connection.setAutoCommit(false);
@@ -201,17 +203,11 @@ public class WatchlistService {
 			StockService ss = new StockService();
 			ss.validateStock(stockSymbol);
 		
-			// call in this service check for duplicate stock
-			WatchlistDAO wldao = new WatchlistDAO();
-			List<String> listofStocks = wldao.getAllStocksFromWatchlist(watchlistId, connection);
-			
-			for (String stocksymbol : listofStocks){
-				if (stocksymbol.equalsIgnoreCase(stockSymbol)){
-					System.out.println("Duplicate stock!");
-				}else{
-					wldao.addStockToWatchlist(watchlistId, stockSymbol, connection);
-				}
+			// call in this service check for duplicate stock*********
+			if (wls.checkForDuplicateStocks(watchlistId, stockSymbol) == false){
+				watchlistDAO.addStockToWatchlist(watchlistId, stockSymbol, connection);
 			}
+			
 			connection.commit();
 			System.out.println(connection);
 			
@@ -223,7 +219,6 @@ public class WatchlistService {
 		}
 	}
 	
-	
 	//==============================================================================
 	// Delete stock from Watchlist
 	//==============================================================================
@@ -234,8 +229,7 @@ public class WatchlistService {
 			connection = WatchlistDAO.getConnection();
 			connection.setAutoCommit(false);
 
-			WatchlistDAO wldao = new WatchlistDAO();
-			wldao.deleteStockFromWatchlist(watchlistId, stockSymbol, connection);
+			watchlistDAO.deleteStockFromWatchlist(watchlistId, stockSymbol, connection);
 			
 		}catch (Exception e) {
 			connection.rollback();
@@ -245,9 +239,41 @@ public class WatchlistService {
 		}
 	}
 	
-	// to be changed later
-	public boolean checkForDuplicateStocks(Integer watchlistId, String stockSymbol) {
-		return true;
+	//==============================================================================
+	// Check for duplicate stock from Watchlist
+	//==============================================================================
+	public boolean checkForDuplicateStocks(Integer watchlistId, String stockSymbol) throws SQLException {
+	
+		Connection connection = null;
+	
+		try {
+			connection = WatchlistDAO.getConnection();
+			connection.setAutoCommit(false);
+		
+			// call stock service validate stock
+			StockService ss = new StockService();
+			ss.validateStock(stockSymbol);
+			
+			// call in this service check for duplicate stock
+			List<String> listofStocks = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connection);
+			
+			for (String stocksymbol : listofStocks){
+				if (stocksymbol.equalsIgnoreCase(stockSymbol)){
+					System.out.println("Duplicate stock!");
+					return true;
+				}else{
+					return false;
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+				if (connection != null)
+					connection.close();
+		}
+		
+		return false;
 	}
 
 }

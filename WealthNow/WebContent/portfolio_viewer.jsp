@@ -47,8 +47,8 @@ table#t01 th {
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script>
-function myFunction() {
-    window.location.reload();
+
+    
 </script>
 </head>
 
@@ -58,7 +58,7 @@ function myFunction() {
 		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
 	</div>
 	<%
-		response.setIntHeader("Refresh", 30);
+		response.setIntHeader("Refresh", 60);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());

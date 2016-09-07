@@ -163,7 +163,7 @@ public class WatchlistDAO extends DBUtil {
 	public List<String> getAllStocksFromWatchlist(Integer watchlistId, Connection connect) {
 
 		List<String> stocksList = new ArrayList<String>();
-
+		
 		try {
 			String SQLStatement = "select stock_symbol from WatchlistDetail where watchlist_id = ?";
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);

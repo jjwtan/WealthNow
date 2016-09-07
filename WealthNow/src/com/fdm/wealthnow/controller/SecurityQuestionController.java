@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.fdm.wealthnow.common.SecurityQnAndAns;
 
 /**
  * Servlet implementation class SecurityQuestionController
@@ -34,6 +37,16 @@ public class SecurityQuestionController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		Integer questionId = Integer.parseInt(request.getParameter("question"));
+		String answer = request.getParameter("answer");
+		System.out.println("question selected:" + questionId + " answer: " + answer);
+		SecurityQnAndAns sqa = new SecurityQnAndAns(questionId, answer);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("UserQnA", sqa);
+		
 		request.getRequestDispatcher("initial_user_account.jsp").forward(request, response);
 	}
 
