@@ -108,7 +108,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 					e.printStackTrace();
 				}
 			    
-			    System.out.println("TIME CHECK: "+ closeDate+ " - cancel order -GOOD FOR THE DAY" );
+			    System.out.println("TIME CHECK: "+ closeDate+ " - any GD order will be cancelled after this." );
 				if(now.after(closeDate)){
 					//check if term is GD
 					if(order.getTerm().toString().equals("GD")){

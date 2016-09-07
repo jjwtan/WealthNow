@@ -72,16 +72,11 @@ public class PortfolioViewerController extends HttpServlet {
 		        Double selling_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString());
 		       Double final_price = qty*selling_price;
 		       
+		       session.setAttribute("orderID", orderID);
 		       session.setAttribute("final_price", final_price);
 		       session.setAttribute("selling_price", selling_price);
 		       session.setAttribute("stock_symbol", stock_symbol);
 		       session.setAttribute("quantity", qty);
-		        
-		      
-		        
-		        UserAccountService uas = new UserAccountService();
-		        uas.creditBalance(user_id,final_price);
-		        System.out.println(final_price);
 		        
 		        
 		       

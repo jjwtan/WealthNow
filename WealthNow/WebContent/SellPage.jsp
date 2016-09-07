@@ -52,7 +52,7 @@ $(document).ready ( function () {
 	<H1>Selling Page</H1>
 
 
-	<form action="SellPageController" method="post">
+	<form action="SellPageController" method="post" id="selling">
 		<table width="559" border="1" cellpadding="5" cellspacing="0">
 			<tr>
 				<th width="407">Stock</th>
@@ -78,9 +78,7 @@ $(document).ready ( function () {
 			<tr>
 				<td>Quantity</td>
 				<td>
-					<%
-						out.print(quantity);
-					%>
+					<input type="number" name="quantity" step="1" min="1" value="0" max="<%=quantity%>">
 				</td>
 
 			</tr>
@@ -105,7 +103,7 @@ $(document).ready ( function () {
 				</td>
 			</tr>
 		</table>
-		<br> <input type="submit" value="Sell Order" id="submitbutton">
+		<br> <input type="submit" value="Sell Order" id="submit_button">
 	</form>
 
 

@@ -37,9 +37,11 @@ public class OrderManagementService extends DBUtil {
 			System.out.println("Start Order Management Service(OMS) - createOpenOrder method");
 			// create sequence id for order_id
 			Integer order_id = getSequenceID("order_id_seq");
-
-			boolean validate = validateOrderData(user_id, currency_code, order_type, quantity, stock_symbol, price_type,
+			boolean validate = false;
+			if (order_type.equals("B")){
+			validate = validateOrderData(user_id, currency_code, order_type, quantity, stock_symbol, price_type,
 					opening_order_date, limit_price, term);
+			}
 			// validate data of the order, only true create data else print
 			// failed
 			if (validate == true) {
@@ -51,7 +53,7 @@ public class OrderManagementService extends DBUtil {
 			connect.commit();
 
 			System.out.println("End Of createOpenOrder..");
-
+			
 			return order_id;
 
 		} catch (Exception e) {
@@ -65,6 +67,59 @@ public class OrderManagementService extends DBUtil {
 		return null;
 	}
 
+	public Integer createSellOrder(Integer user_id, String currency_code, String order_type, Integer quantity,
+			String stock_symbol, String price_type, String opening_order_date, Double limit_price, String term, 
+			Double total_price_deducted){
+		Connection connect = null;
+
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+
+			OrderDAO ord = new OrderDAO();
+			System.out.println("Start Order Management Service(OMS) - createSellOrder method");
+			// create sequence id for order_id
+			Integer order_id = getSequenceID("order_id_seq");
+			boolean validate = false;
+			if (order_type.equals("S")){
+			validate = validateSellData(order_id,user_id, currency_code, order_type, quantity, stock_symbol, price_type,
+					opening_order_date, limit_price, term);
+			}
+			// validate data of the order, only true create data else print
+			// failed
+			if (validate == true) {
+				ord.createOpenOrderInDatabase(connect, order_id, user_id, currency_code, order_type, quantity,
+						stock_symbol, price_type, opening_order_date, limit_price, term, "OpenOrder", total_price_deducted);
+			} else {
+				System.out.println("Validation failed at createSellOrder.");
+			}
+			connect.commit();
+
+			System.out.println("End Of createSellOrder..");
+			
+			return order_id;
+
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+
+		return null;
+		
+	}
 	public void processOrder(Integer order_id, Double closing_price) {
 		Connection connect = null;
 		try {
@@ -175,6 +230,55 @@ public class OrderManagementService extends DBUtil {
 		}
 
 		
+	}
+	
+	public boolean validateSellData(Integer order_id, Integer user_id, String currency_code, String order_type, 
+			Integer quantity, String stock_symbol, String price_type, 
+			String opening_order_date, Double limit_price, String term){
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+
+			// check nulls for all parameters
+			if (user_id == null || currency_code == null || order_type == null || quantity == null
+					|| stock_symbol == null || price_type == null || opening_order_date == null
+					|| limit_price == null) {
+				System.out.println("something null");
+				return false;
+			}
+
+			// check if quantity is not negative
+			else if (quantity < 1) {
+				System.out.println("quantity negative");
+				return false;
+			}
+			//check if quantity is enough in stockholding
+			PortfolioService ps = new PortfolioService();
+			StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order_id);
+			if(sh.getRemaining_quantity() < quantity){
+				System.out.println("not enough quantity in stockholdings");
+				return false;
+			}
+
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return true;
 	}
 
 	public boolean validateOrderData(Integer user_id, String currency_code, String order_type, Integer quantity,
