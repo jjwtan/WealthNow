@@ -59,12 +59,14 @@ public class SellPageController extends HttpServlet {
 		System.out.println(order_ID);
 		
 		String stock_symbol = session.getAttribute("stock_symbol").toString();
-//		Integer qty = request.getAttribute("quantity");
-		Integer qty = Integer.parseInt(session.getAttribute("quantity").toString());
-		System.out.println(qty);
+		Integer qty = Integer.parseInt(request.getParameter("quantity"));
+//		Integer qty = Integer.parseInt(session.getAttribute("quantity1").toString());
+		System.out.println("Quantity in Sell Page controller $$$$$$$$:" + qty);
 		Double selling_price = Double.parseDouble(session.getAttribute("selling_price").toString());
+//		Double total_price = selling_price*qty;
 		
 		session.setAttribute("quantity", qty);
+//		session.setAttribute("total_price", total_price);
 	      
 		
 		request.getRequestDispatcher("SellConfirmationPage.jsp").forward(request, response);

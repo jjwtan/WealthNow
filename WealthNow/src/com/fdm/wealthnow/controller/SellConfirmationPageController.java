@@ -56,7 +56,9 @@ public class SellConfirmationPageController extends HttpServlet {
 //		Integer qty = request.getAttribute("quantity");
 		Integer qty = Integer.parseInt(session.getAttribute("quantity").toString());
 		Double selling_price = Double.parseDouble(session.getAttribute("selling_price").toString());
-		Double final_price = Double.parseDouble(session.getAttribute("final_price").toString());
+		Double fixed_price = 9.95;
+		Double final_price = qty*selling_price + fixed_price;
+		System.out.println("&&&&& fINAL PRICE IN SELLCOMFIRM CONTROLLER:" + final_price);
 		
 		
 		

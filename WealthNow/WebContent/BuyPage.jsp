@@ -81,7 +81,7 @@
 				<option value="GC" >Good Till Cancelled</option>
 
 			</select> <br> <br> 
-			<input type="submit" value="Submit">
+			<input type="submit" value="Submit"> <!-- <button type="reset" value="Reset">Reset</button> -->
 
 		</fieldset>
 	</form>

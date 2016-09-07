@@ -77,7 +77,7 @@ public class PortfolioViewerController extends HttpServlet {
 		       session.setAttribute("selling_price", selling_price);
 		       session.setAttribute("stock_symbol", stock_symbol);
 		       session.setAttribute("quantity", qty);
-		        
+		        System.out.println("$$$$$$$quantity inside portfolio viewer:" + qty);
 		        
 		       
 		        request.getRequestDispatcher("SellPage.jsp").forward(request, response);
