@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import com.fdm.wealthnow.common.SecurityQnAndAns;
 import com.fdm.wealthnow.common.User;
 import com.fdm.wealthnow.dao.SecurityQuestionDAO;
+import com.fdm.wealthnow.dao.UserAccountDAO;
+import com.fdm.wealthnow.dao.UserDAO;
 import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
@@ -32,6 +35,41 @@ public class UserRegisterService extends DBUtil {
 		}
 		System.out.println("returning null");
 		return null;
+	}
+	
+	public Connection registerUser(User user, SecurityQnAndAns sqa, String password, Float balance, boolean toCommit) {
+		Connection connect = null;
+		try {
+			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+			connect = getConnection();
+			connect.setAutoCommit(false);
+//			int id = getSequenceID("");
+//			user.setUserId(id);
+			UserDAO userDAO = new UserDAO();
+			System.out.println("going to add");
+			userDAO.addUser(connect, user, password);
+			System.out.println("added user " + user.getUserId() );
+			SecurityQuestionDAO securityQuestionDAO = new SecurityQuestionDAO();
+			securityQuestionDAO.addSecurityAnswer(connect, user.getUserId(), sqa);
+			
+//			UserAccountDAO userAccountDAO = new UserAccountDAO();
+			
+			if(toCommit) {
+				connect.commit();
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			try {
+				connect.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		return connect;
 	}
 	
 	private boolean validatePassword(User user, String password){

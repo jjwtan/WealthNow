@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.fdm.wealthnow.common.UserAccount;
 import com.fdm.wealthnow.util.DBUtil;
@@ -11,6 +13,26 @@ import com.fdm.wealthnow.util.DBUtil;
 public class UserAccountDAO extends DBUtil{
 	private static final String USER_ACCOUNT_TABLE = "useraccount";
 
+	public void addUserAccount(Connection connect, int userId, Float balance, String currency) {
+		try {
+			PreparedStatement ps = connect.prepareStatement("insert into " + USER_ACCOUNT_TABLE + " values(?,?,?,TO_DATE(?,'dd/mm/yyyy hh24:mi:ss'),TO_DATE(?,'dd/mm/yyyy hh24:mi:ss'))");
+			ps.setInt(1, userId);
+			ps.setFloat(2, balance);
+			ps.setString(3, currency);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			String date = sdf.format(new Date());
+			
+			ps.setString(4, date);
+			ps.setString(5, date);
+			
+			ps.executeUpdate();
+			System.out.println("useraccount added");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public UserAccount getAccountBalance(Connection connect, int userId) {
 		try {
