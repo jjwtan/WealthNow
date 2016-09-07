@@ -142,8 +142,9 @@ $(document).ready ( function () {
 				</td>
 			</tr>
 		</table>
-		<br> <input type="submit" value="Comfirm Order" id="submitbutton">
+		<br> <input type="submit" value="Comfirm Order" id="submitbutton">  
 	</form>
+	<button type="cancel" onclick="javascript:window.location='BuyPage.jsp';">Cancel Order</button>
 
 
 
