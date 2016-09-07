@@ -3,6 +3,7 @@ package com.fdm.wealthnow.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,9 +36,22 @@ public class DBUtil {
 	}
 	
 	public static String convertDateObjToString(Date date){
-		SimpleDateFormat format = new SimpleDateFormat("dd/MMM/yyy");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
 		String datestr = format.format(date);
 		return datestr;
+	}
+	public static Date convertStringToDateObject(String date){
+		SimpleDateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+		Date newDate = null;
+		try {
+			newDate = format.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch bloc
+			System.out.println(newDate);
+			e.printStackTrace();
+		}
+		return newDate;
+		
 	}
 
 }

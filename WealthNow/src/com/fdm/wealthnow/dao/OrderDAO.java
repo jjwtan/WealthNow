@@ -82,7 +82,7 @@ public class OrderDAO extends DBUtil {
 				Date order_completion_date = result.getDate("order_completion_date");
 				Double closing_price = result.getDouble("closing_price");
 				Double total_price_deducted = result.getDouble("total_price_deducted");
-				Integer old_order_id = result.getInt("old_order_id");
+				Integer old_order_id = null;
 
 				order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 						stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,
@@ -122,7 +122,7 @@ public class OrderDAO extends DBUtil {
 			Date order_completion_date = result.getDate("order_completion_date");
 			Double closing_price = result.getDouble("closing_price");
 			Double total_price_deducted = result.getDouble("total_price_deducted");
-			Integer old_order_id = result.getInt("old_order_id");
+			Integer old_order_id = null;
 
 			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 					stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,
@@ -158,7 +158,7 @@ public class OrderDAO extends DBUtil {
 			Double closing_price = result.getDouble("closing_price");
 			Double total_price_deducted = result.getDouble("total_price_deducted");
 			String status = result.getString("status");
-			Integer old_order_id = result.getInt("old_order_id");
+			Integer old_order_id = null;
 
 			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
 					stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,

@@ -45,7 +45,6 @@
 		int userId = currentUser.getUser().getUserId();
 		List<Watchlist> watchlists = ws.getUserWatchlists(userId);
 		
-		String new_watchlist = session.getAttribute("new_watchlist").toString();
 	%>
 	You have <b><%=watchlists.size()%></b> watchlists
 	<div> 
@@ -70,6 +69,7 @@
 	</div>
 	<br>
 	<div>
+	
 		<%
 			if (request.getAttribute("watchlist_id") != null) {
 				Integer id = (Integer) request.getAttribute("watchlist_id");
@@ -78,6 +78,7 @@
 		%>
 		<h2><%=selectedWl.getWatchlistName()%></h2>
 		<div style="float: right"><i>Updated: <%=sdf.format(new Date()) %></i></div>
+		<form>
 		<table width="100%" border="1">
 			<tr>
 				<th>Instrument</th>
@@ -119,6 +120,7 @@
 			%>
 
 		</table>
+		</form>
 	</div>
 	<div style="padding-top: 1em">
 		<label for="submit-form" class="button">Refresh</label>

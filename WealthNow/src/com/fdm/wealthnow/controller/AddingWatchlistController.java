@@ -45,10 +45,12 @@ public class AddingWatchlistController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	HttpSession session = request.getSession();
+	System.out.println("-----------Inside adding watchlist controller------------");
 	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 	UserAccountService uas = new UserAccountService();
 	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 	Integer user_id = ua.getUserId();
+	System.out.println("User id:" + user_id );
 	DBUtil dbu = new DBUtil();
 	Integer watchlist_id =0;
 	try {
@@ -56,16 +58,24 @@ public class AddingWatchlistController extends HttpServlet {
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
+		System.out.println("inside the catch for adding watch list");
 	}
 	
 	
-	String new_watchlist = session.getAttribute("new_watchlist").toString();
+	String new_watchlist = request.getParameter("new_watchlist");
+	System.out.println("new watchlist name:" + new_watchlist);
 	session.setAttribute("new_watchlist", new_watchlist);
 	WatchlistService wls = new WatchlistService();
 	
-	Watchlist wl = new Watchlist(watchlist_id, new_watchlist, null, new Date(), new Date());
+	Date dateNew = dbu.convertStringToDateObject("07/Sep/2016");	
+	Watchlist wl = new Watchlist(watchlist_id, new_watchlist, "",dateNew, dateNew );
 	
-	
+	try {
+		wls.createWatchlist(wl, user_id);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	
 	
 	request.getRequestDispatcher("view_watchlist.jsp").forward(request, response);

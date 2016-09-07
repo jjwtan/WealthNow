@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -65,14 +66,17 @@ public class WatchlistServiceTest extends DBUtil {
 	public void testCreateWatchlist() throws Exception {
 		wls = new WatchlistService();
 		int watchlist_id = getSequenceID("watchlist_id_seq");
-		//wls.createWatchlist(watchlist);
+		Date date = convertStringToDateObject("25 MAR 2016");
+
+		wlist = new Watchlist(watchlist_id, "Test Watchlist", null, date, date);
+		wls.createWatchlist(wlist, 1);
 		
 		wldao = new WatchlistDAO();
-		Watchlist watchlist = wldao.getWatchlist(watchlist_id, connect);
+		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
 		
-		System.out.println("\n Start addStockToWatchlist");
-		assertEquals(watchlist.getWatchlistId(), watchlist_id);
-		System.out.println("Test Completed: Added stock in watchlist.");	
+		System.out.println("\n Start createWatchlist");
+		assertEquals(watchlist.size(), 2);
+		System.out.println("Test Completed: Create watchlist.");	
 	}
 	
 	//==============================================================================
@@ -83,14 +87,16 @@ public class WatchlistServiceTest extends DBUtil {
 	public void testDeleteWatchlist() throws Exception {
 		
 		wls = new WatchlistService();
-		wls.deleteWatchlist(77);
-		
+		int watchlist_id = getSequenceID("watchlist_id_seq");
+
+		//wls.deleteWatchlist(watchListId);
+	
 		wldao = new WatchlistDAO();
-		List<Watchlist> userWatchlist = wls.getUserWatchlists(2);
-		
-		System.out.println("\n Start deleteWatchlist");
-		assertEquals(userWatchlist.size(), 0);
-		System.out.println("Test Completed: Delete watchlist.");	
+		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
+	
+		System.out.println("\n Start createWatchlist");
+		assertEquals(watchlist.size(), 1);
+		System.out.println("Test Completed: Create watchlist.");	
 	}
 	
 	//==============================================================================
