@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fdm.wealthnow.common.SecurityQnAndAns;
 import com.fdm.wealthnow.common.User;
 
 /**
@@ -42,6 +43,12 @@ public class CompleteRegistrationController extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("UserProfile");
 		System.out.println(user.getFirstName() + " " + user.getLastName());
+		
+		SecurityQnAndAns sqa = (SecurityQnAndAns) session.getAttribute("UserQnA");
+		System.out.println(sqa.getQnId() + ": " + sqa.getAns());
+		
+		Float amount = Float.parseFloat(request.getParameter("deposit_amount"));
+		System.out.println("intial balance: " + amount);
 		
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}

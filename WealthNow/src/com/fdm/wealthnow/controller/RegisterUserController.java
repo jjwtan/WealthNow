@@ -82,9 +82,6 @@ public class RegisterUserController extends HttpServlet {
 		}
 
 		
-		
-		
-		
 	}
 
 	private boolean validateUsername(HttpServletRequest request, HttpServletResponse response, String username) throws ServletException, IOException {

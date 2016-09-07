@@ -20,10 +20,12 @@
 					<%
 						UserRegisterService urs = new UserRegisterService();
 						List<String> questions = urs.getAllSecurityQuestions();
+						int counter = 1;
 						for (String question : questions) {
 					%>
-					<option value="<%=question %>"><%=question%></option>
+					<option value="<%=counter %>"><%=question%></option>
 					<%
+						counter++;
 						}
 					%>
 			</select>
