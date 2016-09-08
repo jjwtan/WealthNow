@@ -66,6 +66,7 @@ table#t01 th {
 	
 	
 	<%
+		response.setIntHeader("Refresh", 20);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
