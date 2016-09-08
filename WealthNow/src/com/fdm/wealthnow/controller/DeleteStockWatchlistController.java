@@ -48,12 +48,10 @@ public class DeleteStockWatchlistController extends HttpServlet {
 		String stock_symbol = request.getParameter("stock_Symbol");
 		StockService ss = new StockService();
 		WatchlistService wls = new WatchlistService();
-		Integer watchlist_ID = (Integer)session.getAttribute("delete_stock_watchlist_id");
+		Integer watchlist_ID = (Integer)session.getAttribute("watchlist_id");
 	
 		try{
-		
 			wls.deleteStockFromWatchlist(watchlist_ID, stock_symbol);
-		
 		}catch (Exception e){
 			e.printStackTrace();
 			System.out.println("catch in delete stock watchlist controller");
