@@ -6,9 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Page</title>
-
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 <script>
 	$(document).ready(function() {
 
@@ -39,15 +38,7 @@
 </script>
 </head>
 <body>
-<div style="float: right">
-	<a href="login.jsp">Logout</a>
-
-<a href="view_watchlist.jsp">My Watchlists</a><br/>
-<a href="update_balance.jsp">Update Balance</a><br/>
-<a href="portfolio_viewer.jsp">Portfolio Viewer</a><br/>
-<a href="OrderHistory.jsp">Order History</a>
-
-</div>
+<div class="container">
 
 	<form action="BuyPageController" method="post">
 		<fieldset>
@@ -76,30 +67,41 @@
 			
 
 			<input type="radio" name="Selection" value="B" required> Buy  <br> <br>
-			Quantity: <input type="number" name="quantity"
-				value="0" required min="1" max="100000" step="1"> 
-				Stock Symbol:<input type="text" name="stock_symbol" pattern="[A-Za-z0-9]{3,4}"
+			<div class="col-lg-6">
+			Quantity: <input class="form-control" type="number" name="quantity"	value="0" required min="1" max="100000" step="1"> 
+			</div>
+			<div class="col-lg-6">
+			Stock Symbol:<input class="form-control" type="text" name="stock_symbol" pattern="[A-Za-z0-9]{3,4}"
 				required placeholder="3-4 Characters"  style="text-transform: uppercase">
-				
+			</div>
 				 <br> <br>
-				 Price Type:<br> <select required name="price_type" id="price_type" value="">
+			<div class="col-lg-6">
+				 Price Type:<br> 
+			<select class="form-control" required name="price_type" id="price_type" value="">
 				<option selected disabled hidden style='display: none' value=''></option>
 				<option value="M" id="M">Market</option>
 				<option value="SL" id="SL">Stop Loss</option>
 				<option value="LT" id="LT">Limit</option>
 			</select> 
-			
-			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
-				<br> <select name="term" id="term" >
+			</div>
+			<div class="col-lg-6">
+			<input class="form-control" type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
+				<br> 
+			</div>
+			<div class="col-lg-6">
+			<select class="form-control" name="term" id="term" >
 				<option value="null">Term</option>
 				<option value="GD" >Good For The Day</option>
 				<option value="GC" >Good Till Cancelled</option>
 
-			</select> <br> <br> 
-			<input type="submit" value="Submit"> <!-- <button type="reset" value="Reset">Reset</button> -->
-
+			</select> 
+			</div>
+			<br> <br> 
+			<div class="col-lg-12">
+			<input class="btn btn-primary" type="submit" value="Submit"> <!-- <button type="reset" value="Reset">Reset</button> -->
+</div>
 		</fieldset>
 	</form>
-
+</div>
 </body>
 </html>
