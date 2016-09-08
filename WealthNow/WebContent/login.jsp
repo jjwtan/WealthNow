@@ -74,10 +74,9 @@
 
 					<div class="form-group">
 						<div class="">
-							<button type="submit" value="Login" class="btn btn-default">Sign
+							<button type="submit" value="Login" class="btn btn-primary btn-block">Sign
 								in</button>
-							<br> <br>
-
+							<br>
 							<p>
 								<a href="register_user_info.jsp">Register as new User</a>
 							</p>
