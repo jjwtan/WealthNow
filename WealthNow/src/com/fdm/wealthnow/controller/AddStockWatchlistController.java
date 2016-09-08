@@ -46,7 +46,8 @@ public class AddStockWatchlistController extends HttpServlet {
 		String stock_symbol = request.getParameter("stock_Symbol");
 		StockService ss = new StockService();
 		WatchlistService wls = new WatchlistService();
-		Integer watchlist_ID = Integer.parseInt(session.getAttribute("watchlist_id").toString());
+//		Integer watchlist_ID = Integer.parseInt(session.getAttribute("watchlist_id").toString());
+		Integer watchlist_ID = Integer.parseInt(request.getParameter("add_stock_watchlist_id"));
 
 		if (ss.validateStock(stock_symbol) == true) {
 			

@@ -90,6 +90,13 @@
 			<i>Updated: <%=sdf.format(new Date())%></i>
 		</div>
 
+		
+		<%
+			session.setAttribute("watchlist_id", id);
+		%>
+		<a href="add_stock_watchlist.jsp"><button>Add New Stocks</button></a>
+
+	
 		<table width="100%" border="1">
 			<tr>
 				<th>Instrument</th>
@@ -120,10 +127,6 @@
 				<td><%=stock.getPercentChange()%></td>
 			</tr>
 
-			
-			<button type="submit" value="" name="order_ID"
-				id="order_ID">Add Stock</button>
-
 
 			<%
 				}
@@ -133,7 +136,7 @@
 				<td colspan="9" align="center">You have no stocks in this
 					watchlist</td>
 			</tr>
-			<a href="add_stock_watchlist.jsp"><button>Add New Stock</button></a>
+			
 			<%
 				}
 			%>
