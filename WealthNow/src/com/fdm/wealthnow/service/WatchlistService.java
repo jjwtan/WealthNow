@@ -164,7 +164,7 @@ public class WatchlistService {
 
 			symbolsList = watchlistDAO.getAllStocksFromWatchlist(watchlistId, connection);
 			StockService ss = new StockService();
-			System.out.println("size of symbol list: " + symbolsList.size());
+//			System.out.println("size of symbol list: " + symbolsList.size());  //causing null  pointer exception
 
 			if (symbolsList == null || symbolsList.size() == 0) {
 				System.out.println("listStocksFromWatchlist: There are no stocks in this watchlist!");
