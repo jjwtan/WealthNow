@@ -11,11 +11,12 @@ import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.common.Watchlist;
 import com.fdm.wealthnow.dao.WatchlistDAO;
 import com.fdm.wealthnow.service.StockService;
+import com.fdm.wealthnow.util.DBUtil;
 
-public class WatchlistService {
+public class WatchlistService extends DBUtil {
 
 	static WatchlistDAO watchlistDAO = new WatchlistDAO();
-
+	
 	
 	//==============================================================================
 	// View Watchlist
@@ -144,8 +145,23 @@ public class WatchlistService {
 	// Update Watchlist
 	//==============================================================================
 	
-	public void updateWatchlist(Watchlist newWatchlist) throws Exception {
-		
+	public void updateWatchlist(int watchlistID, String newWatchlistName) throws Exception {
+		Connection connection = null;
+		try {
+			connection = WatchlistDAO.getConnection();
+			connection.setAutoCommit(false);
+			
+			Watchlist updateWatchlist = new Watchlist(watchlistID, newWatchlistName, "");		
+			
+			watchlistDAO.updateWatchlist(updateWatchlist, connection);
+			connection.commit();
+			
+		} catch (Exception e) {
+				e.printStackTrace();
+		} finally {
+				if (connection != null)
+					connection.close();
+		}	
 		
 	}
 

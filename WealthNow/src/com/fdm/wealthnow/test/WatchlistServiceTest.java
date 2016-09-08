@@ -101,8 +101,7 @@ public class WatchlistServiceTest extends DBUtil {
 
 		wls.deleteWatchlist(47);
 	
-		wldao = new WatchlistDAO();
-		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
+		List<Watchlist> watchlist = wls.getUserWatchlists(2);
 	
 		System.out.println("\n Start createWatchlist test");
 		assertEquals(watchlist.size(), 2);
@@ -110,8 +109,27 @@ public class WatchlistServiceTest extends DBUtil {
 	}
 	
 	//==============================================================================
-	// Test on updating Watchlist
+	// Test on updating Watchlist (TESTED)
 	//==============================================================================
+	
+	//@Test
+	public void testUpdateWatchlist() throws Exception {
+		wlist = new Watchlist();
+		wls = new WatchlistService();
+
+		String newWatchlistName = "GoldDuck";
+		wls.updateWatchlist(58, newWatchlistName);
+	
+		wldao = new WatchlistDAO();
+		Watchlist watchlist = wls.viewWatchlist(58);
+	
+		System.out.println("\n Start createWatchlist test");
+
+		System.out.println("\nNew watchlist name is: " +watchlist);
+
+		System.out.println("Test Completed: Create watchlist.");	
+	}
+	
 	
 	//==============================================================================
 	// Test on listing stocks from Watchlist (Tested)
