@@ -46,7 +46,8 @@
 		List<Watchlist> watchlists = ws.getUserWatchlists(userId);
 	%>
 	You have
-	<b><%=watchlists.size()%></b> watchlists
+	<b><%=(watchlists == null) ? 0 : watchlists.size()%></b> watchlists
+	<% if (watchlists != null) { %>
 	<div>
 		<form id="watchlist_form" action="ViewWatchlist" method="post">
 			Select Watchlist: <select required name="watchlistID"
@@ -67,6 +68,9 @@
 			</select> <input type="submit" id="submit-form" style="visibility: hidden" />
 		</form>
 	</div>
+	<%
+	}
+	%>
 	<br>
 	<div>
 
