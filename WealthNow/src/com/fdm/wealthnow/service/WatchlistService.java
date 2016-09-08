@@ -68,16 +68,14 @@ public class WatchlistService {
 
 			userWatchlists = watchlistDAO.getAllUserWatchlist(userId, connection);
 
-			if (userWatchlists.size() == 0) {
+			if (userWatchlists == null || userWatchlists.size() == 0) {
 				System.out.println("The user does not have any watchlist!");
-				userWatchlists = null;
 			} else {
 				for (int a = 0; a < userWatchlists.size(); a++) {
 					System.out.println("Watchlist id: " + userWatchlists.get(a).getWatchlistId());
 				}
 			}
 
-			connection.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -168,9 +166,8 @@ public class WatchlistService {
 			StockService ss = new StockService();
 			System.out.println("size of symbol list: " + symbolsList.size());
 
-			if (symbolsList.size() == 0) {
+			if (symbolsList == null || symbolsList.size() == 0) {
 				System.out.println("listStocksFromWatchlist: There are no stocks in this watchlist!");
-				stocksList = null;
 			} 
 			else {
 				System.out.println("Inside else. There are some stocks!");
@@ -184,7 +181,7 @@ public class WatchlistService {
 					 System.out.println("Market Price: " + stocksList.get(i).getMktPrice());
 				}
 			}
-			connection.commit();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
