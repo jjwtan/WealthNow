@@ -92,7 +92,7 @@
 
 		
 		<%
-			session.setAttribute("watchlist_id", id);
+			session.setAttribute("add_stock_watchlist_id", id);
 		%>
 		<a href="add_stock_watchlist.jsp"><button>Add New Stocks</button></a>
 

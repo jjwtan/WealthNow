@@ -23,7 +23,7 @@
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		int userId = currentUser.getUser().getUserId();
 	%>
-Your watchlist id: <%=session.getAttribute("watchlist_id") %>
+Your watchlist id: <%=session.getAttribute("add_stock_watchlist_id") %>
 	<h3 style="color: red;">${errorMessage}</h3>
 
 	<form action="AddStockWatchlistController" method="post">
