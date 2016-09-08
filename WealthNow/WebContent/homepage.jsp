@@ -33,7 +33,7 @@
 %>
 <div style="float: right">
 <font color="white" size="5px">
-	<a href="login.jsp">Logout</a>
+	<a href="logout.jsp">Logout</a>
 	</font>
 </div>
 <div class="page-header" align="center">

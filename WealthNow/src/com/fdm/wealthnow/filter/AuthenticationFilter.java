@@ -47,13 +47,17 @@ public class AuthenticationFilter implements Filter {
 
 	private boolean checkURI(String uri) {
 		return 	!uri.endsWith("/login.jsp")&&
+				!uri.endsWith("/logout.jsp")&&
 				!uri.endsWith("/LoginController")&&
 				!uri.endsWith("/register_user_info.jsp") &&
 				!uri.endsWith("/RegisterUserController")&&
 				!uri.endsWith("/security_questions.jsp") &&
 				!uri.endsWith("/SecurityQuestionController") &&
 				!uri.endsWith("/initial_user_account.jsp") &&
-				!uri.endsWith("/CompleteRegistrationController");
+				!uri.endsWith("/CompleteRegistrationController")&&
+				!uri.contains("navbar")&&
+				!uri.contains("css")&&
+				!uri.contains("img");
 
 	}
 
