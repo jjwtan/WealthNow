@@ -25,13 +25,22 @@ public class UserRegisterService extends DBUtil {
 	}
 	
 	public List<String> getAllSecurityQuestions() {
+		Connection connect = null;
 		try {
 			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
-			Connection connect = getConnection();
+			connect = getConnection();
 			SecurityQuestionDAO sDAO = new SecurityQuestionDAO();
 			return sDAO.getAllQuestions(connect);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		System.out.println("returning null");
 		return null;
@@ -68,6 +77,14 @@ public class UserRegisterService extends DBUtil {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		
 		return connect;
@@ -88,8 +105,9 @@ public class UserRegisterService extends DBUtil {
 	 * @return
 	 */
 	private boolean validateUserName(String userName, User user){
+		Connection connect = null;
 		try {
-			Connection connect = getConnection();
+			connect = getConnection();
 			PreparedStatement ps = connect.prepareStatement("Select * from " + USER_TABLE + " where user_name = ?");
 			ps.setString(1, userName);
 			
@@ -102,6 +120,14 @@ public class UserRegisterService extends DBUtil {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		return false;
 	}
