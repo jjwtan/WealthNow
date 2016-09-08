@@ -220,6 +220,10 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 		try {
 			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 			connect = getConnection();
+			
+			OrderDAO orderDao = new OrderDAO();
+			List<Order> listOfOpenOrder = orderDao.getListOfOpenOrder(connect, limit);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -230,9 +234,6 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						e.printStackTrace();
 				}
 		}
-
-		OrderDAO orderDao = new OrderDAO();
-		List<Order> listOfOpenOrder = orderDao.getListOfOpenOrder(connect, limit);
 
 		return listOfOpenOrder;
 
