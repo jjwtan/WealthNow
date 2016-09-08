@@ -6,6 +6,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:useBean id="registerBean" class="com.fdm.wealthnow.beans.RegisterBean" scope="request"/>  
 <jsp:setProperty name="registerBean" property="*"/>
+<style type="text/css">
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+</style>
 <title>Registration</title>
 <h3>1: User Profile</h3>
 <form action="RegisterUserController" method="post">  
@@ -13,7 +23,10 @@
 		<tr>
 			<td>User name</td>
 			<td><input type="text" name="username" 
-			value="${registerBean.username}" required/></td>
+			value="${registerBean.username}" required/>
+			<% if(request.getAttribute("errorMessage") != null) {%>
+				<div style="font-style: italic; color: red"><%=request.getAttribute("errorMessage") %></div>
+			<%} %></td>
 		</tr>
 		<tr>
 			<td>Password</td>
@@ -45,7 +58,7 @@
 		</tr>
 		<tr>
 			<td>Phone Number</td>
-			<td><input type="number" name="phoneNumber" value="${registerBean.phoneNumber}" required/></td>
+			<td><input type="number" name="phoneNumber" value="${registerBean.phoneNumber}" min=1 max=999999999 required/></td>
 		</tr>
 		<tr>
 			<td>Maiden Name</td>

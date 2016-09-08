@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fdm.wealthnow.common.User;
+import com.fdm.wealthnow.service.UserRegisterService;
 import com.fdm.wealthnow.service.UserService;
 import com.fdm.wealthnow.util.DBUtil;
 
@@ -48,6 +49,7 @@ public class RegisterUserController extends HttpServlet {
 		
 		if(!validateUsername(request, response, username)){
 			request.getRequestDispatcher("register_user_info.jsp").forward(request, response);
+			return;
 		}
 		
 		String password = request.getParameter("password");
@@ -68,7 +70,6 @@ public class RegisterUserController extends HttpServlet {
 							address + " " +
 							phoneNumber);
 		
-		int userId;
 		try {
 			User userProfile = new User(9, username, firstName, lastName, birthday, email, phoneNumber, address, maidenName);
 			
@@ -86,8 +87,13 @@ public class RegisterUserController extends HttpServlet {
 	}
 
 	private boolean validateUsername(HttpServletRequest request, HttpServletResponse response, String username) throws ServletException, IOException {
-		request.setAttribute("errorMessage", "username has already been taken");
-		return true;
+		UserRegisterService urs = new UserRegisterService();
+		boolean valid = urs.validateUserName(username);
+		
+		if(!valid) {
+			request.setAttribute("errorMessage", "Username has already been taken");
+		}
+		return valid;
 	}
 
 
