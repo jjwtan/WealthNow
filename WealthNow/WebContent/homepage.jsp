@@ -7,6 +7,22 @@
 			com.fdm.wealthnow.service.UserAccountService" %>
 <html>
 <head>
+<!-- Java script and Bootstrap -->
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- --End of Bootstrap---------- -->
+<link rel = "stylesheet" type = "text/css" href="css/style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Homepage</title>
 </head>
@@ -16,17 +32,23 @@
 	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 %>
 <div style="float: right">
+<font color="white" size="5px">
 	<a href="login.jsp">Logout</a>
+	</font>
 </div>
+<div class="page-header" align="center">
 <h1> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %></h1>
+</div>
 <h2>Your balance is $<%=ua.getBalance() %></h2>
+<br><br><br>
 
-<a href="view_watchlist.jsp">My Watchlists</a><br/>
-<a href="BuyPage.jsp">Buy/Sell Securities</a><br/>
-<a href="update_balance.jsp">Update Balance</a><br/>
-<a href="portfolio_viewer.jsp">Portfolio Viewer</a><br/>
-<a href="OrderHistory.jsp">Order History</a>
-
+<div align="center">
+<button type="button" class="btn btn-primary"><a href="view_watchlist.jsp"><font color="white">My Watchlists</font></a></button><br><br>
+<button type="button" class="btn btn-primary"><a href="BuyPage.jsp"><font color="white">Buy/Sell Securities</font></a></button><br><br>
+<button type="button" class="btn btn-primary"><a href="update_balance.jsp"><font color="white">Update Balance</font></a></button><br><br>
+<button type="button" class="btn btn-primary"><a href="portfolio_viewer.jsp"><font color="white">Portfolio Viewer</font></a></button><br><br>
+<button type="button" class="btn btn-primary"><a href="OrderHistory.jsp"><font color="white">Order History</font></a></button><br><br>
+</div>
 
 </body>
 </html>
