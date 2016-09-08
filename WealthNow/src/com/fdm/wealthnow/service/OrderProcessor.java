@@ -223,9 +223,10 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 			
 			OrderDAO orderDao = new OrderDAO();
 			List<Order> listOfOpenOrder = orderDao.getListOfOpenOrder(connect, limit);
+			return listOfOpenOrder;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+				e.printStackTrace();
 		}finally {
 			if (connect != null)
 				try {
@@ -235,7 +236,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 				}
 		}
 
-		return listOfOpenOrder;
+		return null;
 
 	}
 }
