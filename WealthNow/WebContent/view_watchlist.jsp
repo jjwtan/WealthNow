@@ -32,10 +32,15 @@
 </head>
 <body>
 	<div style="float: right">
+	
+<a href="update_balance.jsp">Update Balance</a>
+<a href="OrderHistory.jsp">Order History</a>
+<a href="portfolio_viewer.jsp">Portfolio Viewer</a> 
+		<a href="BuyPage.jsp">Buy Stocks</a> 
 		<a href="login.jsp">Logout</a>
 
 	</div>
-	<div style="float: right; padding-right: 600px; padding-top: 10px;">
+	<div style="float: right; padding-right: 300px; padding-top: 10px;">
 		<a href="adding_watchlist.jsp"><button>Add New WatchList</button></a>
 
 	</div>
