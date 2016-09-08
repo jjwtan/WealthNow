@@ -52,7 +52,7 @@
 			<div class="form-group">
 				<label for="inputUserName" class="col-sm-2 control-label">User
 					name: </label>
-				<div class="col-sm-10">
+				<div class="col-xs-3">
 					<input type="text" name="username" class="form-control"
 						value="${userBean.username}" placeholder="e.g.myAccount" required>
 				</div>
@@ -65,7 +65,7 @@
 			<div class="form-group">
 				<label for="inputPassword" class="col-sm-2 control-label">Password:
 				</label>
-				<div class="col-sm-10">
+				<div class="col-xs-3">
 					<input type="password" name="password" class="form-control"
 						placeholder="Password" required>
 				</div>

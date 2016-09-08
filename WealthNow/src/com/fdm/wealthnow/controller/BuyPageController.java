@@ -65,7 +65,7 @@ public class BuyPageController extends HttpServlet {
 		String quantity = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
 		String price_type = request.getParameter("price_type");
-		String term = request.getParameter("term");
+		
 		String limit_price = request.getParameter("lsl");
 		String order_type = request.getParameter("Selection");
 		String term1 = request.getParameter("term");

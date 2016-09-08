@@ -718,10 +718,9 @@ nav#footer p {
 	background: #FCAC45;
 	border-color: #FCAC45;
 	color: #ffffff;
-}
+} 
 
-<
-style>form {
+form {
 	border: 0px;
 	margin-top: 100px;
 	margin-bottom: 100px;
@@ -751,6 +750,20 @@ footer {
 div.page-header {
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
-</
-style
->
+
+input[type=text], input[type=url], input[type=email], input[type=password], input[type=tel] {
+  -webkit-appearance: none; -moz-appearance: none;
+  display: block;
+  margin: 0;
+  width: 100%; height: 40px;
+  line-height: 40px; font-size: 17px;
+  border: 1px solid #bbb;
+}
+
+.center {
+    text-align:center;
+}
+
+.center form {
+    display:inline-block;
+}
