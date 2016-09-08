@@ -43,7 +43,7 @@
 							<a data-toggle="collapse" href="#collapse1">Watchlist</a>
 						</div>
 					</div>
-					<div id="collapse1" class="panel-collapse collapse.in">
+					<div id="collapse1" class="panel-collapse collapse in">
 						<div class="panel-body">---</div>
 					</div>
 				</div>
@@ -57,7 +57,7 @@
 							<a data-toggle="collapse" href="#collapse3">Order History</a>
 						</div>
 					</div>
-					<div id="collapse3" class="panel-collapse collapse.in">
+					<div id="collapse3" class="panel-collapse collapse in">
 						<div class="panel-body">---</div>
 					</div>
 				</div>
@@ -72,68 +72,14 @@
 						<a data-toggle="collapse" href="#collapse2">Portfolio</a>
 					</div>
 				</div>
-				<div id="collapse2" class="panel-collapse collapse.in">
+				<div id="collapse2" class="panel-collapse collapse in">
 					<div class="panel-body">---</div>
 				</div>
 			</div>
 		</div>
 		</div>
 		<br>
-		<!--    
-	<div class="container-fluid">
-            <div class="col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 row no-gutter">
-                <div class="col-lg-offset-2 col-lg-4 col-sm-6">
-                    <a href="view_watchlist.jsp" class="portfolio-box">
-                        <img src="img/watchlistbtn.jpg" class="img-responsive image-group" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-name">
-                                    My Watchlist
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="BuyPage.jsp" class="portfolio-box">
-                        <img src="img/buysellbtn.jpg" class="img-responsive image-group" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-name">
-                                    Buy/Sell Securities
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-offset-2 col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
-                        <img src="img/portfolio.jpg" class="img-responsive image-group" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-name">
-                                    My Portfolio
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/4.jpg" class="portfolio-box">
-                        <img src="img/orderhistory.jpg" class="img-responsive image-group" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-name">
-                                    My Order History
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-        </div>
--->
+		
 		<!-- 
 <div align="center">
 <button type="button" class="btn btn-primary"><a href="view_watchlist.jsp"><font color="white">My Watchlists</font></a></button><br><br>
