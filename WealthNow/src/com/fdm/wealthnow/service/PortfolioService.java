@@ -20,17 +20,20 @@ public class PortfolioService extends DBUtil {
 		Connection connect = null;
 		try {
 			connect = getConnection();
+			
+			PortfolioDAO pfDao = new PortfolioDAO();
+			System.out.println("Updating StockHolding");
+			pfDao.updateStockHolding(connect, order_id, sold_quantity);
+			System.out.println("StockHolding updated");
+
+			connect.commit();
+		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				connect.rollback();
+		} finally {
+				if (connect != null)
+					connect.close();
 		}
-
-		PortfolioDAO pfDao = new PortfolioDAO();
-		System.out.println("Updating StockHolding");
-		pfDao.updateStockHolding(connect, order_id, sold_quantity);
-		System.out.println("StockHolding updated");
-
-		connect.commit();
 
 	}
 
@@ -67,7 +70,6 @@ public class PortfolioService extends DBUtil {
 		}
 		return (Double) null;
 		
-
 	}
 
 	/*
