@@ -13,20 +13,22 @@
 			com.fdm.wealthnow.service.WatchlistService"%>
 <html>
 <head>
-<style type="text/css">
-.button {
-	text-decoration: none;
-	background-color: #EEEEEE;
-	color: #333333;
-	padding: 2px 6px 2px 6px;
-	border-top: 1px solid #CCCCCC;
-	border-right: 1px solid #333333;
-	border-bottom: 1px solid #333333;
-	border-left: 1px solid #CCCCCC;
-}
-</style>
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
+<!-- Java script and Bootstrap -->
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- --End of Bootstrap---------- -->
+<link rel = "stylesheet" type = "text/css" href="css/style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>My Watchlist</title>
 </head>
@@ -41,7 +43,11 @@
 
 	</div>
 	<div style="float: right; padding-right: 300px; padding-top: 10px;">
+		<!--  
 		<a href="adding_watchlist.jsp"><button>Add New WatchList</button></a>
+		-->
+		<button type="button" class="btn btn-primary"><a href="adding_watchlist.jsp"><font color="white">Add New WatchList</font></a></button><br><br>
+		
 
 	</div>
 	<%
