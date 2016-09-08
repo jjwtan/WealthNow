@@ -66,6 +66,7 @@ table#t01 th {
 	
 	
 	<%
+		session.setAttribute("quantity", null);
 		//response.setIntHeader("Refresh", 20);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
