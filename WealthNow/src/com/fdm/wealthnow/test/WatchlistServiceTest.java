@@ -38,29 +38,29 @@ public class WatchlistServiceTest extends DBUtil {
 	}
 	
 	//==============================================================================
-	// Test on view Watchlist (Tested)
+	// Test on view Watchlist (TESTED)
 	//==============================================================================
 	
 	//@Test
 	public void testViewWatchlist() throws Exception {
 		wls = new WatchlistService();
-		Watchlist watchlist = wls.viewWatchlist(2);
+		Watchlist watchlist = wls.viewWatchlist(58);
 		
-		System.out.println("\nStart viewWatchlist");
-		System.out.println(watchlist);
-		System.out.println("Test Completed: View watchlist.");	
+		System.out.println("\nStart viewWatchlist test");
+		System.out.println("\nWatchlist name: " +watchlist);
+		System.out.println("\nTest Completed: View watchlist.");	
 	}
 	
 	//==============================================================================
 	// Test on get user Watchlist
 	//==============================================================================
 	
-	@Test
+	//@Test
 	public void testGetUserWatchlist() throws Exception {
 		wls = new WatchlistService();
 		List<Watchlist> watchlist = wls.getUserWatchlists(2);
 
-		System.out.println("\nStart getUserWatchlist");
+		System.out.println("\nStart getUserWatchlist test");
 		
 		for(Watchlist watch : watchlist){
 		assertEquals(watchlist.size(), 4);
@@ -84,7 +84,7 @@ public class WatchlistServiceTest extends DBUtil {
 		wldao = new WatchlistDAO();
 		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
 		
-		System.out.println("\n Start createWatchlist");
+		System.out.println("\n Start createWatchlist test");
 		assertEquals(watchlist.size(), 3);
 		System.out.println("Test Completed: Create watchlist.");	
 	}
@@ -104,7 +104,7 @@ public class WatchlistServiceTest extends DBUtil {
 		wldao = new WatchlistDAO();
 		List<Watchlist> watchlist = wldao.getAllUserWatchlist(1, connect);
 	
-		System.out.println("\n Start createWatchlist");
+		System.out.println("\n Start createWatchlist test");
 		assertEquals(watchlist.size(), 2);
 		System.out.println("Test Completed: Create watchlist.");	
 	}
@@ -123,7 +123,7 @@ public class WatchlistServiceTest extends DBUtil {
 		
 		List<Stock> watchlist = wls.listStocksFromWatchlist(2);
 
-		System.out.println("\nStart listStocksFromWatchlist");
+		System.out.println("\nStart listStocksFromWatchlist test");
 		assertEquals(watchlist.size(), 4);
 		System.out.println("Number of stocks in list: " +watchlist.size());
 		System.out.println("Test Completed: List stocks in watchlist.");	
@@ -142,9 +142,9 @@ public class WatchlistServiceTest extends DBUtil {
 		wldao = new WatchlistDAO();
 		List<String> watchlist = wldao.getAllStocksFromWatchlist(2, connect);
 		
-		System.out.println("\n Start addStockToWatchlist");
+		System.out.println("\nStart addStockToWatchlist test");
 		assertEquals(watchlist.size(), 3);
-		System.out.println("Test Completed: Added stock in watchlist.");	
+		System.out.println("\nTest Completed: Added stock in watchlist.");	
 	}
 	
 	//==============================================================================
@@ -159,9 +159,9 @@ public class WatchlistServiceTest extends DBUtil {
 		wldao = new WatchlistDAO();
 		List<String> watchlist = wldao.getAllStocksFromWatchlist(2, connect);
 	
-		System.out.println("\n Start deleteStockFromWatchlist");
+		System.out.println("\nStart deleteStockFromWatchlist test");
 		assertEquals(watchlist.size(), 2);
-		System.out.println("Test Completed: Deleted stock in watchlist.");	
+		System.out.println("\nTest Completed: Deleted stock in watchlist.");	
 	}
 	
 	//==============================================================================

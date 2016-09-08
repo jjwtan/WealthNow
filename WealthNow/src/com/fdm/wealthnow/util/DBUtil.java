@@ -20,19 +20,37 @@ public class DBUtil {
 		return DatabaseConnectionFactory.getFactory(connectionType).getConnection();
 	}
 
-	public static Integer getSequenceID(String sequence_number) throws Exception {
+	public static Integer getSequenceID(String sequence_number) {
 
 		Integer order_id = null;
-		Connection connect = getConnection();
-		PreparedStatement ps = connect.prepareStatement("Select " + sequence_number + ".NEXTVAL FROM DUAL");
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			PreparedStatement ps = connect.prepareStatement("Select " + sequence_number + ".NEXTVAL FROM DUAL");
 
-		ResultSet result = ps.executeQuery();
+			ResultSet result = ps.executeQuery();
 
-		while (result.next()) {
-			order_id = result.getInt("NEXTVAL");
+			while (result.next()) {
+				order_id = result.getInt("NEXTVAL");
+			}
+			
+			return order_id;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (Exception e) {
+						e.printStackTrace();
+				}
 		}
+
+		return null;
 		
-		return order_id;
+	
+	
 	}
 	
 	public static String convertDateObjToString(Date date){
