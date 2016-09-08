@@ -59,6 +59,14 @@
 			<% 
 				UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 				UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
+				
+				session.setAttribute("Selection", null);
+				session.setAttribute("quantity", null);
+				session.setAttribute("stock_symbol", null);
+				session.setAttribute("price_type", null);
+				session.setAttribute("term", null);
+				session.setAttribute("lsl", null);
+				session.setAttribute("total_price", null);
 			%>
 			<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
 			,Your Current Balance $<%=ua.getBalance() %></h4>

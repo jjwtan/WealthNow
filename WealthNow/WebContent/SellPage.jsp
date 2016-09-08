@@ -31,6 +31,7 @@
 	<% 
 	
 	
+	
 	 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 	DecimalFormat df = new DecimalFormat(".##"); 
