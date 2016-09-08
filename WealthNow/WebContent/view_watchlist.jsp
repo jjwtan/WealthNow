@@ -70,7 +70,7 @@
 				Watchlist selectedWl = ws.viewWatchlist(id);
 				SimpleDateFormat sdf = new SimpleDateFormat("E dd/MM/yyyy hh:mm:ssa z");
 		%>
-		<h2><%=selectedWl.getWatchlistName()%></h2>
+		<h2 style="text-align: center"><%=selectedWl.getWatchlistName()%></h2>
 		<div style="float: right">
 			<i>Updated: <%=sdf.format(new Date())%></i>
 		</div>
