@@ -10,7 +10,7 @@
 	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding"%>
 <html>
 <head>
-<% response.addHeader("Refresh","20"); %>
+
 <style>
 table {
 	width: 100%;
@@ -170,7 +170,7 @@ table#t01 th {
 	
 
 	</form>
-<button><a href="portfolio_viewer.jsp">Refresh</a></button>
+<a href="portfolio_viewer.jsp" class="button">Refresh</a>
 
 </body>
 </html>
