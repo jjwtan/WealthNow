@@ -5,31 +5,68 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import org.apache.jasper.tagplugins.jstl.core.Catch;
 
 import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Stock;
+import com.fdm.wealthnow.util.DBUtil;
 
-public class StockService {
+public class StockService extends DBUtil{
+	HashMap<String, Stock> StockCache = new HashMap<>();
 	static List<String> rawStockList;
 	static List<Stock> requestStock;
+
 	
+	public StockService() {
+		//populateCache();
+	}
+
+	private void populateCache() {
+		try {
+			Connection connect = getConnection();
+			PreparedStatement ps = connect.prepareStatement("select * from stockcache");
+			ResultSet rs = ps.executeQuery();
+			SimpleDateFormat sdf = new SimpleDateFormat("");
+			Date lastTradeDate = sdf.parse(rs.getString("last_trade_date"));
+			Date tradeDate = sdf.parse(rs.getString("trade_date"));
+			while(rs.next()) {
+				Stock stock = new Stock(rs.getString("stock_symbol"), rs.getString("company"), 
+										rs.getFloat("ask"), rs.getFloat("bid"), rs.getFloat("opening"),
+										rs.getFloat("closing"), lastTradeDate, tradeDate, 
+										rs.getString("days_change_value"), rs.getString("percent_change"));
+				StockCache.put(rs.getString("stock_symbol"), stock);
+			}
+		} catch (Exception e) {
+			
+		}
+		
+	}
+
 	public boolean validateStock(String stockSymbol) {
+		if(StockCache.containsKey(stockSymbol)) {
+			return true;
+		}
 		if(stockSymbol==null || stockSymbol.equals("")) {return false;}
 		Stock stock = getStockFromExchange(stockSymbol, InfoType.BASIC);
 		return (stock==null) ? false : true ;
 	}
 
 	public Stock getStockFromExchange(String stockSymbol, InfoType type) {
+		if(StockCache.containsKey(stockSymbol)) {
+			return createStock(stockSymbol);
+		}
 		if(stockSymbol==null || stockSymbol.equals("")) {return null;}
 		List<Stock> wrapper = new ArrayList<>();
 		this.requestStock = wrapper;
@@ -39,8 +76,11 @@ public class StockService {
 		String url = generateRequestURL(wrapper, type);
 		getFromExhange(url);
 		
-		Stock result = createListStockObj(rawStockList, type).get(0);
 		
+		Stock result = null;
+		if (createListStockObj(rawStockList, type) != null){
+			result = createListStockObj(rawStockList, type).get(0);
+		}
 		if (result.getCompany().equals("N/A")) {
 			result = null;
 		}
@@ -48,6 +88,11 @@ public class StockService {
 		return result;
 	}
 	
+	private Stock createStock(String stockSymbol) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public List<Stock> getStocksFromExchange(List<Stock> stocks, InfoType type) {
 		this.requestStock = stocks;
 		rawStockList  = new ArrayList<>();
