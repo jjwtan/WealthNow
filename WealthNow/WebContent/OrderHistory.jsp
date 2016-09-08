@@ -44,6 +44,9 @@ table#t01 th {
 <body>
 
 	<div style="float: right">
+	<a href="view_watchlist.jsp">My Watchlists</a>
+<a href="update_balance.jsp">Update Balance</a>
+<a href="portfolio_viewer.jsp">Portfolio Viewer</a>
 		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
 	</div>
 
