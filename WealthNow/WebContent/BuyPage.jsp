@@ -69,8 +69,8 @@
 
 			<input type="radio" name="Selection" value="B" required> Buy  <br> <br>
 			Quantity: <input type="number" name="quantity"
-				value="${quantity}" required min="1" max="100000" step="1"> 
-				Stock Symbol:<input type="text" name="stock_symbol" value="${stock_symbol}" pattern="[A-Za-z0-9]{3,4}"
+				value="0" required min="1" max="100000" step="1"> 
+				Stock Symbol:<input type="text" name="stock_symbol" pattern="[A-Za-z0-9]{3,4}"
 				required placeholder="3-4 Characters"  style="text-transform: uppercase">
 				
 				 <br> <br>
