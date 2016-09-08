@@ -3,37 +3,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-<!-- Java script and Bootstrap -->
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<jsp:include page="include/css_import.jsp" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login Page</title>
-<!--<jsp:include page="navbar.jsp" />-->
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
-      <a class="navbar-brand" href="#">WealthNow</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
+<div class="container-fluid">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse"
+			data-target="#myNavbar">
+			<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+				class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#">WealthNow</a>
+	</div>
+	<div class="collapse navbar-collapse" id="myNavbar">
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+					Sign Up</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+					Login</a></li>
+		</ul>
+	</div>
+</div>
 </nav>
 </head>
 
@@ -47,7 +39,8 @@
 		<h1>Log In</h1>
 	</div>
 -->
-		<div class="col-lg-offset-4 col-lg-4 col-sm-offset-4 col-sm-4 panel panel-default">
+		<div
+			class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-5 col-sm-offset-4 col-sm-5 panel panel-default">
 			<form class="form-horizontal" action="LoginController" method="post">
 
 				<div class="form-group" align="center">
@@ -60,19 +53,18 @@
 				</div>
 				<div class="container-fluid">
 					<div class="form-group">
-						<label for="inputUserName" class="control-label">User
-							name: </label>
+						<!-- <label for="inputUserName" class="control-label">User
+							name: </label>-->
 						<div>
 							<input type="text" name="username" class="form-control"
-								value="${userBean.username}" placeholder="e.g. myAccount"
-								required>
+								value="${userBean.username}" placeholder="Username" required>
 						</div>
 					</div>
 
 
 					<div class="form-group">
-						<label for="inputPassword" class="control-label">Password:
-						</label>
+						<!-- <label for="inputPassword" class="control-label">Password:
+						</label>-->
 						<div class="">
 							<input type="password" name="password" class="form-control"
 								placeholder="Password" required>
@@ -98,7 +90,10 @@
 		</div>
 	</div>
 </body>
-<footer> <br>
-<strong>All Copyrights go to FDM Group.</strong> <br>
-Contact: enquiries@fdmgroup.com</footer>
+<div
+	class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-5 col-sm-offset-4 col-sm-5">
+	<footer> <br>
+	<strong>All Copyrights go to FDM Group.</strong> <br>
+	Contact: enquiries@fdmgroup.com</footer>
+</div>
 </html>

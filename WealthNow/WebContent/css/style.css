@@ -732,7 +732,7 @@ a:hover {
 
 div.container {
 	position: relative;
-	background-color: white;
+	background-color: none;
 	opacity: 0.8;
 }
 

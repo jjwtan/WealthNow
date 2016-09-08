@@ -7,10 +7,11 @@
 <title>Logout page</title>
 </head>
 <body>
-<h1> You have been successfully logged out</h1>
+You have been successfully logged out. You will be redirected to login page...	
 <%
   request.getSession(true).invalidate();
   System.out.println("Session exist:" +  request.getSession(false));
 %> 
+  <meta http-equiv="refresh" content="2; url=login.jsp">
 </body>
 </html>

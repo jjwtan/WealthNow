@@ -57,7 +57,8 @@ public class AuthenticationFilter implements Filter {
 				!uri.endsWith("/CompleteRegistrationController")&&
 				!uri.contains("navbar")&&
 				!uri.contains("css")&&
-				!uri.contains("img");
+				!uri.contains("img")&&
+				!uri.contains("include");
 
 	}
 
