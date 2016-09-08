@@ -20,56 +20,14 @@
 
 <!-- --End of Bootstrap---------- -->
 
-<style>
-form {
-	border: 0px;
-	margin-top: 100px;
-	margin-bottom: 100px;
-	margin-right: 150px;
-	margin-left: 0px;
-}
-
-div.page-header {
-	margin-top: 50px;
-	margin-left: 80px;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-body {
-	background-image:
-		url("http://science-all.com/images/wallpapers/background-images-for-websites/background-images-for-websites-24.jpg");
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-
-div.container {
-	position: relative;
-	background-color: white;
-	opacity: 0.9;
-}
-
-footer {
-	text-align: center;
-}
-
-div.page-header {
-	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-}
-</style>
+<link rel = "stylesheet" type = "text/css" href="css/style.css">
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login Page</title>
 </head>
 
 <body>
-	<%
-		if (request.getAttribute("errorMessage") != null) {
-			out.println(request.getAttribute("errorMessage"));
-		}
-	%>
+
 	<jsp:useBean id="userBean" class="com.fdm.wealthnow.beans.UserBean"
 		scope="request" />
 	<jsp:setProperty name="userBean" property="*" />
@@ -80,6 +38,16 @@ div.page-header {
 
 	<div class="container">
 		<form class="form-horizontal" action="LoginController" method="post">
+
+			<div class="form-group" align="center">
+			<font color="red">
+			<%
+				if (request.getAttribute("errorMessage") != null) {
+					out.println(request.getAttribute("errorMessage"));
+				}
+			%>
+			</font>
+			</div>
 
 			<div class="form-group">
 				<label for="inputUserName" class="col-sm-2 control-label">User
@@ -111,11 +79,8 @@ div.page-header {
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" value="Login" class="btn btn-default">Sign
 						in</button>
-					<br>
-					<br>
-					<p>
-						<a href="#">Forgot UserID or Password?</a>
-					</p>
+					<br> <br>
+
 					<p>
 						<a href="register_user_info.jsp">Register as new User</a>
 					</p>
@@ -128,5 +93,9 @@ div.page-header {
 		</form>
 	</div>
 </body>
-<footer><br><strong>All Copyrights go to FDM Group.</strong><br>Contact: enquiries@fdmgroup.com</footer>
+<footer>
+<br>
+<strong>All Copyrights go to FDM Group.</strong>
+<br>
+Contact: enquiries@fdmgroup.com</footer>
 </html>
