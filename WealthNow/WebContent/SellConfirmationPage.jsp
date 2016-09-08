@@ -88,10 +88,10 @@ $(document).ready ( function () {
 				</td>
 			</tr>
 		</table>
-		<br> <input type="submit" value="Comfirm Order" id="submit_button">   <button type="cancel" onclick="javascript:window.location='portfolio_viewer.jsp';">Cancel Order</button>
-		
+		<br> <input type="submit" value="Comfirm Order" id="submit_button">   
 	</form>
-
+<button type="cancel" onclick="javascript:window.location='portfolio_viewer.jsp';">Cancel Order</button>
+		
 
 </body>
 </html>
