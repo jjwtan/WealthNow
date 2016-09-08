@@ -59,8 +59,7 @@
 		
 			
 
-			<input type="radio" name="Selection" value="B" required> Buy <input
-				type="radio" name="Selection" value="S"  disabled> Sell <br> <br>
+			<input type="radio" name="Selection" value="B" required> Buy  <br> <br>
 			Quantity: <input type="number" name="quantity"
 				value="${quantity}" required min="1" max="100000" step="1"> 
 				Stock Symbol:<input type="text" name="stock_symbol" value="${stock_symbol}" pattern="[A-Za-z0-9]{3,4}"
@@ -76,7 +75,7 @@
 			
 			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
 				<br> <select name="term" id="term" >
-				<option value="null" >Term</option>
+				<option value="null" disabled >Term</option>
 				<option value="GD" >Good For The Day</option>
 				<option value="GC" >Good Till Cancelled</option>
 

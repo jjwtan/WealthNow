@@ -10,7 +10,7 @@
 	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding"%>
 <html>
 <head>
-
+<% response.addHeader("Refresh","20"); %>
 <style>
 table {
 	width: 100%;
@@ -66,7 +66,7 @@ table#t01 th {
 	
 	
 	<%
-		response.setIntHeader("Refresh", 20);
+		//response.setIntHeader("Refresh", 20);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
@@ -170,7 +170,7 @@ table#t01 th {
 	
 
 	</form>
-
+<button><a href="portfolio_viewer.jsp">Refresh</a></button>
 
 </body>
 </html>
