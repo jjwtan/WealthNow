@@ -733,7 +733,7 @@ a:hover {
 div.container {
 	position: relative;
 	background-color: none;
-	opacity: 0.8;
+	opacity: 1;
 }
 
 div.loginbox {
