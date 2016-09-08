@@ -1,6 +1,7 @@
 package com.fdm.wealthnow.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -220,8 +221,14 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 			connect = getConnection();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (Exception e) {
+						e.printStackTrace();
+				}
 		}
 
 		OrderDAO orderDao = new OrderDAO();
