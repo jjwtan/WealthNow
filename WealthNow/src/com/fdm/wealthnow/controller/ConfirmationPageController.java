@@ -70,7 +70,7 @@ public class ConfirmationPageController extends HttpServlet {
 		Double amountToDebit = (Double) session.getAttribute("total_price");
 		uas.debitBalance(user_id, amountToDebit);
 		
-		
+		System.out.println(user_id + " " + order_type + " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
 		try {
 			
 			if((lsl == null) && (term.equals("null"))){
@@ -92,6 +92,8 @@ public class ConfirmationPageController extends HttpServlet {
 			else{
 				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
 						price_type, txDate, lsl, term , amountToDebit);
+				System.out.println(" comfirmation page controller else method:"+user_id + " " + order_type + " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
+
 				
 				session.setAttribute("Selection", null);
 				session.setAttribute("quantity", null);

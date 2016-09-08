@@ -39,7 +39,15 @@
 </script>
 </head>
 <body>
+<div style="float: right">
+	<a href="login.jsp">Logout</a>
 
+<a href="view_watchlist.jsp">My Watchlists</a><br/>
+<a href="update_balance.jsp">Update Balance</a><br/>
+<a href="portfolio_viewer.jsp">Portfolio Viewer</a><br/>
+<a href="OrderHistory.jsp">Order History</a>
+
+</div>
 
 	<form action="BuyPageController" method="post">
 		<fieldset>
@@ -75,7 +83,7 @@
 			
 			<input type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
 				<br> <select name="term" id="term" >
-				<option value="null" disabled >Term</option>
+				<option value="null">Term</option>
 				<option value="GD" >Good For The Day</option>
 				<option value="GC" >Good Till Cancelled</option>
 

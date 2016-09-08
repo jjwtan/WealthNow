@@ -31,12 +31,16 @@ public class OrderManagementService extends DBUtil {
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
+			
+			System.out.println("inside createopen order - OMS "+user_id + " " + order_type + " " + quantity + " " + stock_symbol + " " + price_type +" " + term +" "+ opening_order_date + " " +limit_price +" " + total_price_deducted);
 
+			
 			OrderDAO ord = new OrderDAO();
 			System.out.println("Start Order Management Service(OMS) - createOpenOrder method");
 			// create sequence id for order_id
 			Integer order_id = getSequenceID("order_id_seq");
 			boolean validate = false;
+			System.out.println("BEFORE order_type equals b");
 			if (order_type.equals("B")) {
 				validate = validateOrderData(user_id, currency_code, order_type, quantity, stock_symbol, price_type,
 						opening_order_date, limit_price, term);
@@ -353,6 +357,8 @@ public class OrderManagementService extends DBUtil {
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
+			System.out.println("inside validate order data");
+			System.out.println(user_id + " " + order_type + " " + quantity + " " + stock_symbol + " " + price_type +" " + term +" "+ opening_order_date + " " +limit_price +" " + currency_code);
 
 			// check nulls for all parameters
 			if (user_id == null || currency_code == null || order_type == null || quantity == null
