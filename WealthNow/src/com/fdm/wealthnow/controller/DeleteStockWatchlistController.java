@@ -45,13 +45,19 @@ public class DeleteStockWatchlistController extends HttpServlet {
 		HttpSession session = request.getSession();
 		System.out.println("--------------------Inside delete stockwatchlist controller------------------");
 		
-		String stock_symbol = request.getParameter("stock_Symbol");
-		StockService ss = new StockService();
+		String stock_symbol = request.getParameter("delete");
+		Integer watchlist_ID = Integer.parseInt(session.getAttribute("add_stock_watchlist_id").toString());
+		
+		request.setAttribute("watchlist_id", watchlist_ID);
+		
+		System.out.println("stock symbol:" + stock_symbol + "id:" + watchlist_ID);
 		WatchlistService wls = new WatchlistService();
-		Integer watchlist_ID = (Integer)session.getAttribute("watchlist_id");
+		
 	
 		try{
+		
 			wls.deleteStockFromWatchlist(watchlist_ID, stock_symbol);
+		
 		}catch (Exception e){
 			e.printStackTrace();
 			System.out.println("catch in delete stock watchlist controller");
@@ -63,3 +69,9 @@ public class DeleteStockWatchlistController extends HttpServlet {
 	}
 
 }
+
+
+
+
+
+

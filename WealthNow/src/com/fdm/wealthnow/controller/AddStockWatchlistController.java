@@ -49,6 +49,7 @@ public class AddStockWatchlistController extends HttpServlet {
 //		Integer watchlist_ID = Integer.parseInt(session.getAttribute("watchlist_id").toString());
 		Integer watchlist_ID = (Integer)session.getAttribute("add_stock_watchlist_id");
 
+		request.setAttribute("watchlist_id", watchlist_ID);
 		if (ss.validateStock(stock_symbol) == true) {
 			
 			

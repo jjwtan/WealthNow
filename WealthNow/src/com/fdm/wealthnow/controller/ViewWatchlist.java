@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.fdm.wealthnow.service.WatchlistService;
 
 /**
  * Servlet implementation class ViewWatchlist
@@ -36,11 +39,15 @@ public class ViewWatchlist extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		System.out.println("view watchlist POST method");
 		Integer id = Integer.parseInt(request.getParameter("watchlistID"));
 		System.out.println("Id: " + id);
 		request.setAttribute("watchlist_id", id);
 		request.getRequestDispatcher("view_watchlist.jsp").forward(request, response);
+		
+	
 	}
 
 }

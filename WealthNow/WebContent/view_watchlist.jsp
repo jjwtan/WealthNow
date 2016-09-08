@@ -102,7 +102,7 @@
 		%>
 		<a href="add_stock_watchlist.jsp"><button>Add New Stocks</button></a>
 
-	
+	<form action="DeleteStockWatchlistController" method="post">
 		<table width="100%" border="1">
 			<tr>
 				<th>Instrument</th>
@@ -122,7 +122,8 @@
 						Date dateMod = stock.getModifiedDate();
 			%>
 			<tr>
-				<td><%=stock.getStockSymbol() + ": " + stock.getCompany()%></td>
+				<td><%=stock.getStockSymbol() + ": " + stock.getCompany()%> 
+				<button type="submit" value="<%=stock.getStockSymbol() %>" name="delete" id="delete" style="float:right;">Delete</button></td>
 				<td><%=stock.getBid()%></td>
 				<td><%=stock.getAsk()%></td>
 				<td><%=stock.getOpen()%></td>
@@ -148,6 +149,7 @@
 			%>
 
 		</table>
+		</form>
 
 	</div>
 	<div style="padding-top: 1em">
