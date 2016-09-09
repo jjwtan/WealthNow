@@ -80,8 +80,7 @@ public class StockService extends DBUtil{
 		Stock result = null;
 		if (createListStockObj(rawStockList, type) != null){
 			result = createListStockObj(rawStockList, type).get(0);
-		}
-		if (result.getCompany().equals("N/A")) {
+		} else if ("N/A".equals(result.getCompany())) {
 			result = null;
 		}
 		
