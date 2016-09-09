@@ -127,6 +127,13 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 					oms.processCancelledOrders(order.getOrder_id());
 					System.out.println("This order has been cancelled for the day : orderID - " + order.getOrder_id());
 					count++;
+				}else if (order.getLimit_price() <= stockPrice) {
+					System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
+					ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
+					count++;
+					System.out.println("Count - " + count);
+				}else{
+					System.out.println("stock price is too high for now.");
 				}
 
 			} else {
@@ -139,7 +146,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						if (order.getPrice_type().toString().equals("SL")
 								|| order.getPrice_type().toString().equals("LT")) {
 							// if statement to check if the limit price
-							if (order.getLimit_price() < stockPrice) {
+							if (order.getLimit_price() <= stockPrice) {
 								System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
 								ex.submit(() -> oms.processOrder(order.getOrder_id(), stockPrice));
 								count++;
