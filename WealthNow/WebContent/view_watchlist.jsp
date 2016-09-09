@@ -20,10 +20,14 @@
 </head>
 <body>
 <div class="container">
+	<div class="col-lg-12">
 	<div style="float: right">
 
-		<a href="adding_watchlist.jsp"><button type="button" class="btn btn-primary">Add New WatchList</button></a>
+		<a href="adding_watchlist.jsp"><button type="button" class="btn btn-primary btn-block">Add New WatchList</button></a>
 
+		<form action="#" method="POST">
+			<button type="submit" value="delete_watchlist" class="btn btn-danger btn-block">Delete This Watchlist</button>
+		</form>
 		<br>
 		<br>
 	</div>
@@ -62,7 +66,7 @@
 		}
 	%>
 	<br>
-	<div>
+	<div class="col-lg-12">
 
 		<%
 			if (request.getAttribute("watchlist_id") != null) {
@@ -131,9 +135,10 @@
 			</table>
 		</form>
 
-	</div>
+	
 	<div style="padding-top: 1em">
 		<label for="submit-form" class="btn btn-primary">Refresh</label>
+	</div>
 	</div>
 	<%
 		}
