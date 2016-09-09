@@ -7,7 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Sell Page</title>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
