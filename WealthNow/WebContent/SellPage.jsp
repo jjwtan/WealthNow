@@ -21,7 +21,9 @@
 
 </head>
 <body>
+<div class="container">
 
+<!--  
 <div style="float: right">
 	<a href="view_watchlist.jsp">My Watchlists</a>
 <a href="update_balance.jsp">Update Balance</a>
@@ -29,6 +31,7 @@
 <a href="portfolio_viewer.jsp">Portfolio Viewer</a>
 		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
 	</div>
+	-->
 
 	<% 
 	
@@ -53,9 +56,9 @@
 %>
 
 
-	<H1>Selling Page</H1>
+	<div class="col-lg-12"><h2 style="text-align: center">Add New Stocks</h2></div><br><br>
 
-
+<div class="col-md-4 col-md-offset-2">
 	<form action="SellPageController" method="post" id="selling">
 		<table width="559" border="1" cellpadding="5" cellspacing="0">
 			<tr>
@@ -90,9 +93,18 @@
 
 			
 		</table>
-		<br> <input type="submit" value="Sell Order" id="submit_button">
+		<br> 
+		
+		<!--  
+		<input type="submit" value="Sell Order" id="submit_button">
+		-->
+		
+				<div style="padding-top: 1em">
+							<button type="submit" id="submit" class="btn btn-primary">Sell Order</button>
+				</div> 
 	</form>
+	</div>
 
-
+</div>
 </body>
 </html>
