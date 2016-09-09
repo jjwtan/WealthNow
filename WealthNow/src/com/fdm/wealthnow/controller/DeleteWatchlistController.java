@@ -18,7 +18,7 @@ import com.fdm.wealthnow.util.DBUtil;
 /**
  * Servlet implementation class DeleteWachlistController
  */
-@WebServlet("/DeleteWachlistController")
+@WebServlet("/DeleteWatchlistController")
 public class DeleteWatchlistController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
