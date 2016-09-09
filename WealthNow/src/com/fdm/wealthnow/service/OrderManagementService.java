@@ -95,9 +95,9 @@ public class OrderManagementService extends DBUtil {
 				ord.createOpenOrderInDatabase(connect, OLDorder_id, order_id, user_id, currency_code, order_type,
 						quantity, stock_symbol, price_type, opening_order_date, limit_price, term, "OpenOrder",
 						total_price_deducted);
-			} else {
-				System.out.println("Validation failed at createSellOrder.");
-			}
+				} else {
+					System.out.println("Validation failed at createSellOrder.");
+				}
 			connect.commit();
 
 			System.out.println("End Of createSellOrder..");
@@ -187,6 +187,51 @@ public class OrderManagementService extends DBUtil {
 					e.printStackTrace();
 				}
 		}
+	}
+	
+	public void updateStockholdingForSellConfirmation(Integer order_id, Integer qty){
+		Connection connect = null;
+		OrderDAO ord = new OrderDAO();
+		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
+		System.out.println(order);
+		
+		try{
+			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			System.out.println("connection  is - " + connect);
+			updateStockHoldings(order.getUser_id(), order.getOrder_id(), qty);
+	
+		connect.commit();
+		// need to check if quantity will be zero or not.
+		PortfolioService ps = new PortfolioService();
+		StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order.getOrder_id());
+		if (sh.getRemaining_quantity() < 1) {
+			deleteStockHoldings(order.getOrder_id());
+			connect.commit();
+			System.out.println(
+					"Remaining quantity is less than 1\nDelete stockholding with orderID - " + order.getOrder_id());
+		}
+		
+		} catch (Exception e) {
+			try {
+				System.out.println("simitachi@ OMS updatestockholding");
+				connect.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
 	}
 
 	public void processOrder(Integer order_id, Double closing_price) {
