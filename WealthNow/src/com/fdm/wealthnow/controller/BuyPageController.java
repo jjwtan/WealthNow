@@ -61,7 +61,7 @@ public class BuyPageController extends HttpServlet {
 
 		System.out.println("buy page controller");
 
-		String ordertype = request.getParameter("Selection");
+//		String ordertype = request.getParameter("Selection");
 		String quantity = request.getParameter("quantity");
 		String stock_symbol = request.getParameter("stock_symbol");
 		String price_type = request.getParameter("price_type");
@@ -99,7 +99,7 @@ public class BuyPageController extends HttpServlet {
 
 					System.out.println("Setting attributes.BP Controller");
 
-					session.setAttribute("Selection", ordertype);
+//					session.setAttribute("Selection", ordertype);
 					session.setAttribute("quantity", quantity);
 					session.setAttribute("stock_symbol", stock_symbol);
 					session.setAttribute("price_type", price_type);
@@ -136,7 +136,7 @@ public class BuyPageController extends HttpServlet {
 
 						System.out.println("Setting attributes.BP Controller");
 
-						session.setAttribute("Selection", ordertype);
+//						session.setAttribute("Selection", ordertype);
 						session.setAttribute("quantity", quantity);
 						session.setAttribute("stock_symbol", stock_symbol);
 						session.setAttribute("price_type", price_type);
@@ -165,8 +165,8 @@ public class BuyPageController extends HttpServlet {
 
 		// just for testing
 		PrintWriter pw = response.getWriter();
-		pw.println(ordertype + " " + quantity + " " + stock_symbol + " " + price_type + " " + term1);
-		System.out.println(ordertype + " " + quantity + " " + stock_symbol + " " + price_type + " " + term1);
+		pw.println(  " " + quantity + " " + stock_symbol + " " + price_type + " " + term1);
+		System.out.println ( " " + quantity + " " + stock_symbol + " " + price_type + " " + term1);
 
 		// make sure that UserID has been checked before proceeding
 
