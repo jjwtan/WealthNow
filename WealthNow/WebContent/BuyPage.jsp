@@ -84,6 +84,7 @@
 				<option value="LT" id="LT">Limit</option>
 			</select> 
 			</div>
+			<br><br>
 			<div class="col-lg-6">
 			<input class="form-control" type="number" id="lsl" name="lsl" required placeholder="Limit/Stop Loss Price" min="0" value="" step="0.01"> <br> 
 				<br> 
@@ -96,7 +97,7 @@
 
 			</select> 
 			</div>
-			<br> <br> 
+			<br> <br> <br> 
 			<div class="col-lg-12">
 			<input class="btn btn-primary" type="submit" value="Submit"> <!-- <button type="reset" value="Reset">Reset</button> -->
 </div>
