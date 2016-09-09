@@ -9,16 +9,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update Balance</title>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 </head>
 <body>
+<div class="container">
 
-<div style="float: right">
-	<a href="view_watchlist.jsp">My Watchlists</a>
-<a href="update_balance.jsp">Update Balance</a>
-<a href="OrderHistory.jsp">Order History</a>
-<a href="portfolio_viewer.jsp">Portfolio Viewer</a>
-		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
-	</div>
 
 
 <% 
@@ -56,5 +52,6 @@
 			}
 		}
 	</script>
+	</div>
 </body>
 </html>
