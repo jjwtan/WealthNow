@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Account Balance</title>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 <style type="text/css">
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
