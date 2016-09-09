@@ -101,23 +101,25 @@ table#t01 th {
 			 
 			<tr>
 				<th colspan="2">Stock Symbol</th>
-				<th>Last Trade($)</th>
+				<th>Closing Price(Last Trade)($)</th>
 				<th colspan="2">Change</th>
 				<th>Qty</th>
 				<th>Price Paid($)</th>
 				<th colspan="2">Total Gain</th>
+				<th>Total Price</th>
 
 			</tr>
 			<tr>
 				<th></th>
 				<th></th>
 				<th></th>
-				<th>%</th>
 				<th>$</th>
+				<th>%</th>
 				<th></th>
 				<th></th>
 				<th>$</th>
 				<th>%</th>
+				<th>$</th>
 
 			</tr>
 	
@@ -149,6 +151,7 @@ table#t01 th {
 					Double total_gain = purchase_price - mkt_price;
 					Double total_gain_percent = total_gain / mkt_price;
 					DecimalFormat df2 = new DecimalFormat("##.#####");
+					Double total_stock_price = purchase_price * quantity;
 			%>
 
 
@@ -168,6 +171,7 @@ table#t01 th {
 				<td><%=purchase_price%></td>
 				<td><%=df2.format(total_gain)%></td>
 				<td><%=df2.format(total_gain_percent)%></td>
+				<td><%=total_stock_price %></td>
 
 			</tr>
 			<%

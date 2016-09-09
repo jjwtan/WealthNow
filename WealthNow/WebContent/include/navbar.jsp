@@ -13,7 +13,7 @@
 			<ul class="nav navbar-nav">
 				<li><a href="homepage.jsp">Home</a></li>
 				<li><a href="view_watchlist.jsp">Watchlist</a></li>
-				<li><a href="BuyPage.jsp">Buy/Sell Securities</a></li>
+				<li><a href="BuyPage.jsp">Buy Securities</a></li>
 				<li><a href="portfolio_viewer.jsp">Portfolio</a></li>
 				<li><a href="OrderHistory.jsp">Order History</a></li>
 				<li><a href="update_balance.jsp">Update Balance</a></li>
