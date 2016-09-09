@@ -53,9 +53,18 @@ table#t01 th {
 		OrderDAO ord = new OrderDAO();
 		Integer user_id = currentUser.getUser().getUserId();
 	%>
-	<h2>Open Orders</h2>
 	<br>
-	<table class="table table-striped">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<a data-toggle="collapse" href="#collapse1"><h2>Open Orders</h2></a>
+					</div>
+				</div>
+				<div id="collapse1" class="panel-collapse collapse in">
+					<div class="panel-body">
+					
+						<table class="table table-striped">
 			<tr>
 				<th>Date Placed Order</th>
 				<th>Order No</th>
@@ -86,9 +95,22 @@ table#t01 th {
 				}
 			%>
 		</table>
-	<h2>Completed Orders</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 	<br>
-	<table class="table table-striped">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<a data-toggle="collapse" href="#collapse2"><h2>Completed Orders</h2></a>
+					</div>
+				</div>
+				<div id="collapse2" class="panel-collapse collapse">
+					<div class="panel-body">
+					<table class="table table-striped">
 		<tr>
 			<th>Date Placed Order</th>
 			<th>Order No</th>
@@ -120,11 +142,22 @@ table#t01 th {
 		%>
 		
 		</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<br>
-		<br>
-		<h2>Cancelled Orders</h2>
-		<br>
-		<table class="table table-striped">
+		<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<a data-toggle="collapse" href="#collapse3"><h2>Cancelled Orders</h2></a>
+						</div>
+					</div>
+					<div id="collapse3" class="panel-collapse collapse">
+						<div class="panel-body">
+						<table class="table table-striped">
 			<tr>
 				<th>Date Placed Order</th>
 				<th>Order No</th>
@@ -155,6 +188,12 @@ table#t01 th {
 				}
 			%>
 		</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		<br>
+		
 		</div>
 </body>
 </html>
