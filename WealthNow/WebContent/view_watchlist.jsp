@@ -105,7 +105,7 @@
 							Date dateMod = stock.getModifiedDate();
 				%>
 				<tr>
-					<td><%=stock.getStockSymbol() + ": " + stock.getCompany()%>
+					<td><%=stock.getStockSymbol().toUpperCase() + ": " + stock.getCompany()%>
 						<button class="btn btn-warning" type="submit" value="<%=stock.getStockSymbol()%>"
 							name="delete" id="delete" style="float: right;">Delete</button></td>
 					<td><%=stock.getBid()%></td>

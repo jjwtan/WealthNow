@@ -167,7 +167,8 @@ public class WatchlistDAO extends DBUtil {
 		List<String> stocksList = new ArrayList<String>();
 		
 		try {
-			String SQLStatement = "select stock_symbol from WatchlistDetail where watchlist_id = ?";
+			String SQLStatement = "select stock_symbol from WatchlistDetail where watchlist_id = ? order by lower(stock_symbol)";
+			System.out.println(SQLStatement);
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 			ps.setInt(1, watchlistId);
 
@@ -177,6 +178,7 @@ public class WatchlistDAO extends DBUtil {
 			while (result.next()) {
 				count ++;
 				String stockSymbol = result.getString("stock_symbol");
+				System.out.println(stockSymbol);
 				stocksList.add(stockSymbol);
 			}
 			
@@ -199,7 +201,7 @@ public class WatchlistDAO extends DBUtil {
 		try {
 
 			String SQLStatement = "INSERT INTO WatchlistDetail(watchlist_id  , stock_symbol ) VALUES (" + watchlistId
-					+ ", '" + stockSymbol + "')";
+					+ ", '" + stockSymbol.toUpperCase() + "')";
 
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 			ps.executeUpdate();
