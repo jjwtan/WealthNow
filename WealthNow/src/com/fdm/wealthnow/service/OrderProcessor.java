@@ -110,7 +110,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 			SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 			Date now = new Date();
 			String nowtime = format2.format(now);
-			String closetime = nowtime + " 16:00:00";
+			String closetime = nowtime + " 18:00:00";
 			Date closeDate = null;
 			try {
 				closeDate = (Date) format.parse(closetime);
