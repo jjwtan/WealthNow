@@ -178,14 +178,15 @@ public class OrderManagementService extends DBUtil {
 	public void updateStockholdingForSellConfirmation(Integer order_id, Integer qty){
 		Connection connect = null;
 		OrderDAO ord = new OrderDAO();
-		Order order = ord.getOrderFromProcessedOrder(connect, order_id);
-		System.out.println(order);
+	
 		
 		try{
 			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 			connect = getConnection();
 			connect.setAutoCommit(false);
 			System.out.println("connection  is - " + connect);
+			Order order = ord.getOrderFromProcessedOrder(connect, order_id);
+			System.out.println(order);
 			updateStockHoldings(order.getUser_id(), order.getOrder_id(), qty);
 	
 		connect.commit();

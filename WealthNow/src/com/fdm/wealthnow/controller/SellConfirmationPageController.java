@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fdm.wealthnow.common.StockHolding;
 import com.fdm.wealthnow.common.UserAccount;
 import com.fdm.wealthnow.common.UserAuth;
 import com.fdm.wealthnow.service.OrderManagementService;
@@ -75,12 +76,27 @@ public class SellConfirmationPageController extends HttpServlet {
 			System.out.println("error in sell page controller in selling");
 		}
 		
+		StockHolding sh = new StockHolding();
+//		Integer remaining_quantity = sh.getRemaining_quantity();
+//		Integer new_remaining_quantity = remaining_quantity - qty;
+		System.out.println("sellpage controller" +order_ID);
+		
+		oms.updateStockholdingForSellConfirmation(order_ID, qty);
+//		System.out.println("sellpage controller" +order_ID);
+		
+		
 		System.out.println("setting sessions to null");
 //		session.setAttribute("orderID", null);
 		session.setAttribute("final_price", null);
 		session.setAttribute("selling_price", null);
-		session.setAttribute("quantity", null);
+//		session.setAttribute("quantity", null);
 		session.setAttribute("stock_symbol", null);
+		
+		
+		
+		
+		
+		
 		
 		 UserAccountService uas = new UserAccountService();
 //		 System.out.println("crediting back to user" );
