@@ -25,7 +25,7 @@
 
 		<a href="adding_watchlist.jsp"><button type="button" class="btn btn-primary btn-block">Add New WatchList</button></a>
 
-		<form action="#" method="POST">
+		<form action="DeleteWatchlistController" method="POST">
 			<button type="submit" value="delete_watchlist" class="btn btn-danger btn-block">Delete This Watchlist</button>
 		</form>
 		<br>
