@@ -129,7 +129,7 @@ public class WatchlistService extends DBUtil {
 			connection = WatchlistDAO.getConnection();
 			connection.setAutoCommit(false);
 		
-			System.out.println("Calling add watchlist: ");
+			System.out.println("Calling delete watchlist: ");
 			watchlistDAO.deleteWatchlist(watchListId, connection);
 			connection.commit();
 		} catch (Exception e) {

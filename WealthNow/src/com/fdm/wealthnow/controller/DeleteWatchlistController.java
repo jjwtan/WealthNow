@@ -61,6 +61,7 @@ public class DeleteWatchlistController extends HttpServlet {
 				System.out.println("catch in delete watchlist controller");
 		}
 		
+		request.getRequestDispatcher("view_watchlist.jsp").forward(request, response);
 	}
 
 }
