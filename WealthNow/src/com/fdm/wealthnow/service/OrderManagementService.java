@@ -153,21 +153,7 @@ public class OrderManagementService extends DBUtil {
 				connect.commit();
 				System.out.println("deleted open order in database - " + order.getOrder_id());
 			}
-
-			System.out.println("Order has been processed... and needs to be updated in stockholdings.");
-			// update stockholding quantity.
-			oms.updateStockHoldings(order.getUser_id(), order.getOrder_id(), newQty);
-			connect.commit();
-			// need to check if quantity will be zero or not.
-			PortfolioService ps = new PortfolioService();
-			StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order.getOrder_id());
-			if (sh.getRemaining_quantity() < 1) {
-				oms.deleteStockHoldings(order.getOrder_id());
-				connect.commit();
-				System.out.println(
-						"Remaining quantity is less than 1\nDelete stockholding with orderID - " + order.getOrder_id());
-			}
-			System.out.println("processSellOrder done.");
+			System.out.println("------------------processSellOrder done.");
 
 		} catch (Exception e) {
 			try {
