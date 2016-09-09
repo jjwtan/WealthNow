@@ -146,7 +146,7 @@ public class OrderManagementService extends DBUtil {
 					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
 					convertDateObjToString(date), "completed", price, order.getTotal_price_deducted());
 			connect.commit();
-			System.out.println("created processed order in database - " + order.getOrder_id());
+			System.out.println("created processed order in database - " + order_id);
 			System.out.println("Check for delete open order");
 			if (ord.getOrderFromProcessedOrder(connect, order_id) != null) {
 				ord.deleteOpenOrderInDatabase(connect, order_id);
