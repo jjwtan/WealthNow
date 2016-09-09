@@ -1,6 +1,8 @@
+<%@page import="java.io.PrintWriter"%>
 <%@page import="com.fdm.wealthnow.common.InfoType"%>
 <%@page import="com.fdm.wealthnow.dao.OrderDAO"%>
 <%@page import="com.fdm.wealthnow.service.OrderManagementService"%>
+<%@ page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="com.fdm.wealthnow.service.PortfolioService"%>
@@ -46,108 +48,119 @@ table#t01 th {
 <jsp:include page="include/navbar.jsp" />
 </head>
 <body>
-<div class="container">
-	<%
-		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
-		OrderManagementService oms = new OrderManagementService();
-		PortfolioService ps = new PortfolioService();
-		OrderDAO ord = new OrderDAO();
-		Integer user_id = currentUser.getUser().getUserId();
-	%>
-	<br>
+	<div class="container">
+		<%
+			UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+			OrderManagementService oms = new OrderManagementService();
+			PortfolioService ps = new PortfolioService();
+			OrderDAO ord = new OrderDAO();
+			Integer user_id = currentUser.getUser().getUserId();
+		%>
+		<br>
 		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="panel-title">
-						<a data-toggle="collapse" href="#collapse1"><h2>Open Orders</h2></a>
+						<a data-toggle="collapse" href="#collapse1"><h2>Open
+								Orders</h2></a>
 					</div>
 				</div>
 				<div id="collapse1" class="panel-collapse collapse in">
 					<div class="panel-body">
-					
-						<table class="table table-striped">
-			<tr>
-				<th>Date Placed Order</th>
-				<th>Order No</th>
-				<th>Type</th>
-				<th>Quantity</th>
-				<th>Symbol</th>
-				<th>Price Type</th>
-				<th>Term</th>
-				<th>Limit Price </th>
-				<th>Market Price</th>
-			</tr>
-			<%
-				List<Order> orderOpen = oms.getOpenOrdersFromUser(user_id);
-				StockService ss = new StockService();
-				
-
-				for (Order order3 : orderOpen) {
-					Stock s = ss.getStockFromExchange(order3.getStock_symbol(), InfoType.BASIC);
-			%>
-			<tr>
-
-				<td><%=order3.getPlace_order_date()%></td>
-				<td><b># <%=order3.getOrder_id()%></b></td>
-				<td><%=order3.getOrder_type().toString()%></td>
-				<td><%=order3.getQuantity()%></td>
-				<td><%=order3.getStock_symbol()%></td>
-				<td><%=order3.getPrice_type()%></td>
-				<td><%=order3.getTerm()%></td>
-				<td><b>$ <%=order3.getLimit_price()%></b></td>
-				<td><b>$ <%=s.getMktPrice()%></b></td>
-			</tr>
-			<%
-				}
-			%>
-		</table>
+						<form action="CancelOrderController" method="POST">
+							<table class="table table-striped">
+								<tr>
+									<th>Cancel order?</th>
+									<th>Date Placed Order</th>
+									<th>Order No</th>
+									<th>Type</th>
+									<th>Quantity</th>
+									<th>Symbol</th>
+									<th>Price Type</th>
+									<th>Term</th>
+									<th>Limit Price</th>
+									<th>Market Price</th>
+								</tr>
+								<%
+									List<Order> orderOpen = oms.getOpenOrdersFromUser(user_id);
+									StockService ss = new StockService();
+									DecimalFormat df2 = new DecimalFormat("##.###");
+									for (Order order3 : orderOpen) {
+										Stock s = ss.getStockFromExchange(order3.getStock_symbol(), InfoType.BASIC);
+								%>
+								<tr>
+									<td>
+										<%
+					if (order3.getTerm().toString().equals("GC") || order3.getTerm().toString().equals("GD")) {
+						%><button class="btn btn-warning" type="submit"
+											value="<%=order3.getOrder_id()%>" name="cancel" id="cancel"
+											style="float: left;">Cancel</button> <%
+					}
+				%>
+									</td>
+									<td><%=order3.getPlace_order_date()%></td>
+									<td><b># <%=order3.getOrder_id()%></b></td>
+									<td><%=order3.getOrder_type().toString()%></td>
+									<td><%=order3.getQuantity()%></td>
+									<td><%=order3.getStock_symbol()%></td>
+									<td><%=order3.getPrice_type()%></td>
+									<td><%=order3.getTerm()%></td>
+									<td><b>$ <%=order3.getLimit_price()%></b></td>
+									<td><b>$ <%=df2.format(s.getMktPrice())%></b></td>
+								</tr>
+								<%
+									}
+								%>
+							</table>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-	<br>
+
+		<br>
 		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="panel-title">
-						<a data-toggle="collapse" href="#collapse2"><h2>Completed Orders</h2></a>
+						<a data-toggle="collapse" href="#collapse2"><h2>Completed
+								Orders</h2></a>
 					</div>
 				</div>
 				<div id="collapse2" class="panel-collapse collapse">
 					<div class="panel-body">
-					<table class="table table-striped">
-		<tr>
-			<th>Date Placed Order</th>
-			<th>Order No</th>
-			<th>Type</th>
-			<th>Quantity</th>
-			<th>Symbol</th>
-			<th>Price Type</th>
-			<th>Price</th>
-			<th>Status</th>
-		</tr>
-		<%
-			List<Order> orderList = oms.getCompletedOrdersFromUser(user_id);
+						<table class="table table-striped">
+							<tr>
+								<th>Date Placed Order</th>
+								<th>Order No</th>
+								<th>Type</th>
+								<th>Quantity</th>
+								<th>Symbol</th>
+								<th>Price Type</th>
+								<th>Price</th>
+								<th>Status</th>
+							</tr>
+							<%
+								List<Order> orderList = oms.getCompletedOrdersFromUser(user_id);
 
-			for (Order order : orderList) {
-		%>
-		<tr>
+								for (Order order : orderList) {
+							%>
+							<tr>
 
-			<td><%=order.getPlace_order_date()%></td>
-			<td><b># <%=order.getOrder_id()%></b></td>
-			<td><%=order.getOrder_type().toString()%></td>
-			<td><%=order.getQuantity()%></td>
-			<td><%=order.getStock_symbol()%></td>
-			<td><%=order.getPrice_type()%></td>
-			<td>$ <%=order.getClosing_price()%></td>
-			<td><b><%=order.getStatus()%></b></td>
-		</tr>
-		<%
-			}
-		%>
-		
-		</table>
+								<td><%=order.getPlace_order_date()%></td>
+								<td><b># <%=order.getOrder_id()%></b></td>
+								<td><%=order.getOrder_type().toString()%></td>
+								<td><%=order.getQuantity()%></td>
+								<td><%=order.getStock_symbol()%></td>
+								<td><%=order.getPrice_type()%></td>
+								<td>$ <%=order.getClosing_price()%></td>
+								<td><b><%=order.getStatus()%></b></td>
+							</tr>
+							<%
+								}
+							%>
+
+						</table>
 					</div>
 				</div>
 			</div>
@@ -155,51 +168,52 @@ table#t01 th {
 
 		<br>
 		<div class="panel-group">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<a data-toggle="collapse" href="#collapse3"><h2>Cancelled Orders</h2></a>
-						</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<a data-toggle="collapse" href="#collapse3"><h2>Cancelled
+								Orders</h2></a>
 					</div>
-					<div id="collapse3" class="panel-collapse collapse">
-						<div class="panel-body">
+				</div>
+				<div id="collapse3" class="panel-collapse collapse">
+					<div class="panel-body">
 						<table class="table table-striped">
-			<tr>
-				<th>Date Placed Order</th>
-				<th>Order No</th>
-				<th>Type</th>
-				<th>Quantity</th>
-				<th>Symbol</th>
-				<th>Price Type</th>
-				<th>Price</th>
-				<th>Status</th>
-			</tr>
-			<%
-				List<Order> orderList1 = oms.getCancelledOrdersFromUser(user_id);
+							<tr>
+								<th>Date Placed Order</th>
+								<th>Order No</th>
+								<th>Type</th>
+								<th>Quantity</th>
+								<th>Symbol</th>
+								<th>Price Type</th>
+								<th>Price</th>
+								<th>Status</th>
+							</tr>
+							<%
+								List<Order> orderList1 = oms.getCancelledOrdersFromUser(user_id);
+							
+								for (Order order1 : orderList1) {
+							%>
+							<tr>
 
-				for (Order order1 : orderList1) {
-			%>
-			<tr>
-
-				<td><%=order1.getPlace_order_date()%></td>
-				<td><b># <%=order1.getOrder_id()%></b></td>
-				<td><%=order1.getOrder_type().toString()%></td>
-				<td><%=order1.getQuantity()%></td>
-				<td><%=order1.getStock_symbol()%></td>
-				<td><%=order1.getPrice_type()%></td>
-				<td>$ <%=order1.getClosing_price()%></td>
-				<td><b><%=order1.getStatus()%></b></td>
-			</tr>
-			<%
-				}
-			%>
-		</table>
-						</div>
+								<td><%=order1.getPlace_order_date()%></td>
+								<td><b># <%=order1.getOrder_id()%></b></td>
+								<td><%=order1.getOrder_type().toString()%></td>
+								<td><%=order1.getQuantity()%></td>
+								<td><%=order1.getStock_symbol()%></td>
+								<td><%=order1.getPrice_type()%></td>
+								<td>$ <%=order1.getClosing_price()%></td>
+								<td><b><%=order1.getStatus()%></b></td>
+							</tr>
+							<%
+								}
+							%>
+						</table>
 					</div>
 				</div>
 			</div>
-		<br>
-		
 		</div>
+		<br>
+
+	</div>
 </body>
 </html>
