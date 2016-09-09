@@ -142,7 +142,7 @@ public class OrderManagementService extends DBUtil {
 			// format the date to string for create method
 			System.out.println("process order method running...");
 			ord.createProcessedOrderInDatabase(connect, order.getUser_id(), order_id, order.getCurrency_code(),
-					order.getOrder_type().toString(), newQty, order.getStock_symbol(), order.getPrice_type().toString(),
+					"S", newQty, order.getStock_symbol(), order.getPrice_type().toString(),
 					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
 					convertDateObjToString(date), "completed", price, order.getTotal_price_deducted());
 			connect.commit();
