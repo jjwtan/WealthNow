@@ -56,7 +56,7 @@ public class ConfirmationPageController extends HttpServlet {
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 		int user_id = ua.getUserId();
-		String order_type = (String) session.getAttribute("Selection");
+//		String order_type = (String) session.getAttribute("Selection");
 		Integer qty = Integer.parseInt(session.getAttribute("quantity").toString());
 		String stock_symbol = (String) session.getAttribute("stock_symbol");
 
@@ -70,15 +70,15 @@ public class ConfirmationPageController extends HttpServlet {
 		Double amountToDebit = (Double) session.getAttribute("total_price");
 		uas.debitBalance(user_id, amountToDebit);
 		
-		System.out.println(user_id + " " + order_type + " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
+		System.out.println(user_id + " "  + " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
 		try {
 			
 			if((lsl == null) && (term.equals("null"))){
-				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
+				oms.createOpenOrder(new Integer(user_id), "SGD","B",qty, stock_symbol,
 						price_type, txDate, null, null, amountToDebit);
 				
 				
-				session.setAttribute("Selection", null);
+//				session.setAttribute("Selection", null);
 				session.setAttribute("quantity", null);
 				session.setAttribute("stock_symbol", null);
 				session.setAttribute("price_type", null);
@@ -90,12 +90,12 @@ public class ConfirmationPageController extends HttpServlet {
 				
 			}
 			else{
-				oms.createOpenOrder(new Integer(user_id), "SGD",order_type,qty, stock_symbol,
+				oms.createOpenOrder(new Integer(user_id), "SGD","B",qty, stock_symbol,
 						price_type, txDate, lsl, term , amountToDebit);
-				System.out.println(" comfirmation page controller else method:"+user_id + " " + order_type + " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
+				System.out.println(" comfirmation page controller else method:"+user_id +  " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
 
 				
-				session.setAttribute("Selection", null);
+//				session.setAttribute("Selection", null);
 				session.setAttribute("quantity", null);
 				session.setAttribute("stock_symbol", null);
 				session.setAttribute("price_type", null);

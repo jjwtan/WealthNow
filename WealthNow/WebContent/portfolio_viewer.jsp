@@ -11,7 +11,7 @@
 <html>
 <head>
 <!--  -->
-<style>
+<!--  <style>
 table {
 	width: 100%;
 }
@@ -38,7 +38,7 @@ table#t01 th {
 	background-color: black;
 	color: white;
 }
-</style>
+</style> -->
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Portfolio Viewer</title>
@@ -97,7 +97,7 @@ table#t01 th {
 
 	<form action="PortfolioViewerController" method="post">
 
-		<table id="t01">
+		<table class="table table-striped">
 			 
 			<tr>
 				<th colspan="2">Stock Symbol</th>

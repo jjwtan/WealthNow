@@ -51,7 +51,7 @@
 				UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 				UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 				
-				session.setAttribute("Selection", null);
+				
 				session.setAttribute("quantity", null);
 				session.setAttribute("stock_symbol", null);
 				session.setAttribute("price_type", null);
@@ -66,7 +66,7 @@
 		
 			
 
-			<input type="radio" name="Selection" value="B" required> Buy  <br> <br>
+			  <br> <br>
 			<div class="col-lg-6">
 			Quantity: <input class="form-control" type="number" name="quantity"	value="0" required min="1" max="100000" step="1"> 
 			</div>
@@ -97,7 +97,7 @@
 
 			</select> 
 			</div>
-			<br> <br> <br> 
+			
 			<div class="col-lg-12">
 			<input class="btn btn-primary" type="submit" value="Submit"> <!-- <button type="reset" value="Reset">Reset</button> -->
 </div>
