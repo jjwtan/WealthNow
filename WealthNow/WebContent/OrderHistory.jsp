@@ -10,7 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
+<!--<style>
 table {
 	width: 100%;
 }
@@ -38,17 +38,13 @@ table#t01 th {
 	color: white;
 }
 </style>
+-->
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Order History</title>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 </head>
 <body>
-
-	<div style="float: right">
-	<a href="view_watchlist.jsp">My Watchlists</a>
-<a href="update_balance.jsp">Update Balance</a>
-<a href="portfolio_viewer.jsp">Portfolio Viewer</a>
-		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
-	</div>
 
 	<%
 	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
@@ -59,8 +55,9 @@ table#t01 th {
 		
 		
 	%>
-	<h1>Completed/Cancelled Orders</h1>
-	<table  id="t01">
+	<h2>Completed/Cancelled Orders</h2>
+	<br>
+	<table class="table table-striped">
 			<tr>
 				<th>Date Placed Order</th>
 				<th>Order No</th>
