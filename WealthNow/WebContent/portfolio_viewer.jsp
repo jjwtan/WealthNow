@@ -10,7 +10,7 @@
 	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding"%>
 <html>
 <head>
-
+<!--  -->
 <style>
 table {
 	width: 100%;
@@ -43,7 +43,8 @@ table#t01 th {
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Portfolio Viewer</title>
 
-
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script>
@@ -54,15 +55,15 @@ table#t01 th {
 
 
 <body>
+<!--  
 	<div style="float: right">
 	<a href="view_watchlist.jsp">My Watchlists</a>
 <a href="update_balance.jsp">Update Balance</a>
 <a href="OrderHistory.jsp">Order History</a>
 		<a href="BuyPage.jsp">Buy Stocks</a> <a href="login.jsp">Logout</a>
 	</div>
-	<div style="float: left">
-		<label for="order_ID" class="button">Refresh</label>
-	</div>
+	-->
+	
 	
 	
 	<%
