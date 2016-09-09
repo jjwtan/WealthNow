@@ -133,6 +133,110 @@ public class OrderDAO extends DBUtil {
 		return processedCompletedOrderfromUser;
 	}
 
+	public List getCompletedOrdersFromDatabase(Connection connect, Integer user_id) throws Exception {
+		List<Order> processedCompletedOrderfromUser = new ArrayList<Order>();
+
+		String SQL = "SELECT * FROM PROCESSEDORDER WHERE USER_ID = ? AND STATUS = 'completed' ORDER BY order_id desc";
+
+		PreparedStatement ps = connect.prepareStatement(SQL);
+		ps.setInt(1, user_id);
+
+		ResultSet result = ps.executeQuery();
+		System.out.println(SQL + "\nThe SQL statement above has been executed");
+
+		while (result.next()) {
+			Integer order_id = result.getInt("order_id");
+			String currency_code = result.getString("currency_code");
+			String order_type = result.getString("order_type");
+			Integer quantity = result.getInt("quantity");
+			String stock_symbol = result.getString("stock_symbol");
+			String price_type = result.getString("price_type");
+			Date place_order_date = result.getDate("place_order_date");
+			Double limit_price = result.getDouble("limit_price");
+			String status = result.getString("status");
+			Date order_completion_date = result.getDate("order_completion_date");
+			Double closing_price = result.getDouble("closing_price");
+			Double total_price_deducted = result.getDouble("total_price_deducted");
+			Integer old_order_id = null;
+
+			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
+					stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,
+					order_completion_date, status, closing_price, total_price_deducted, old_order_id);
+			processedCompletedOrderfromUser.add(order);
+		}
+
+		return processedCompletedOrderfromUser;
+	}
+
+	public List getCancelledOrdersFromDatabase(Connection connect, Integer user_id) throws Exception {
+		List<Order> processedCompletedOrderfromUser = new ArrayList<Order>();
+
+		String SQL = "SELECT * FROM PROCESSEDORDER WHERE USER_ID = ? AND STATUS = 'cancelled' ORDER BY order_id desc";
+
+		PreparedStatement ps = connect.prepareStatement(SQL);
+		ps.setInt(1, user_id);
+
+		ResultSet result = ps.executeQuery();
+		System.out.println(SQL + "\nThe SQL statement above has been executed");
+
+		while (result.next()) {
+			Integer order_id = result.getInt("order_id");
+			String currency_code = result.getString("currency_code");
+			String order_type = result.getString("order_type");
+			Integer quantity = result.getInt("quantity");
+			String stock_symbol = result.getString("stock_symbol");
+			String price_type = result.getString("price_type");
+			Date place_order_date = result.getDate("place_order_date");
+			Double limit_price = result.getDouble("limit_price");
+			String status = result.getString("status");
+			Date order_completion_date = result.getDate("order_completion_date");
+			Double closing_price = result.getDouble("closing_price");
+			Double total_price_deducted = result.getDouble("total_price_deducted");
+			Integer old_order_id = null;
+
+			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
+					stock_symbol, PriceTypeEnum.valueOf(price_type), place_order_date, limit_price,
+					order_completion_date, status, closing_price, total_price_deducted, old_order_id);
+			processedCompletedOrderfromUser.add(order);
+		}
+
+		return processedCompletedOrderfromUser;
+	}
+
+	public List getOpenOrdersFromDatabase(Connection connect, Integer user_id) throws Exception {
+		List<Order> processedCompletedOrderfromUser = new ArrayList<Order>();
+
+		String SQL = "SELECT * FROM OPENORDER WHERE USER_ID = ? ORDER BY order_id desc";
+
+		PreparedStatement ps = connect.prepareStatement(SQL);
+		ps.setInt(1, user_id);
+
+		ResultSet result = ps.executeQuery();
+		System.out.println(SQL + "\nThe SQL statement above has been executed");
+
+		while (result.next()) {
+			Integer order_id = result.getInt("order_id");
+			String currency_code = result.getString("currency_code");
+			String order_type = result.getString("order_type");
+			Integer quantity = result.getInt("quantity");
+			String stock_symbol = result.getString("stock_symbol");
+			String price_type = result.getString("price_type");
+			Date opening_order_date = result.getDate("opening_order_date");
+			Double limit_price = result.getDouble("limit_price");
+			String term = result.getString("term");
+
+			Integer old_order_id = null;
+
+			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
+					stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price,
+					TermEnum.valueOf(term), "", new Double(0.00), old_order_id);
+		
+			processedCompletedOrderfromUser.add(order);
+		}
+
+		return processedCompletedOrderfromUser;
+	}
+
 	public List getAllSoldOrderInDatabase(Connection connect, Integer user_ID, Integer order_ID) throws Exception {
 		List<Order> AllSoldOrderInDatabase = new ArrayList<Order>();
 

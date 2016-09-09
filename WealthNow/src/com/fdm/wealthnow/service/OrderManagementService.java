@@ -586,5 +586,95 @@ public class OrderManagementService extends DBUtil {
 		}
 		return null;
 	}
+	public List<Order> getCompletedOrdersFromUser(Integer user_id) {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			OrderDAO ord = new OrderDAO();
+			List<Order> orderList = ord.getCompletedOrdersFromDatabase(connect, user_id);
+			connect.commit();
+			return orderList;
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return null;
+	}
+	public List<Order> getCancelledOrdersFromUser(Integer user_id) {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			OrderDAO ord = new OrderDAO();
+			List<Order> orderList = ord.getCancelledOrdersFromDatabase(connect, user_id);
+			connect.commit();
+			return orderList;
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return null;
+	}
+	public List<Order> getOpenOrdersFromUser(Integer user_id) {
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			OrderDAO ord = new OrderDAO();
+			List<Order> orderList = ord.getOpenOrdersFromDatabase(connect, user_id);
+			connect.commit();
+			return orderList;
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return null;
+	}
 
 }
