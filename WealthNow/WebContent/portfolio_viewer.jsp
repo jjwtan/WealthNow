@@ -73,6 +73,7 @@ table#t01 th {
 	session.setAttribute("order_ID", null);
 	 session.setAttribute("selling_price", null);
      session.setAttribute("stock_symbol", null);
+     session.setAttribute("final_price", null);
      
 		//response.setIntHeader("Refresh", 20);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));

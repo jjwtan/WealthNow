@@ -86,10 +86,10 @@ public class SellConfirmationPageController extends HttpServlet {
 		
 		
 		System.out.println("setting sessions to null");
-//		session.setAttribute("orderID", null);
+		session.setAttribute("orderID", null);
 		session.setAttribute("final_price", null);
 		session.setAttribute("selling_price", null);
-//		session.setAttribute("quantity", null);
+		session.setAttribute("quantity", null);
 		session.setAttribute("stock_symbol", null);
 		
 		
