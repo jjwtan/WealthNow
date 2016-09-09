@@ -17,12 +17,17 @@ input[type=number]::-webkit-outer-spin-button {
 
 </style>
 <title>Registration</title>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
+</head>
+<body>
+<div class="container">
 <h3>1: User Profile</h3>
 <form action="RegisterUserController" method="post">  
 	<table style="width: 40%">
 		<tr>
 			<td>User name</td>
-			<td><input type="text" name="username" 
+			<td><input class="form-control" type="text" name="username" 
 			value="${registerBean.username}" required/>
 			<% if(request.getAttribute("errorMessage") != null) {%>
 				<div style="font-style: italic; color: red"><%=request.getAttribute("errorMessage") %></div>
@@ -30,45 +35,43 @@ input[type=number]::-webkit-outer-spin-button {
 		</tr>
 		<tr>
 			<td>Password</td>
-			<td><input type="password" name="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" 
+			<td><input class="form-control" type="password" name="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" 
 				 oninvalid="setCustomValidity('Please enter at least one uppercase, one lowercase and one number')"
 				 onchange="try{setCustomValidity('')}catch(e){}"
 				 value="${registerBean.password}" required/></td>
 		</tr>
 		<tr>
 			<td>First name</td>
-			<td><input type="text" name="firstName" value="${registerBean.firstName}" required/></td>
+			<td><input class="form-control" type="text" name="firstName" value="${registerBean.firstName}" required/></td>
 		</tr>
 		<tr>
 			<td>Last name</td>
-			<td><input type="text" name="lastName" value="${registerBean.lastName}"/></td>
+			<td><input class="form-control" type="text" name="lastName" value="${registerBean.lastName}"/></td>
 		</tr>
 		<tr>
 			<td>Birthday</td>
-			<td><input type="text" name="birthday" placeholder="dd/mm/yyyy" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}" 
+			<td><input class="form-control" type="text" name="birthday" placeholder="dd/mm/yyyy" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}" 
 				value="${registerBean.birthday}" required/></td>
 		</tr>
 		<tr>
 			<td>Email</td>
-			<td><input type="email" name="email" value="${registerBean.email}" required/></td>
+			<td><input class="form-control" type="email" name="email" value="${registerBean.email}" required/></td>
 		</tr>
 		<tr>
 			<td>Address</td>
-			<td><input type="text" name="address" value="${registerBean.address}" required/></td>
+			<td><input class="form-control" type="text" name="address" value="${registerBean.address}" required/></td>
 		</tr>
 		<tr>
 			<td>Phone Number</td>
-			<td><input type="number" name="phoneNumber" value="${registerBean.phoneNumber}" min=1 max=999999999 required/></td>
+			<td><input class="form-control" type="number" name="phoneNumber" value="${registerBean.phoneNumber}" min=1 max=999999999 required/></td>
 		</tr>
 		<tr>
 			<td>Maiden Name</td>
-			<td><input type="text" name="maidenName" value="${registerBean.maidenName}" required/></td>
+			<td><input class="form-control" type="text" name="maidenName" value="${registerBean.maidenName}" required/></td>
 		</tr>
 	</table>
 	<input type="submit" value="Next"/>  
 </form>  
-</head>
-<body>
-
+</div>
 </body>
 </html>

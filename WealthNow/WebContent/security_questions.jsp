@@ -8,8 +8,11 @@
 			com.fdm.wealthnow.service.UserRegisterService"%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Security Questions</title>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 </head>
 <body>
+<div class="container">
 <h3>2: Security Question</h3>
 <form action="SecurityQuestionController" method="POST">
 <table>
@@ -38,5 +41,7 @@
 
 	</table>
 	<input type="submit" value="Next"/>
+	</form>
+	</div>
 </body>
 </html>

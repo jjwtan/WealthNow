@@ -13,27 +13,44 @@
 			com.fdm.wealthnow.service.WatchlistService"%>
 <html>
 <head>
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Adding Stocks To WatchList</title>
+<title>Adding Stocks to WatchList</title>
 </head>
 <body>
-	<h2>Add New Stocks</h2>
+<div class="col-lg-12"><h2 style="text-align: center">Add New Stocks</h2></div>
 
 	<%
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		int userId = currentUser.getUser().getUserId();
 	%>
+<br>
+<div class="row">
+<div class="col-md-4 col-md-offset-2">
 Your watchlist id: <%=session.getAttribute("add_stock_watchlist_id") %>
 	<h3 style="color: red;">${errorMessage}</h3>
+	</div>
+	</div>
 
+<div class="row">
+<div class="col-md-4 col-md-offset-2">
+	<!-- Start of stock symbol form -->
 	<form action="AddStockWatchlistController" method="post">
 		Stock Symbol:<input type="text" name="stock_Symbol"
 			value="${stock_symbol}" pattern="[A-Za-z0-9]{3,4}" required
 			placeholder="3-4 Characters" style="text-transform: uppercase">
-
-
+<br>
+		<!--  
 		<input type="submit" id="submit" value="Submit">
+		-->
+				<div style="padding-top: 1em">
+							<button type="submit" id="submit" class="btn btn-primary">Add this stock</button>
+				</div>
 	</form>
+	<!-- End of stock symbol form -->
+	</div>
+	</div>
 
 </body>
 </html>

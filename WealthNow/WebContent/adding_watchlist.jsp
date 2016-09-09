@@ -13,24 +13,10 @@
 			com.fdm.wealthnow.service.WatchlistService"%>
 <html>
 <head>
-<!-- Java script and Bootstrap -->
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<!-- --End of Bootstrap---------- -->
-<link rel = "stylesheet" type = "text/css" href="css/style.css">
+<jsp:include page="include/css_import.jsp" />
+<jsp:include page="include/navbar.jsp" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Adding WatchList</title>
+<title>Add New WatchList</title>
 </head>
 <body>
 
@@ -38,15 +24,23 @@
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		int userId = currentUser.getUser().getUserId();
 	%>
-	
-		<div class="page-header" align="center">
-		<h1>Add A New Watchlist</h1>
+
+	<div class="col-lg-12">
+		<h2 style="text-align: center">Add New Watchlist</h2>
 	</div>
-	
-	<form action="AddingWatchlistController" method="post">
-		Please Enter Your WatchList Name:<input type="text"
-			name="new_watchlist" id="new_watchlist" required> <input type="submit"
-			value="Submit">
-	</form>
+
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2">
+		<br>
+			<form action="AddingWatchlistController" method="post">
+				Please Enter Your WatchList Name:<input type="text"
+					name="new_watchlist" id="new_watchlist" required>
+					
+									<div style="padding-top: 1em">
+							<button type="submit" id="submit" class="btn btn-primary">Add new watchlist</button>
+				</div> 
+			</form>
+		</div>
+	</div>
 </body>
 </html>
