@@ -7,7 +7,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
 	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
-	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding"%>
+	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding,java.util.Date,
+			java.text.SimpleDateFormat"%>
 <html>
 <head>
 <!--  -->
@@ -76,6 +77,10 @@ table#t01 th {
 		StockHolding sh = new StockHolding();
 		int user_id = currentUser.getUser().getUserId();
 		PortfolioService pfs = new PortfolioService();
+		SimpleDateFormat sdf = new SimpleDateFormat("E dd/MM/yyyy hh:mm:ssa z");
+	
+		
+		
 	%>
 	
 		<div class="col-lg-12">
@@ -85,6 +90,12 @@ table#t01 th {
 		<br>Your Current Balance $<%=ua.getBalance()%>
 		</h4>
 	</div>
+	
+	
+	
+	<div style="float: right">
+			<i>Updated: <%=sdf.format(new Date())%></i>
+		</div>
 	
 	<!--  
 	<h4>
@@ -101,22 +112,26 @@ table#t01 th {
 			 
 			<tr>
 				<th colspan="2">Stock Symbol</th>
-				<th>Closing Price(Last Trade)($)</th>
+				<th>Closing Price(Last Trade)</th>
+				<th>Opening Price</th>
 				<th colspan="2">Change</th>
+				<th>Market Price</th>
 				<th>Qty</th>
-				<th>Price Paid($)</th>
-				<th colspan="2">Total Gain</th>
+				<th>Price Paid</th>
+				<th colspan="2">Gain Per Stock</th>
 				<th>Total Price</th>
 
 			</tr>
 			<tr>
 				<th></th>
 				<th></th>
-				<th></th>
+				<th>$</th>
+				<th>$</th>
 				<th>$</th>
 				<th>%</th>
+				<th>$</th>
 				<th></th>
-				<th></th>
+				<th>$</th>
 				<th>$</th>
 				<th>%</th>
 				<th>$</th>
@@ -148,10 +163,12 @@ table#t01 th {
 							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString()));
 					Double closing_price = Double
 							.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getClose().toString());
-					Double total_gain = purchase_price - mkt_price;
-					Double total_gain_percent = total_gain / mkt_price;
+					Double total_gain =  mkt_price - purchase_price ;
+					Double total_gain_percent = total_gain / mkt_price *100;
 					DecimalFormat df2 = new DecimalFormat("##.#####");
 					Double total_stock_price = purchase_price * quantity;
+					
+					Double opening_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getOpen().toString());
 			%>
 
 
@@ -164,14 +181,16 @@ table#t01 th {
 				<button type="submit" value="<%=order_id %>" name="order_ID" id="order_ID" class="btn btn-primary center-block">Sell</button>
 				</div>
 				
-				<td><%=closing_price%></td>
+				<td><%=df2.format(closing_price)%></td>
+				<td><%=df2.format(opening_price)%></td>
 				<td><%=change%></td>
 				<td><%=percent_change%></td>
+				<td><%=df2.format(mkt_price)%></td>
 				<td><%=quantity%></td>
-				<td><%=purchase_price%></td>
+				<td><%=df2.format(purchase_price)%></td>
 				<td><%=df2.format(total_gain)%></td>
 				<td><%=df2.format(total_gain_percent)%></td>
-				<td><%=total_stock_price %></td>
+				<td><%=df2.format(total_stock_price) %></td>
 
 			</tr>
 			<%
