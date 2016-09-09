@@ -120,13 +120,15 @@ public class WatchlistDAO extends DBUtil {
 	public void deleteWatchlist(int watchListId, Connection connect) {
 
 		try {
-
+			String SQLStatement = "delete from watchlistdetail where watchlist_id = " + watchListId;
 			String SQLStatement1 = "delete from userwatchlist where watchlist_id = " + watchListId;
 			String SQLStatement2 = "delete from watchlist where watchlist_id = " + watchListId;
-
+			
+			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 			PreparedStatement ps1 = connect.prepareStatement(SQLStatement1);
 			PreparedStatement ps2 = connect.prepareStatement(SQLStatement2);
 
+			ps.executeUpdate();
 			ps1.executeUpdate();
 			ps2.executeUpdate();
 
@@ -165,7 +167,8 @@ public class WatchlistDAO extends DBUtil {
 		List<String> stocksList = new ArrayList<String>();
 		
 		try {
-			String SQLStatement = "select stock_symbol from WatchlistDetail where watchlist_id = ?";
+			String SQLStatement = "select stock_symbol from WatchlistDetail where watchlist_id = ? order by lower(stock_symbol)";
+			System.out.println(SQLStatement);
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 			ps.setInt(1, watchlistId);
 
@@ -175,6 +178,7 @@ public class WatchlistDAO extends DBUtil {
 			while (result.next()) {
 				count ++;
 				String stockSymbol = result.getString("stock_symbol");
+				System.out.println(stockSymbol);
 				stocksList.add(stockSymbol);
 			}
 			
@@ -197,7 +201,7 @@ public class WatchlistDAO extends DBUtil {
 		try {
 
 			String SQLStatement = "INSERT INTO WatchlistDetail(watchlist_id  , stock_symbol ) VALUES (" + watchlistId
-					+ ", '" + stockSymbol + "')";
+					+ ", '" + stockSymbol.toUpperCase() + "')";
 
 			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 			ps.executeUpdate();
