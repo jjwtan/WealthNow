@@ -120,13 +120,15 @@ public class WatchlistDAO extends DBUtil {
 	public void deleteWatchlist(int watchListId, Connection connect) {
 
 		try {
-
+			String SQLStatement = "delete from watchlistdetail where watchlist_id = " + watchListId;
 			String SQLStatement1 = "delete from userwatchlist where watchlist_id = " + watchListId;
 			String SQLStatement2 = "delete from watchlist where watchlist_id = " + watchListId;
-
+			
+			PreparedStatement ps = connect.prepareStatement(SQLStatement);
 			PreparedStatement ps1 = connect.prepareStatement(SQLStatement1);
 			PreparedStatement ps2 = connect.prepareStatement(SQLStatement2);
 
+			ps.executeUpdate();
 			ps1.executeUpdate();
 			ps2.executeUpdate();
 

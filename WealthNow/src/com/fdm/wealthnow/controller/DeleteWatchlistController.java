@@ -18,7 +18,7 @@ import com.fdm.wealthnow.util.DBUtil;
 /**
  * Servlet implementation class DeleteWachlistController
  */
-@WebServlet("/DeleteWachlistController")
+@WebServlet("/DeleteWatchlistController")
 public class DeleteWatchlistController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -61,6 +61,7 @@ public class DeleteWatchlistController extends HttpServlet {
 				System.out.println("catch in delete watchlist controller");
 		}
 		
+		request.getRequestDispatcher("view_watchlist.jsp").forward(request, response);
 	}
 
 }
