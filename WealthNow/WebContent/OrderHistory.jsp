@@ -1,3 +1,4 @@
+<%@page import="com.fdm.wealthnow.common.InfoType"%>
 <%@page import="com.fdm.wealthnow.dao.OrderDAO"%>
 <%@page import="com.fdm.wealthnow.service.OrderManagementService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -5,7 +6,7 @@
 <%@page import="com.fdm.wealthnow.service.PortfolioService"%>
 <%@ page
 	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
-	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding, java.util.List, com.fdm.wealthnow.common.Order"%>
+	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding,com.fdm.wealthnow.common.Stock, java.util.List, com.fdm.wealthnow.common.Order"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -74,11 +75,15 @@ table#t01 th {
 				<th>Price Type</th>
 				<th>Term</th>
 				<th>Limit Price </th>
+				<th>Market Price</th>
 			</tr>
 			<%
 				List<Order> orderOpen = oms.getOpenOrdersFromUser(user_id);
+				StockService ss = new StockService();
+				
 
 				for (Order order3 : orderOpen) {
+					Stock s = ss.getStockFromExchange(order3.getStock_symbol(), InfoType.BASIC);
 			%>
 			<tr>
 
@@ -90,6 +95,7 @@ table#t01 th {
 				<td><%=order3.getPrice_type()%></td>
 				<td><%=order3.getTerm()%></td>
 				<td><b>$ <%=order3.getLimit_price()%></b></td>
+				<td><b>$ <%=s.getMktPrice()%></b></td>
 			</tr>
 			<%
 				}
