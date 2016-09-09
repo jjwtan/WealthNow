@@ -45,7 +45,7 @@ table#t01 th {
 <jsp:include page="include/navbar.jsp" />
 </head>
 <body>
-
+<div class="container">
 	<%
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		OrderManagementService oms = new OrderManagementService();
@@ -155,5 +155,6 @@ table#t01 th {
 				}
 			%>
 		</table>
+		</div>
 </body>
 </html>
