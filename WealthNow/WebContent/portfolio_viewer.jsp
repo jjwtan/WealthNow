@@ -157,7 +157,9 @@ table#t01 th {
 				<td><%=stock_symbol%></td>
 				<td>
 				
-				<button type="submit" value="<%=order_id %>" name="order_ID" id="order_ID">Sell</button>
+				<div style="padding-top: 5px; padding-bottom: 5px" class="center-block">
+				<button type="submit" value="<%=order_id %>" name="order_ID" id="order_ID" class="btn btn-primary center-block">Sell</button>
+				</div>
 				
 				<td><%=closing_price%></td>
 				<td><%=change%></td>
@@ -185,7 +187,8 @@ table#t01 th {
 	
 
 	</form>
-<a href="portfolio_viewer.jsp" class="button">Refresh</a>
+	<br>
+<button class="btn btn-success"><a href="portfolio_viewer.jsp" class="button"><font color="white">Refresh</font></a></button>
 </div>
 </body>
 </html>
