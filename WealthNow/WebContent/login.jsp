@@ -4,29 +4,10 @@
 <html>
 <head>
 <jsp:include page="include/css_import.jsp" />
-
+<jsp:include page="include/blanknav.jsp" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login Page</title>
-<nav class="navbar navbar-inverse">
-<div class="container-fluid">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse"
-			data-target="#myNavbar">
-			<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-				class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="#">WealthNow</a>
-	</div>
-	<div class="collapse navbar-collapse" id="myNavbar">
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#"><span class="glyphicon glyphicon-user"></span>
-					Sign Up</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-					Login</a></li>
-		</ul>
-	</div>
-</div>
-</nav>
+
 </head>
 
 <body>

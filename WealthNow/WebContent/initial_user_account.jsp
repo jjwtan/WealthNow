@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Account Balance</title>
 <jsp:include page="include/css_import.jsp" />
-<jsp:include page="include/navbar.jsp" />
+<jsp:include page="include/blanknav.jsp" />
 <style type="text/css">
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -19,14 +19,17 @@ input[type=number]::-webkit-outer-spin-button {
 </style>
 </head>
 <body>
+<div class="container">
 	<h3>3: Account balance</h3>
 	
+	<div class="col-lg-6">
 	<form action="CompleteRegistrationController" method="post">
 				<div id="depositing">
-			Deposit Amount $<input type="number" name="deposit_amount" min="1" max="9999999"/><br /> <br />
+			Deposit Amount $<input class="form-control" type="number" name="deposit_amount" min="1" max="9999999"/><br /> <br />
 			<input type="submit" value="Finish" name ="action"/>
 		</div>
 	</form>
-
+	</div>
+</div>
 </body>
 </html>

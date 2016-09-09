@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Security Questions</title>
 <jsp:include page="include/css_import.jsp" />
-<jsp:include page="include/navbar.jsp" />
+<jsp:include page="include/blanknav.jsp" />
 </head>
 <body>
 <div class="container">
@@ -42,6 +42,6 @@
 	</table>
 	<input type="submit" value="Next"/>
 	</form>
-	</div>
+</div>
 </body>
 </html>

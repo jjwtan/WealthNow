@@ -18,7 +18,7 @@ input[type=number]::-webkit-outer-spin-button {
 </style>
 <title>Registration</title>
 <jsp:include page="include/css_import.jsp" />
-<jsp:include page="include/navbar.jsp" />
+<jsp:include page="include/blanknav.jsp" />
 </head>
 <body>
 <div class="container">
