@@ -6,7 +6,7 @@
 <%@ page
 	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
 	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding, java.util.List, com.fdm.wealthnow.common.Order"%>
-	
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -47,15 +47,13 @@ table#t01 th {
 <body>
 
 	<%
-	UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
-	OrderManagementService oms = new OrderManagementService();
-	PortfolioService ps = new PortfolioService();
-	OrderDAO ord = new OrderDAO();
-	Integer user_id = currentUser.getUser().getUserId();
-		
-		
+		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
+		OrderManagementService oms = new OrderManagementService();
+		PortfolioService ps = new PortfolioService();
+		OrderDAO ord = new OrderDAO();
+		Integer user_id = currentUser.getUser().getUserId();
 	%>
-	<h2>Completed/Cancelled Orders</h2>
+	<h2>Open Orders</h2>
 	<br>
 	<table class="table table-striped">
 			<tr>
@@ -65,31 +63,97 @@ table#t01 th {
 				<th>Quantity</th>
 				<th>Symbol</th>
 				<th>Price Type</th>
-				<th>Price</th>		
-				<th>Status</th>
+				<th>Term</th>
+				<th>Limit Price </th>
 			</tr>
 			<%
-			List <Order> orderList = oms.getAllProcessedOrderFromOrderDAO(user_id);
+				List<Order> orderOpen = oms.getOpenOrdersFromUser(user_id);
 
-					for (Order order : orderList) {
-						
+				for (Order order3 : orderOpen) {
 			%>
 			<tr>
-				
-				<td><%=order.getPlace_order_date()%></td>
-				<td><b># <%=order.getOrder_id()%></b></td>
-				<td><%=order.getOrder_type().toString()%></td>
-				<td><%=order.getQuantity()%></td>
-				<td><%=order.getStock_symbol()%></td>
-				<td><%=order.getPrice_type()%></td>
-				<td>$ <%=order.getClosing_price()%></td>
-				<td><b><%=order.getStatus()%></b></td>
+
+				<td><%=order3.getPlace_order_date()%></td>
+				<td><b># <%=order3.getOrder_id()%></b></td>
+				<td><%=order3.getOrder_type().toString()%></td>
+				<td><%=order3.getQuantity()%></td>
+				<td><%=order3.getStock_symbol()%></td>
+				<td><%=order3.getPrice_type()%></td>
+				<td><%=order3.getTerm()%></td>
+				<td><b>$ <%=order3.getLimit_price()%></b></td>
 			</tr>
 			<%
 				}
-					
 			%>
-		
+		</table>
+	<h2>Completed Orders</h2>
+	<br>
+	<table class="table table-striped">
+		<tr>
+			<th>Date Placed Order</th>
+			<th>Order No</th>
+			<th>Type</th>
+			<th>Quantity</th>
+			<th>Symbol</th>
+			<th>Price Type</th>
+			<th>Price</th>
+			<th>Status</th>
+		</tr>
+		<%
+			List<Order> orderList = oms.getCompletedOrdersFromUser(user_id);
 
+			for (Order order : orderList) {
+		%>
+		<tr>
+
+			<td><%=order.getPlace_order_date()%></td>
+			<td><b># <%=order.getOrder_id()%></b></td>
+			<td><%=order.getOrder_type().toString()%></td>
+			<td><%=order.getQuantity()%></td>
+			<td><%=order.getStock_symbol()%></td>
+			<td><%=order.getPrice_type()%></td>
+			<td>$ <%=order.getClosing_price()%></td>
+			<td><b><%=order.getStatus()%></b></td>
+		</tr>
+		<%
+			}
+		%>
+		
+		</table>
+		<br>
+		<br>
+		<h2>Cancelled Orders</h2>
+		<br>
+		<table class="table table-striped">
+			<tr>
+				<th>Date Placed Order</th>
+				<th>Order No</th>
+				<th>Type</th>
+				<th>Quantity</th>
+				<th>Symbol</th>
+				<th>Price Type</th>
+				<th>Price</th>
+				<th>Status</th>
+			</tr>
+			<%
+				List<Order> orderList1 = oms.getCancelledOrdersFromUser(user_id);
+
+				for (Order order1 : orderList1) {
+			%>
+			<tr>
+
+				<td><%=order1.getPlace_order_date()%></td>
+				<td><b># <%=order1.getOrder_id()%></b></td>
+				<td><%=order1.getOrder_type().toString()%></td>
+				<td><%=order1.getQuantity()%></td>
+				<td><%=order1.getStock_symbol()%></td>
+				<td><%=order1.getPrice_type()%></td>
+				<td>$ <%=order1.getClosing_price()%></td>
+				<td><b><%=order1.getStatus()%></b></td>
+			</tr>
+			<%
+				}
+			%>
+		</table>
 </body>
 </html>
