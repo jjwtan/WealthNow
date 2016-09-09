@@ -70,11 +70,20 @@ table#t01 th {
 	
 	<%
 		session.setAttribute("quantity", null);
+	session.setAttribute("order_ID", null);
+	 session.setAttribute("selling_price", null);
+     session.setAttribute("stock_symbol", null);
+     
 		//response.setIntHeader("Refresh", 20);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccountService uas = new UserAccountService();
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 		StockHolding sh = new StockHolding();
+		
+		//new quantity variable to solve quantity problem
+	
+		
+		
 		int user_id = currentUser.getUser().getUserId();
 		PortfolioService pfs = new PortfolioService();
 		SimpleDateFormat sdf = new SimpleDateFormat("E dd/MM/yyyy hh:mm:ssa z");
@@ -140,7 +149,7 @@ table#t01 th {
 	
 
 			<%
-				int counter = 1;
+				
 				List<StockHolding> shList = pfs.getPortfolioInStockHolding(user_id);
 				for (StockHolding newShList : shList) {
 					System.out.println("List $$$$$$$$" + newShList);
@@ -158,7 +167,7 @@ table#t01 th {
 							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
 
 					String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
-					String day_val_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getDaysValueChange();
+					
 					Double mkt_price = Double
 							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString()));
 					Double closing_price = Double
@@ -194,7 +203,7 @@ table#t01 th {
 
 			</tr>
 			<%
-				counter++;
+				
 				}
 
 				if (shList.size() == 0) {
