@@ -226,11 +226,17 @@ public class OrderDAO extends DBUtil {
 			String term = result.getString("term");
 
 			Integer old_order_id = null;
+			Order order;
+			if (term == null) {
+				order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
+						stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price, null,
+						"", new Double(0.00), old_order_id);
 
-			Order order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
-					stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price,
-					TermEnum.valueOf(term), "", new Double(0.00), old_order_id);
-		
+			} else {
+				order = new Order(user_id, order_id, currency_code, OrderTypeEnum.valueOf(order_type), quantity,
+						stock_symbol, PriceTypeEnum.valueOf(price_type), opening_order_date, limit_price,
+						TermEnum.valueOf(term), "", new Double(0.00), old_order_id);
+			}
 			processedCompletedOrderfromUser.add(order);
 		}
 
