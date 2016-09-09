@@ -55,6 +55,7 @@ table#t01 th {
 
 
 <body>
+<div class="container">
 <!--  
 	<div style="float: right">
 	<a href="view_watchlist.jsp">My Watchlists</a>
@@ -76,10 +77,22 @@ table#t01 th {
 		int user_id = currentUser.getUser().getUserId();
 		PortfolioService pfs = new PortfolioService();
 	%>
+	
+		<div class="col-lg-12">
+		<h4 style="text-align: center">
+				Welcome To Your Portfolio Viewer
+		<%=currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName()%>
+		<br>Your Current Balance $<%=ua.getBalance()%>
+		</h4>
+	</div>
+	
+	<!--  
 	<h4>
 		Welcome To Your Portfolio Viewer
 		<%=currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName()%>
-		<br>Your Current Balance $<%=ua.getBalance()%></h4>
+		<br>Your Current Balance $<%=ua.getBalance()%>
+		</h4>
+	-->
 
 
 	<form action="PortfolioViewerController" method="post">
@@ -173,6 +186,6 @@ table#t01 th {
 
 	</form>
 <a href="portfolio_viewer.jsp" class="button">Refresh</a>
-
+</div>
 </body>
 </html>

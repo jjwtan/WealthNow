@@ -30,6 +30,7 @@
 		</script>
 </head>
 <body>
+<div class="container">
 	<%-- priceLimit = Double.parseDouble(limit_price); --%>
 	<%
 		Double brokerage_fee = 9.95;
@@ -151,6 +152,7 @@
 							<button type="cancel" onclick="javascript:window.location='BuyPage.jsp';" class="btn btn-danger">Cancel Order</button>
 				</div>  
 
+	</div>
 	</div>
 	</div>
 </body>
