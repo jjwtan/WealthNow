@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,14 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
-
+import java.util.concurrent.TimeUnit;
 
 import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Stock;
 import com.fdm.wealthnow.util.DBUtil;
+import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
 public class StockService extends DBUtil{
-	HashMap<String, Stock> StockCache = new HashMap<>();
+	HashMap<String, Stock> stockCache = new HashMap<>();
 	static List<String> rawStockList;
 	static List<Stock> requestStock;
 
@@ -32,30 +34,109 @@ public class StockService extends DBUtil{
 	public StockService() {
 		//populateCache();
 	}
+	
+	public HashMap<String, Stock> getCache() {
+		return stockCache;
+	}
 
-	private void populateCache() {
+	public void populateMapCache() {
+		Connection connect = null;
 		try {
-			Connection connect = getConnection();
+			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+			connect = getConnection();
 			PreparedStatement ps = connect.prepareStatement("select * from stockcache");
 			ResultSet rs = ps.executeQuery();
-			SimpleDateFormat sdf = new SimpleDateFormat("");
-			Date lastTradeDate = sdf.parse(rs.getString("last_trade_date"));
-			Date tradeDate = sdf.parse(rs.getString("trade_date"));
+			
 			while(rs.next()) {
+				Date lastTradeDate = rs.getDate("last_trade_date");
+				Date tradeDate = rs.getDate("trade_date");
 				Stock stock = new Stock(rs.getString("stock_symbol"), rs.getString("company"), 
 										rs.getFloat("ask"), rs.getFloat("bid"), rs.getFloat("opening"),
 										rs.getFloat("closing"), lastTradeDate, tradeDate, 
-										rs.getString("days_change_value"), rs.getString("percent_change"));
-				StockCache.put(rs.getString("stock_symbol"), stock);
+										rs.getString("days_chage_value"), rs.getString("percent_change"));
+				stockCache.put(rs.getString("stock_symbol"), stock);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(connect!=null) {
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
+	public void populateDBCache(Stock stock) {
+		Connection connect = null;
+		try {
+			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
+			connect = getConnection();
+			checkStockInDB(connect, stock);
+			PreparedStatement ps = connect.prepareStatement("insert into stockcache values(?,?,?,?,?,?,to_date(?,'mm/dd/yyyy'),to_date(?,'mm/dd/yyyy'),?,?,?)");
 			
+			SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			
+			ps.setString(1, stock.getStockSymbol());
+			ps.setString(2, stock.getCompany());
+			ps.setFloat(3, stock.getAsk());
+			ps.setFloat(4, stock.getBid());
+			ps.setFloat(5, stock.getOpen());
+			ps.setFloat(6, stock.getClose());
+			ps.setString(7, sdf1.format(stock.getLastTradeDate()));
+			ps.setString(8, sdf1.format(stock.getTradeDate()));
+			ps.setString(9, stock.getDaysValueChange());
+			ps.setString(10, stock.getPercentChange());
+			ps.setLong(11, new Date().getTime());
+			
+			ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(connect!=null) {
+				try {
+					connect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void checkStockInDB(Connection connect, Stock stock) {
+		try {
+			PreparedStatement ps = connect.prepareStatement("select time_cached from stockcache where stock_symbol = ?");
+			ps.setString(1, stock.getStockSymbol());
+			
+			long mins = 0;
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				long cachedDate = rs.getLong("time_cached");
+				long now = new Date().getTime();
+				long diff = now - cachedDate;
+				mins = TimeUnit.MILLISECONDS.toMinutes(diff);
+			}
+			
+			if(mins > 3) {
+				PreparedStatement ps2 = connect.prepareStatement("delete from stockcache where stock_symbol = ?");
+				ps2.setString(1, stock.getStockSymbol());
+				ps2.executeUpdate();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
 
 	public boolean validateStock(String stockSymbol) {
-		if(StockCache.containsKey(stockSymbol)) {
+		if(stockCache.containsKey(stockSymbol)) {
 			return true;
 		}
 		if(stockSymbol==null || stockSymbol.equals("")) {return false;}
@@ -64,9 +145,10 @@ public class StockService extends DBUtil{
 	}
 
 	public Stock getStockFromExchange(String stockSymbol, InfoType type) {
-		if(StockCache.containsKey(stockSymbol)) {
+		if(stockCache.containsKey(stockSymbol)) {
 			return createStock(stockSymbol);
 		}
+		System.out.println("connecting to exchange");
 		if(stockSymbol==null || stockSymbol.equals("")) {return null;}
 		List<Stock> wrapper = new ArrayList<>();
 		this.requestStock = wrapper;
