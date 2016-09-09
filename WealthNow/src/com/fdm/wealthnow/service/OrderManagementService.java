@@ -31,10 +31,11 @@ public class OrderManagementService extends DBUtil {
 		try {
 			connect = getConnection();
 			connect.setAutoCommit(false);
-			
-			System.out.println("inside createopen order - OMS "+user_id + " " + order_type + " " + quantity + " " + stock_symbol + " " + price_type +" " + term +" "+ opening_order_date + " " +limit_price +" " + total_price_deducted);
 
-			
+			System.out.println("inside createopen order - OMS " + user_id + " " + order_type + " " + quantity + " "
+					+ stock_symbol + " " + price_type + " " + term + " " + opening_order_date + " " + limit_price + " "
+					+ total_price_deducted);
+
 			OrderDAO ord = new OrderDAO();
 			System.out.println("Start Order Management Service(OMS) - createOpenOrder method");
 			// create sequence id for order_id
@@ -95,9 +96,9 @@ public class OrderManagementService extends DBUtil {
 				ord.createOpenOrderInDatabase(connect, OLDorder_id, order_id, user_id, currency_code, order_type,
 						quantity, stock_symbol, price_type, opening_order_date, limit_price, term, "OpenOrder",
 						total_price_deducted);
-				} else {
-					System.out.println("Validation failed at createSellOrder.");
-				}
+			} else {
+				System.out.println("Validation failed at createSellOrder.");
+			}
 			connect.commit();
 
 			System.out.println("End Of createSellOrder..");
@@ -141,8 +142,8 @@ public class OrderManagementService extends DBUtil {
 			System.out.println(order);
 			// format the date to string for create method
 			System.out.println("process order method running...");
-			ord.createProcessedOrderInDatabase(connect, order.getUser_id(), order_id, order.getCurrency_code(),
-					"S", newQty, order.getStock_symbol(), order.getPrice_type().toString(),
+			ord.createProcessedOrderInDatabase(connect, order.getUser_id(), order_id, order.getCurrency_code(), "S",
+					newQty, order.getStock_symbol(), order.getPrice_type().toString(),
 					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
 					convertDateObjToString(date), "completed", price, order.getTotal_price_deducted());
 			connect.commit();
@@ -174,13 +175,12 @@ public class OrderManagementService extends DBUtil {
 				}
 		}
 	}
-	
-	public void updateStockholdingForSellConfirmation(Integer order_id, Integer qty){
+
+	public void updateStockholdingForSellConfirmation(Integer order_id, Integer qty) {
 		Connection connect = null;
 		OrderDAO ord = new OrderDAO();
-	
-		
-		try{
+
+		try {
 			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
 			connect = getConnection();
 			connect.setAutoCommit(false);
@@ -188,18 +188,18 @@ public class OrderManagementService extends DBUtil {
 			Order order = ord.getOrderFromProcessedOrder(connect, order_id);
 			System.out.println(order);
 			updateStockHoldings(order.getUser_id(), order.getOrder_id(), qty);
-	
-		connect.commit();
-		// need to check if quantity will be zero or not.
-		PortfolioService ps = new PortfolioService();
-		StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order.getOrder_id());
-		if (sh.getRemaining_quantity() < 1) {
-			deleteStockHoldings(order.getOrder_id());
+
 			connect.commit();
-			System.out.println(
-					"Remaining quantity is less than 1\nDelete stockholding with orderID - " + order.getOrder_id());
-		}
-		
+			// need to check if quantity will be zero or not.
+			PortfolioService ps = new PortfolioService();
+			StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order.getOrder_id());
+			if (sh.getRemaining_quantity() < 1) {
+				deleteStockHoldings(order.getOrder_id());
+				connect.commit();
+				System.out.println(
+						"Remaining quantity is less than 1\nDelete stockholding with orderID - " + order.getOrder_id());
+			}
+
 		} catch (Exception e) {
 			try {
 				System.out.println("simitachi@ OMS updatestockholding");
@@ -218,7 +218,7 @@ public class OrderManagementService extends DBUtil {
 					e.printStackTrace();
 				}
 		}
-		
+
 	}
 
 	public void processOrder(Integer order_id, Double closing_price) {
@@ -390,7 +390,8 @@ public class OrderManagementService extends DBUtil {
 			connect = getConnection();
 			connect.setAutoCommit(false);
 			System.out.println("inside validate order data");
-			System.out.println(user_id + " " + order_type + " " + quantity + " " + stock_symbol + " " + price_type +" " + term +" "+ opening_order_date + " " +limit_price +" " + currency_code);
+			System.out.println(user_id + " " + order_type + " " + quantity + " " + stock_symbol + " " + price_type + " "
+					+ term + " " + opening_order_date + " " + limit_price + " " + currency_code);
 
 			// check nulls for all parameters
 			if (user_id == null || currency_code == null || order_type == null || quantity == null
@@ -586,6 +587,7 @@ public class OrderManagementService extends DBUtil {
 		}
 		return null;
 	}
+
 	public List<Order> getCompletedOrdersFromUser(Integer user_id) {
 		Connection connect = null;
 		try {
@@ -616,6 +618,7 @@ public class OrderManagementService extends DBUtil {
 		}
 		return null;
 	}
+
 	public List<Order> getCancelledOrdersFromUser(Integer user_id) {
 		Connection connect = null;
 		try {
@@ -646,6 +649,7 @@ public class OrderManagementService extends DBUtil {
 		}
 		return null;
 	}
+
 	public List<Order> getOpenOrdersFromUser(Integer user_id) {
 		Connection connect = null;
 		try {
@@ -677,4 +681,34 @@ public class OrderManagementService extends DBUtil {
 		return null;
 	}
 
+	public StockHolding getStockholdingfromPortfolioService(Integer order_id) {
+		PortfolioService ps = new PortfolioService();
+		Connection connect = null;
+		try {
+			connect = getConnection();
+			connect.setAutoCommit(false);
+			StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order_id);
+
+			return sh;
+		} catch (Exception e) {
+			try {
+				connect.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if (connect != null)
+				try {
+					connect.close();
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return null;
+	}
 }

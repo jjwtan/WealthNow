@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.fdm.wealthnow.common.InfoType;
 import com.fdm.wealthnow.common.Order;
+import com.fdm.wealthnow.common.StockHolding;
 import com.fdm.wealthnow.common.UserAccount;
 import com.fdm.wealthnow.common.UserAuth;
 import com.fdm.wealthnow.dao.OrderDAO;
@@ -61,12 +62,25 @@ public class PortfolioViewerController extends HttpServlet {
 			 PrintWriter out = response.getWriter();
 		        out.println(orderID);
 		        
-		       
+		  
 		        
 		        OrderManagementService oms = new OrderManagementService();
 		        Order order = oms.getOrderFromProcessedOrder(orderID);
-		        Integer qty = order.getQuantity();
+		        
+		        
+		        StockHolding sh1 = oms.getStockholdingfromPortfolioService(orderID);
+		        Integer qty = sh1.getRemaining_quantity();
+		        
+//		        oms.getOrderFromProcessedOrder(orderID).
+		 
+		        
+		        //---------------//to be deleted as this fetches the Purchase qty and not the updated one
+		        //Integer qty = order.getQuantity();
 		       StockService svc = new StockService();
+		       PortfolioService pfs = new PortfolioService();
+		       
+		       
+		       
 		       
 		        String stock_symbol = order.getStock_symbol();
 		        System.out.println("--------Stock symbol inside portfolioViewer---------"+stock_symbol);
@@ -76,6 +90,8 @@ public class PortfolioViewerController extends HttpServlet {
 		       session.setAttribute("order_ID", orderID);
 		       session.setAttribute("selling_price", selling_price);
 		       session.setAttribute("stock_symbol", stock_symbol);
+		       
+		       //to be edited-----------------------
 		       session.setAttribute("quantity", qty);
 		        System.out.println("$$$$$$$quantity inside portfolio viewer:" + qty);
 		        
