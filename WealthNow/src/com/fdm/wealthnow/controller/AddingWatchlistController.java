@@ -77,7 +77,7 @@ public class AddingWatchlistController extends HttpServlet {
 		e.printStackTrace();
 	}
 	
-	
+	request.setAttribute("watchlist_id", watchlist_id);
 	request.getRequestDispatcher("view_watchlist.jsp").forward(request, response);
 	
 	}

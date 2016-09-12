@@ -33,8 +33,8 @@
 		<div class="col-md-4 col-md-offset-2">
 		<br>
 			<form action="AddingWatchlistController" method="post">
-				Please Enter Your WatchList Name:<input type="text"
-					name="new_watchlist" id="new_watchlist" required>
+				Please Enter Your WatchList Name:<input class="form-control" type="text"
+					name="new_watchlist" id="new_watchlist" required autofocus>
 					
 									<div style="padding-top: 1em">
 							<button type="submit" id="submit" class="btn btn-primary">Add new watchlist</button>
