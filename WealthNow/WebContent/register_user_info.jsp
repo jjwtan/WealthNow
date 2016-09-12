@@ -71,7 +71,7 @@ input[type=number]::-webkit-outer-spin-button {
 				<tr>
 					<td>Phone Number</td>
 					<td><input class="form-control" type="number"
-						name="phoneNumber" value="${registerBean.phoneNumber}" min=1
+						name="phoneNumber" value="<%=(registerBean.getPhoneNumber()==0)? null : registerBean.getPhoneNumber()%>" min=1
 						max=999999999 required /></td>
 				</tr>
 				<tr>
