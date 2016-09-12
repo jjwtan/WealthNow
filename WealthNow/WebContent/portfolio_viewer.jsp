@@ -221,7 +221,7 @@ table#t01 th {
 
 	</form>
 	<br>
-<button class="btn btn-success"><a href="portfolio_viewer.jsp" class="button"><font color="white">Refresh</font></a></button>
+	<a href="portfolio_viewer.jsp" class="btn btn-success"><font color="white">Refresh</font></a>
 </div>
 </body>
 </html>
