@@ -58,7 +58,8 @@ public class AuthenticationFilter implements Filter {
 				!uri.contains("navbar")&&
 				!uri.contains("css")&&
 				!uri.contains("img")&&
-				!uri.contains("include");
+				!uri.contains("include")&&
+				!uri.contains("fonts");
 
 	}
 

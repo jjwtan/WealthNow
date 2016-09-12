@@ -59,8 +59,7 @@
 				session.setAttribute("lsl", null);
 				session.setAttribute("total_price", null);
 			%>
-			<h4> Welcome <%= currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName() %>
-			,Your Current Balance $<%=ua.getBalance() %></h4>
+			<h4>Your Current Balance $<%=ua.getBalance() %></h4>
 			
 			<h3 style="color:red;">${errorMessage}</h3>
 		

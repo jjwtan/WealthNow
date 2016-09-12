@@ -37,10 +37,9 @@ Your watchlist id: <%=session.getAttribute("add_stock_watchlist_id") %>
 <div class="col-md-4 col-md-offset-2">
 	<!-- Start of stock symbol form -->
 	<form action="AddStockWatchlistController" method="post">
-		Stock Symbol:<input type="text" name="stock_Symbol"
+		Stock Symbol:<input class="form-control" type="text" name="stock_Symbol"
 			value="${stock_symbol}" pattern="[A-Za-z0-9]{3,4}" required
-			placeholder="3-4 Characters" style="text-transform: uppercase">
-<br>
+			placeholder="3-4 Characters" style="text-transform: uppercase" autofocus>
 		<!--  
 		<input type="submit" id="submit" value="Submit">
 		-->

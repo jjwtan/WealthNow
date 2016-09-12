@@ -28,11 +28,11 @@
 		<br />
 		<div id="depositing">
 			Deposit Amount $<input type="number" name="deposit_amount" /><br /> <br />
-			<input type="submit" value="Deposit" name ="action"/>
+			<input class="btn btn-primary" type="submit" value="Deposit" name ="action"/>
 		</div>
 		<div id="withdrawing" style="display: none">
 			Withdraw Amount $<input type="number" name="withdraw_amount" styl/><br /> <br />
-			<input type="submit" value="Withdraw" name = "action"/>
+			<input class="btn btn-primary" type="submit" value="Withdraw" name = "action"/>
 		</div>
 	</form>
 
