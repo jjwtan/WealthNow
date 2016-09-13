@@ -70,7 +70,7 @@
 							<td>Stock Symbol</td>
 							<td>
 								<%
-									out.print(stock_symbol);
+									out.print(stock_symbol.toUpperCase());
 								%>
 							</td>
 						</tr>
