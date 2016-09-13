@@ -51,10 +51,7 @@ table#t01 th {
 <jsp:include page="include/navbar.jsp" />
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-<script>
 
-    
-</script>
 </head>
 
 
@@ -104,9 +101,12 @@ table#t01 th {
 		</h4>
 	</div>
 	
-	
-	
-	<div style="float: right">
+	<div class="col-lg-offset-9 col-lg-3" align="right">
+<input class="form-control" type="text" id="search" placeholder="Type to search">
+</div>
+<br>
+
+	<div style="float: right; padding-top: 15px">
 			<i>Updated: <%=sdf.format(new Date())%></i>
 		</div>
 	
@@ -116,12 +116,11 @@ table#t01 th {
 		<%=currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName()%>
 		<br>Your Current Balance $<%=ua.getBalance()%>
 		</h4>
-	-->
-
+	-->		
 
 	<form action="PortfolioViewerController" method="post">
 
-		<table class="table table-striped">
+		<table id="portfolio_stocks" class="table table-striped">
 			 
 			<tr>
 				<th colspan="2">Stock Symbol</th>
@@ -182,8 +181,7 @@ table#t01 th {
 			%>
 
 
-
-			<tr>
+			<tr class="toformat">
 				<td><%=stock_symbol.toUpperCase()%></td>
 				<td>
 				
@@ -224,4 +222,17 @@ table#t01 th {
 	<a href="portfolio_viewer.jsp" class="btn btn-success"><font color="white">Refresh</font></a>
 </div>
 </body>
+<script type="text/javascript">
+
+		var $rows = $('#portfolio_stocks tr.toformat');
+		$('#search').keyup(function() {
+			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+			$rows.show().filter(function() {
+				var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+				return !~text.indexOf(val);
+			}).hide();
+		});
+
+</script>
 </html>
