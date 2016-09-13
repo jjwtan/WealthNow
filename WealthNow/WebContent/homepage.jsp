@@ -1,3 +1,8 @@
+<%@page import="com.fdm.wealthnow.service.PortfolioService"%>
+<%@page import="com.fdm.wealthnow.service.OrderManagementService"%>
+<%@page import="java.util.List"%>
+<%@page import="com.fdm.wealthnow.common.StockHolding"%>
+<%@page import="com.fdm.wealthnow.common.Stock"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,11 +47,27 @@
 		
 		<br>
 		<div class="container">
+		<%
+		PortfolioService ps = new PortfolioService();
+		List <StockHolding> arraylist = ps.getPortfolioInStockHolding(ua.getUserId());
+		StockHolding a = null;
+		for(StockHolding stock : arraylist){
+			a = stock;
+		}
 		
+		if(a != null){
+		%>
+		
+		
+		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=45&s=<%=a.getStock_symbol()%>.si"></script>
+		<%}else{ %>
+		
+		<a href="http://www.accuweather.com/en/sg/singapore/300597/weather-forecast/300597" class="aw-widget-legal">
 
+</a><div id="awcc1473751843245" class="aw-widget-current"  data-locationkey="300597" data-unit="c" data-language="en-us" data-useip="false" data-uid="awcc1473751843245"></div><script type="text/javascript" src="http://oap.accuweather.com/launch.js"></script>
 		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42"></script>
-		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=45&s=z74.si"></script>
 		
+		<%} %>
 		</div>
 		
 		
