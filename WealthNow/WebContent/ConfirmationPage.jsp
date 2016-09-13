@@ -16,6 +16,7 @@
 	<h2 style="text-align: center">Confirmation Page</h2>
 </div>
 
+<!-- Edited by Nes -->
 
 <br>
 <br>
