@@ -77,7 +77,7 @@
 						<tr>
 							<td>Stock Price</td>
 							<td>$ <%
-								out.print(stock_price);
+								out.print(df.format(stock_price));
 							%>
 							</td>
 

@@ -32,7 +32,7 @@ $(document).ready ( function () {
 <% 
  UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
-	DecimalFormat df = new DecimalFormat("##.###"); 
+	DecimalFormat df = new DecimalFormat("##.##"); 
 	
 	String stock_symbol= session.getAttribute("stock_symbol").toString();
 	Integer quantity = Integer.parseInt(session.getAttribute("quantity").toString());

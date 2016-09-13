@@ -22,16 +22,17 @@
 	UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 %>
 <h2>Your balance is $<%=ua.getBalance() %></h2>
+<br>
 	<form action="UpdateBalanceController" method="post">
 		<input type="radio" name="Selection" id="deposit" checked="checked" onclick="withdrawDeposit()" value="Deposit">Deposit 
 		<input type="radio" name="Selection" id="withdraw" onclick="withdrawDeposit()" value="Withdraw">	Withdraw <br />
 		<br />
 		<div id="depositing">
-			Deposit Amount $<input type="number" name="deposit_amount" /><br /> <br />
+			Deposit Amount $<input type="number" name="deposit_amount" step="0.01"/><br /> <br />
 			<input class="btn btn-primary" type="submit" value="Deposit" name ="action"/>
 		</div>
 		<div id="withdrawing" style="display: none">
-			Withdraw Amount $<input type="number" name="withdraw_amount" styl/><br /> <br />
+			Withdraw Amount $<input type="number" name="withdraw_amount" step="0.01"/><br /> <br />
 			<input class="btn btn-primary" type="submit" value="Withdraw" name = "action"/>
 		</div>
 	</form>
