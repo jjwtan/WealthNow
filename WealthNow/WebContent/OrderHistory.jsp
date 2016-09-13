@@ -53,6 +53,7 @@ table#t01 th {
 			UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 			OrderManagementService oms = new OrderManagementService();
 			PortfolioService ps = new PortfolioService();
+			StockService ss = new StockService();
 			OrderDAO ord = new OrderDAO();
 			Integer user_id = currentUser.getUser().getUserId();
 		%>
@@ -83,7 +84,6 @@ table#t01 th {
 								</tr>
 								<%
 									List<Order> orderOpen = oms.getOpenOrdersFromUser(user_id);
-									StockService ss = new StockService();
 									DecimalFormat df2 = new DecimalFormat("##.###");
 									for (Order order3 : orderOpen) {
 										Stock s = ss.getStockFromExchange(order3.getStock_symbol(), InfoType.BASIC);
@@ -91,10 +91,13 @@ table#t01 th {
 								<tr>
 									<td>
 										<%
+					if(order3.getTerm()!=null){					
 					if (order3.getTerm().toString().equals("GC") || order3.getTerm().toString().equals("GD")) {
 						%><button class="btn btn-warning" type="submit"
 											value="<%=order3.getOrder_id()%>" name="cancel" id="cancel"
 											style="float: left;">Cancel</button> <%
+					}
+					
 					}
 				%>
 									</td>
