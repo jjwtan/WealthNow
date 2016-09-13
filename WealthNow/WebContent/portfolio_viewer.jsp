@@ -184,7 +184,7 @@ table#t01 th {
 
 
 			<tr>
-				<td><%=stock_symbol%></td>
+				<td><%=stock_symbol.toUpperCase()%></td>
 				<td>
 				
 				<div style="padding-top: 5px; padding-bottom: 5px" class="center-block">
