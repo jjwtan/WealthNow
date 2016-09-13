@@ -15,6 +15,7 @@
 <head>
 <jsp:include page="include/css_import.jsp" />
 <jsp:include page="include/navbar.jsp" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>My Watchlist</title>
 </head>
@@ -49,6 +50,8 @@
 		if (watchlists != null) {
 	%>
 	<div>
+  
+
 		<form id="watchlist_form" action="ViewWatchlist" method="post">
 			Select Watchlist: <select required name="watchlistID"
 				onchange="this.form.submit()">
@@ -81,6 +84,12 @@
 				SimpleDateFormat sdf = new SimpleDateFormat("E dd/MM/yyyy hh:mm:ssa z");
 		%>
 		<h2 style="text-align: center"><%=selectedWl.getWatchlistName()%></h2>
+    
+        <div class= "col-lg-offset-9 col-lg-3" align="right">
+          <input type="text" id="search" class="form-control" placeholder="Type to search">
+        <br>
+        </div>
+        
 		<div style="float: right">
 			<i>Updated: <%=sdf.format(new Date())%></i>
 		</div>
@@ -90,9 +99,10 @@
 			session.setAttribute("add_stock_watchlist_id", id);
 		%>
 		<a href="add_stock_watchlist.jsp"><button type="button" class="btn btn-primary">Add New Stocks</button></a>
-
+           
 		<form action="DeleteStockWatchlistController" method="post">
-			<table class="table table-striped">
+  
+			<table class="table table-striped" id="table">
 				<tr>
 					<th>Instrument</th>
 					<th>Bid</th>
@@ -110,7 +120,7 @@
 						for (Stock stock : stocks) {
 							Date dateMod = stock.getModifiedDate();
 				%>
-				<tr>
+				<tr class="toformat">
 					<td><%=stock.getStockSymbol().toUpperCase() + ": " + stock.getCompany()%>
 						<button class="btn btn-warning" type="submit" value="<%=stock.getStockSymbol()%>"
 							name="delete" id="delete" style="float: right;">Delete</button></td>
@@ -150,6 +160,19 @@
 		}
 	%>
 	</div>
+  
+<script>
+var $rows = $('#table tr.toformat');
+$('#search').keyup(function() {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+    $rows.show().filter(function() {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
+});
+</script> 
+  
 	</div>
 </body>
 </html>
