@@ -59,7 +59,13 @@ public class UpdateBalanceController extends HttpServlet {
 		case "Withdraw":
 			input = stringCheck(request.getParameter("withdraw_amount"));
 			amount = Double.parseDouble(input);
-			uas.debitBalance(userId, amount);
+			double status = uas.debitBalance(userId, amount);
+			
+			if(status < 0) {
+				request.setAttribute("error_message", "Insufficient funds");
+				request.getRequestDispatcher("update_balance.jsp").forward(request, response);
+				return;
+			}
 			break;
 		}
 

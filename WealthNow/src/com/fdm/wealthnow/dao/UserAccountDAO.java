@@ -72,6 +72,7 @@ public class UserAccountDAO extends DBUtil{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return -1;
 		}
 		
 		return getAccountBalance(connect, userId).getBalance();
