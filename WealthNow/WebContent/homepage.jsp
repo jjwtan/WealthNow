@@ -10,6 +10,7 @@
 <title>Homepage</title>
 <jsp:include page="include/css_import.jsp" />
 <jsp:include page="include/navbar.jsp" />
+
 </head>
 <body>
 	<div class="container">
@@ -24,6 +25,8 @@
 	</font>
 </div>
 -->
+
+<br>
 		<div class="container-fluid padd">
 			<div class="col-md-8">
 				<h2>
@@ -35,50 +38,12 @@
 				Your balance is $<%=ua.getBalance()%>
 			</div>
 		</div>
-		<div class="col-md-9">
-			<div class="panel-group">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<a data-toggle="collapse" href="#collapse1">Watchlist</a>
-						</div>
-					</div>
-					<div id="collapse1" class="panel-collapse collapse in">
-						<div class="panel-body">---</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="panel-group">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<a data-toggle="collapse" href="#collapse3">Order History</a>
-						</div>
-					</div>
-					<div id="collapse3" class="panel-collapse collapse in">
-						<div class="panel-body">---</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	
-		<div class="col-md-12">
-			<div class="panel-group">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="panel-title">
-						<a data-toggle="collapse" href="#collapse2">Portfolio</a>
-					</div>
-				</div>
-				<div id="collapse2" class="panel-collapse collapse in">
-					<div class="panel-body">---</div>
-				</div>
-			</div>
-		</div>
-		</div>
+
 		<br>
+		<div class="container">
+		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42"></script>
+		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=45&s=z74.si"></script>
+		</div>
 		
 		<!-- 
 <div align="center">
