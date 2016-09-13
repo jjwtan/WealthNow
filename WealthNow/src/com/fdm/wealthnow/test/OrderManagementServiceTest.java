@@ -99,7 +99,7 @@ public class OrderManagementServiceTest extends DBUtil {
 		System.out.println("============================end of process buy order");
 		Integer order_id = oms.createSellOrder(order_id1,new Integer(3), "SGD", "S", new Integer(5), "Z74", "M", "11 Sep 2011",
 				new Double(2.0), "null", 150.1); 
-		oms.processSellOrder(order_id,order_id1, new Double(2.0), new Integer(5));
+		oms.processSellOrder(order_id,order_id1, new Double(2.0), new Integer(5), new Double(10));
 		System.out.println(order_id1);
 		StockHolding sh = ps.getStockholdingFromPortfolioService(connect, order_id1);
 		
