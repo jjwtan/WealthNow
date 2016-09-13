@@ -11,9 +11,9 @@
 <jsp:include page="include/css_import.jsp" />
 <jsp:include page="include/navbar.jsp" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Confirmation Page</title>
+<title>Buying Confirmation</title>
 <div class="col-lg-12">
-	<h2 style="text-align: center">Confirmation Page</h2>
+	<h2 style="text-align: center">Buying Confirmation Page</h2>
 </div>
 
 <!-- Edited by Nes -->

@@ -34,9 +34,6 @@
 	-->
 
 	<% 
-	
-	
-	
 	 UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
 		UserAccount ua = new UserAccountService().getAccountBalance(currentUser.getUser().getUserId());
 	DecimalFormat df = new DecimalFormat(".##"); 
@@ -46,21 +43,14 @@
 	Double selling_price = Double.parseDouble(session.getAttribute("selling_price").toString());
 	
 	Double fixed_price = 9.95;
-	
-	
-	
-	
-	
-
-
 %>
 
 
-	<div class="col-lg-12"><h2 style="text-align: center">Add New Stocks</h2></div><br><br>
+	<div class="col-lg-12"><h2 style="text-align: center">Sell Stocks</h2></div><br><br>
 
-<div class="col-md-4 col-md-offset-2">
+<div class="col-md-6 col-md-offset-3">
 	<form action="SellPageController" method="post" id="selling">
-		<table width="559" border="1" cellpadding="5" cellspacing="0">
+		<table class="table table-striped">
 			<tr>
 				<th width="407">Stock</th>
 				<th width="126">Details</th>
@@ -100,7 +90,7 @@
 		-->
 		
 				<div style="padding-top: 1em">
-							<button type="submit" id="submit" class="btn btn-primary">Sell Order</button>
+							<button type="submit" id="submit" class="btn btn-primary">Confirm</button>
 				</div> 
 	</form>
 	</div>

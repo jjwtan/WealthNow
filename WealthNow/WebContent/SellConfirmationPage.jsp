@@ -6,10 +6,13 @@
 <%@page import="java.text.DecimalFormat"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
 <jsp:include page="include/css_import.jsp" />
 <jsp:include page="include/navbar.jsp" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Selling Confirmation</title>
+<div class="col-lg-12">
+	<h2 style="text-align: center">Selling Confirmation Page</h2>
+</div>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 	
@@ -40,9 +43,14 @@ $(document).ready ( function () {
 	Double final_price = selling_price * quantity + fixed_price;
 	%>
 
+<br><br>
+		<div class="col-md-6 col-md-offset-3">
+			<p>Review Stock Details</p>
+		</div>
 
+<div class="col-md-6 col-md-offset-3">
 <form action="SellConfirmationPageController" method="post" id="selling">
-		<table width="559" border="1" cellpadding="5" cellspacing="0">
+		<table class="table table-striped">
 			<tr>
 				<th width="407">Stock</th>
 				<th width="126">SellingDetails</th>
@@ -90,9 +98,19 @@ $(document).ready ( function () {
 				</td>
 			</tr>
 		</table>
-		<br> <input type="submit" value="Comfirm Order" id="submit_button">   
+		<br>  
+		
+					<div style="padding-top: 1em">
+				<button type="submit" value="Comfirm Order" id="submit_button" class="btn btn-primary">Confirm
+					Order</button>
+			</div>  
 	</form>
-<button type="cancel" onclick="javascript:window.location='portfolio_viewer.jsp';">Cancel Order</button>
+
+		<div style="padding-top: 1em">
+			<button type="cancel" onclick="javascript:window.location='portfolio_viewer.jsp';" class="btn btn-danger">Cancel Order</button>
+		</div>
+
+</div>
 		
 
 </body>
