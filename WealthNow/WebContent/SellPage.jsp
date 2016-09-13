@@ -90,7 +90,7 @@
 		-->
 		
 				<div style="padding-top: 1em">
-							<button type="submit" id="submit" class="btn btn-primary">Confirm</button>
+							<button type="submit" id="submit" class="btn btn-primary">Submit</button>
 				</div> 
 	</form>
 	</div>
