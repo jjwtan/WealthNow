@@ -62,10 +62,8 @@
 			<h4>Your Current Balance $<%=ua.getBalance() %></h4>
 			
 			<h3 style="color:red;">${errorMessage}</h3>
-		
+		<div class="container"><script src="http://widgets.macroaxis.com/widgets/url.jsp?t=20&s=z74.si"></script></div>
 			
-
-			  <br> <br>
 			<div class="col-lg-6">
 			Quantity: <input class="form-control" type="number" name="quantity"	value="0" required min="1" max="100000" step="1"> 
 			</div>

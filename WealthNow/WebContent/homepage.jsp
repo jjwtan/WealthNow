@@ -31,19 +31,25 @@
 			<div class="col-md-8">
 				<h2>
 					Welcome
-					<%=currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName()%>,</h2>
+					<%=currentUser.getUser().getFirstName() + " " + currentUser.getUser().getLastName()%></h2>
 				
 			</div>
 			<div class="col-md-4" style="text-align: right">
 				Your balance is $<%=ua.getBalance()%>
 			</div>
 		</div>
-
+		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=58&s=z74.si, u11.si, d05.si, s85.si, c6l.si"></script>
+		
 		<br>
 		<div class="container">
+		
+
 		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42"></script>
 		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=45&s=z74.si"></script>
+		
 		</div>
+		
+		
 		
 		<!-- 
 <div align="center">
