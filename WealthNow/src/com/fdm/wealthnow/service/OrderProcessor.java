@@ -94,7 +94,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 			Double stockPrice = Double.parseDouble(
 					stksvc.getStockFromExchange(order.getStock_symbol(), InfoType.BASIC).getMktPrice().toString());
 			Integer quantity = order.getQuantity();
-			Double total_price = stockPrice * quantity;
+			Double total_price = stockPrice * quantity +9.95;
 			Double balance = uas.getAccountBalance(order.getUser_id()).getBalance();
 			System.out.println("stock price : " + stockPrice);
 			System.out.println("limit price : " + order.getLimit_price());

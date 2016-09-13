@@ -42,7 +42,7 @@
 			String stock_symbol = request.getParameter("stock_symbol");
 			String limit_price = request.getParameter("lsl");
 			String term = request.getParameter("term");
-			DecimalFormat df = new DecimalFormat(".##");
+			DecimalFormat df = new DecimalFormat("#.##");
 
 			Double stock_price = Double
 					.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.BASIC).getMktPrice().toString());
