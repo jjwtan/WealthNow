@@ -17,7 +17,7 @@ import com.fdm.wealthnow.service.OrderManagementService;
 import com.fdm.wealthnow.service.PortfolioService;
 import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
-import com.sun.org.apache.xpath.internal.operations.Or;
+
 
 public class OrderManagementServiceTest extends DBUtil {
 

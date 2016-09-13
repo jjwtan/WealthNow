@@ -12,7 +12,6 @@ import com.fdm.wealthnow.service.PortfolioService;
 import com.fdm.wealthnow.util.DBUtil;
 import com.fdm.wealthnow.util.DatabaseConnectionFactory.ConnectionType;
 
-import sun.font.CreatedFontTracker;
 
 import static org.junit.Assert.assertEquals;
 
