@@ -70,11 +70,11 @@ public class ConfirmationPageController extends HttpServlet {
 		Double amountToDebit = (Double) session.getAttribute("total_price");
 		uas.debitBalance(user_id, amountToDebit);
 		
-		System.out.println(user_id + " "  + " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
+		System.out.println(user_id + " "  + " " + qty + " " + stock_symbol.toUpperCase() + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
 		try {
 			
 			if((lsl == null) && (term.equals("null"))){
-				oms.createOpenOrder(new Integer(user_id), "SGD","B",qty, stock_symbol,
+				oms.createOpenOrder(new Integer(user_id), "SGD","B",qty, stock_symbol.toUpperCase(),
 						price_type, txDate, null, null, amountToDebit);
 				
 				
@@ -90,9 +90,9 @@ public class ConfirmationPageController extends HttpServlet {
 				
 			}
 			else{
-				oms.createOpenOrder(new Integer(user_id), "SGD","B",qty, stock_symbol,
+				oms.createOpenOrder(new Integer(user_id), "SGD","B",qty, stock_symbol.toUpperCase(),
 						price_type, txDate, lsl, term , amountToDebit);
-				System.out.println(" comfirmation page controller else method:"+user_id +  " " + qty + " " + stock_symbol + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
+				System.out.println(" comfirmation page controller else method:"+user_id +  " " + qty + " " + stock_symbol.toUpperCase() + " " + price_type +" " + term +" "+ txDate + " " +lsl +" " + amountToDebit);
 
 				
 //				session.setAttribute("Selection", null);
