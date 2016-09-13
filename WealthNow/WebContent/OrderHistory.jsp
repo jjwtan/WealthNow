@@ -141,6 +141,7 @@ table#t01 th {
 								<th>Symbol</th>
 								<th>Price Type</th>
 								<th>Price</th>
+								<th>Total Price</th>
 								<th>Status</th>
 							</tr>
 							<%
@@ -157,6 +158,7 @@ table#t01 th {
 								<td><%=order.getStock_symbol()%></td>
 								<td><%=order.getPrice_type()%></td>
 								<td>$ <%=order.getClosing_price()%></td>
+								<td>$ <%=order.getTotal_price_deducted()%></td>
 								<td><b><%=order.getStatus()%></b></td>
 							</tr>
 							<%

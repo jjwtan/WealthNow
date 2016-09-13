@@ -127,7 +127,7 @@ public class OrderManagementService extends DBUtil {
 
 	}
 
-	public void processSellOrder(Integer order_id, Integer OLDorder_id, Double price, Integer newQty) {
+	public void processSellOrder(Integer order_id, Integer OLDorder_id, Double price, Integer newQty, Double total_price) {
 		Connection connect = null;
 		try {
 			this.setConnectionType(ConnectionType.LOCAL_CONNECTION);
@@ -145,7 +145,7 @@ public class OrderManagementService extends DBUtil {
 			ord.createProcessedOrderInDatabase(connect, order.getUser_id(), order_id, order.getCurrency_code(), "S",
 					newQty, order.getStock_symbol(), order.getPrice_type().toString(),
 					convertDateObjToString(order.getPlace_order_date()), order.getLimit_price(),
-					convertDateObjToString(date), "completed", price, order.getTotal_price_deducted());
+					convertDateObjToString(date), "completed", price, total_price);
 			connect.commit();
 			System.out.println("created processed order in database - " + order_id);
 			System.out.println("Check for delete open order");

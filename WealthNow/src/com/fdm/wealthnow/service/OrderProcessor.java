@@ -184,7 +184,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 						if (order.getLimit_price() < stockPrice) {
 							System.out.println("Executing processOrder at OrderProcessor.\nPrice type is LT or SL");
 							ex.submit(() -> oms.processSellOrder(order.getOrder_id(), order.getOld_order_id(),
-									stockPrice, order.getQuantity()));
+									stockPrice, order.getQuantity(),total_price));
 							count++;
 							System.out.println("Count - " + count);
 							uas.creditBalance(order.getUser_id(), total_price);
@@ -194,7 +194,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 					} else if (order.getPrice_type().toString().equals("M")) {
 						System.out.println("Executing processOrder at OrderProcessor.\nPrice type is M");
 						ex.submit(() -> oms.processSellOrder(order.getOrder_id(), order.getOld_order_id(), stockPrice,
-								order.getQuantity()));
+								order.getQuantity(), total_price));
 						count++;
 						System.out.println("Count: " + count);
 						uas.creditBalance(order.getUser_id(), total_price);
