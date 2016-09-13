@@ -150,12 +150,11 @@ public class StockService extends DBUtil{
 		}
 		System.out.println("connecting to exchange");
 		if(stockSymbol==null || stockSymbol.equals("")) {return null;}
-		List<Stock> wrapper = new ArrayList<>();
-		this.requestStock = wrapper;
+		requestStock = new ArrayList<>();
 		rawStockList = new ArrayList<>();
 		
-		wrapper.add(new Stock(stockSymbol));
-		String url = generateRequestURL(wrapper, type);
+		requestStock.add(new Stock(stockSymbol));
+		String url = generateRequestURL(requestStock, type);
 		getFromExhange(url);
 		
 		
