@@ -6,13 +6,13 @@
 			<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 				class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="#">WealthNow</a>
+		<a class="navbar-brand" href="login.jsp">WealthNow</a>
 	</div>
 	<div class="collapse navbar-collapse" id="myNavbar">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+			<li><a href="register_user_info.jsp"><span class="glyphicon glyphicon-user"></span>
 					Sign Up</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+			<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>
 					Login</a></li>
 		</ul>
 	</div>

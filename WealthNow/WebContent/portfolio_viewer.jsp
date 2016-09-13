@@ -6,7 +6,10 @@
 <%@ page import="java.text.DecimalFormat"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
-	import="com.fdm.wealthnow.common.UserAuth,com.fdm.wealthnow.common.UserAccount,com.fdm.wealthnow.service.UserAccountService,
+	import="com.fdm.wealthnow.common.UserAuth,
+			com.fdm.wealthnow.common.UserAccount,
+			com.fdm.wealthnow.common.Stock,
+			com.fdm.wealthnow.service.UserAccountService,
 	com.fdm.wealthnow.service.StockService,com.fdm.wealthnow.common.StockHolding,java.util.Date,
 			java.text.SimpleDateFormat"%>
 <html>
@@ -73,6 +76,7 @@ table#t01 th {
 	session.setAttribute("order_ID", null);
 	 session.setAttribute("selling_price", null);
      session.setAttribute("stock_symbol", null);
+     session.setAttribute("final_price", null);
      
 		//response.setIntHeader("Refresh", 20);
 		UserAuth currentUser = (UserAuth) (session.getAttribute("loggedInUser"));
@@ -162,22 +166,19 @@ table#t01 th {
 					Double purchase_price = newShList.getPurchase_price();
 
 					StockService svc = new StockService();
+					Stock stockRetrieved = svc.getStockFromExchange(stock_symbol, InfoType.FULL);
+					Double change = Double.parseDouble((stockRetrieved.getChange().toString()));
 
-					Double change = Double
-							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getChange().toString()));
-
-					String percent_change = svc.getStockFromExchange(stock_symbol, InfoType.FULL).getPercentChange();
+					String percent_change = stockRetrieved.getPercentChange();
 					
-					Double mkt_price = Double
-							.parseDouble((svc.getStockFromExchange(stock_symbol, InfoType.FULL).getMktPrice().toString()));
-					Double closing_price = Double
-							.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getClose().toString());
+					Double mkt_price = Double.parseDouble(stockRetrieved.getMktPrice().toString());
+					Double closing_price = Double.parseDouble(stockRetrieved.getClose().toString());
 					Double total_gain =  mkt_price - purchase_price ;
 					Double total_gain_percent = total_gain / mkt_price *100;
 					DecimalFormat df2 = new DecimalFormat("##.#####");
 					Double total_stock_price = purchase_price * quantity;
 					
-					Double opening_price = Double.parseDouble(svc.getStockFromExchange(stock_symbol, InfoType.FULL).getOpen().toString());
+					Double opening_price = Double.parseDouble(stockRetrieved.getOpen().toString());
 			%>
 
 
@@ -220,7 +221,7 @@ table#t01 th {
 
 	</form>
 	<br>
-<button class="btn btn-success"><a href="portfolio_viewer.jsp" class="button"><font color="white">Refresh</font></a></button>
+	<a href="portfolio_viewer.jsp" class="btn btn-success"><font color="white">Refresh</font></a>
 </div>
 </body>
 </html>
