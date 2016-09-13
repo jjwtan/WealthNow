@@ -64,8 +64,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-3" for="email"></label>
 					<div class="col-sm-7">
-						<input class="form-control" type="text" style="width: 99%" name="answer"
-						required />
+						<input class="form-control" type="text" style="width: 99%" name="answer" required autofocus/>
 					</div>
 				</div>
 				

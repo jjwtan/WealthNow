@@ -54,7 +54,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 					<label class="control-label col-sm-4" for="pwd">Deposit Amount $</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="number"
-						name="deposit_amount" min="1" max="9999999" step="0.01" /><br /> <br /> 
+						name="deposit_amount" min="1" max="9999999" step="0.01" 
+						oninvalid="setCustomValidity('Please enter an amount more than $1')"
+						onchange="try{setCustomValidity('')}catch(e){}"
+						required autofocus/><br /> <br /> 
 					</div>
 				</div>
 				<div class="form-group"> 
