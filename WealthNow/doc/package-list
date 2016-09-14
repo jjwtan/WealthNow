@@ -1,0 +1,9 @@
+com.fdm.wealthnow.beans
+com.fdm.wealthnow.common
+com.fdm.wealthnow.controller
+com.fdm.wealthnow.dao
+com.fdm.wealthnow.filter
+com.fdm.wealthnow.rmi
+com.fdm.wealthnow.service
+com.fdm.wealthnow.test
+com.fdm.wealthnow.util

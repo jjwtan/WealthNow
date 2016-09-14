@@ -65,8 +65,10 @@
 		<a href="http://www.accuweather.com/en/sg/singapore/300597/weather-forecast/300597" class="aw-widget-legal">
 
 </a><div id="awcc1473751843245" class="aw-widget-current"  data-locationkey="300597" data-unit="c" data-language="en-us" data-useip="false" data-uid="awcc1473751843245"></div><script type="text/javascript" src="http://oap.accuweather.com/launch.js"></script>
-		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42"></script>
 		
+		<script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42"></script>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/JNBpu-Ll8Gk" frameborder="0" allowfullscreen></iframe>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/LGRPzQfqKgE" frameborder="0" allowfullscreen></iframe>
 		<%} %>
 		</div>
 		

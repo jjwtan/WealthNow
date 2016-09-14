@@ -187,7 +187,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 									stockPrice, order.getQuantity(),total_price));
 							count++;
 							System.out.println("Count - " + count);
-							uas.creditBalance(order.getUser_id(), total_price);
+							uas.creditBalance(order.getUser_id(), total_price-9.95);
 							System.out.println(
 									"Amount - " + total_price + " has been credited to user " + order.getUser_id());
 						}
@@ -197,7 +197,7 @@ public class OrderProcessor extends DBUtil implements ServletContextListener {
 								order.getQuantity(), total_price));
 						count++;
 						System.out.println("Count: " + count);
-						uas.creditBalance(order.getUser_id(), total_price);
+						uas.creditBalance(order.getUser_id(), total_price-9.95);
 						System.out.println("Amount - " + total_price + " has been credited to user " + order.getUser_id());
 					}
 
